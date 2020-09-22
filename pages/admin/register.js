@@ -4,6 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 // @material-ui/icons
 import Email from "@material-ui/icons/Email";
+import PersonIcon from '@material-ui/icons/Person';
+import PhoneIcon from '@material-ui/icons/Phone';
 import LockIcon from '@material-ui/icons/Lock';
 // core components
 import Header from "components/logincomponents/Header/Header.js";
@@ -54,10 +56,40 @@ export default function LoginPage(props) {
               <Card className={classes[cardAnimaton]}>
                 <form className={classes.form}>
                   <CardHeader color="primary" className={classes.cardHeader}>
-                    <h4>Login</h4>
+                    <h4>Register an Account</h4>
                   </CardHeader>
-                  <p className={classes.divider}>Enter your login details</p>
+                  <p className={classes.divider}>Enter your details</p>
                   <CardBody>
+                  <CustomInput
+                      labelText="Name"
+                      id="name"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        type: "text",
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <PersonIcon className={classes.inputIconsColor} />
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+                    <CustomInput
+                      labelText="Mobile Number"
+                      id="mobilenumber"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        type: "text",
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <PhoneIcon className={classes.inputIconsColor} />
+                          </InputAdornment>
+                        )
+                      }}
+                    />
                     <CustomInput
                       labelText="Email"
                       id="email"
@@ -92,7 +124,7 @@ export default function LoginPage(props) {
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
                     <Button simple color="primary" size="lg">
-                      Login
+                      Sign Up
                     </Button>
                   </CardFooter>
                 </form>

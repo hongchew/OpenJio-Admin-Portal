@@ -34,10 +34,9 @@ export default function HeaderLinks(props) {
           classes={{ tooltip: classes.tooltip }}
         >
           <Button
-            color="transparent"
-            href="https://google.com"
-            target="_blank"
+            color="primary"
             className={classes.navLink}
+            href="login"
           >
             Login
           </Button>
@@ -52,9 +51,8 @@ export default function HeaderLinks(props) {
         >
           <Button
             color="transparent"
-            href="https://google.com"
-            target="_blank"
             className={classes.navLink}
+            href="register"
           >
             Sign Up
           </Button>
