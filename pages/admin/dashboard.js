@@ -31,7 +31,7 @@ import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 
-import { bugs, website, server } from "variables/general.js";
+import { supportTickets, complaints } from "variables/general.js";
 
 import {
   dailySalesChart,
@@ -48,7 +48,49 @@ function Dashboard() {
   return (
     <div>
       <GridContainer>
-        <GridItem xs={12} sm={6} md={3}>
+        <GridItem xs={12} sm={12} md={6}>
+          <Card>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>Admin Accounts</h4>
+              <p className={classes.cardCategoryWhite}>All admin accounts</p>
+            </CardHeader>
+            <CardBody>
+              <Table
+                tableHeaderColor="primary"
+                tableHead={["Name", "Admin Type"]}
+                tableData={[
+                  ["Sylvest", "Super Admin"],
+                  ["Cheng Yang", "Admin"],
+                  ["Yizhao", "Admin"],
+                  ["Hong Chew", "Admin"],
+                  ["Ying Hui", "Admin"],
+                  ["Shu Qing", "Admin"],
+                ]}
+              />
+            </CardBody>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={6}>
+          <Card>
+            <CardHeader color="danger">
+              <h4 className={classes.cardTitleWhite}>Blacklisted Users</h4>
+            </CardHeader>
+            <CardBody>
+              <Table
+                tableHeaderColor="danger"
+                tableHead={["Name", "Strike Count"]}
+                tableData={[
+                  ["User A", "2"],
+                  ["User B", "3"],
+                  ["User C", "1"],
+                  ["User D", "2"],
+                  ["User E", "3"],
+                ]}
+              />
+            </CardBody>
+          </Card>
+        </GridItem>
+        {/* <GridItem xs={12} sm={6} md={3}>
           <Card>
             <CardHeader color="warning" stats icon>
               <CardIcon color="warning">
@@ -121,9 +163,9 @@ function Dashboard() {
               </div>
             </CardFooter>
           </Card>
-        </GridItem>
+        </GridItem> */}
       </GridContainer>
-      <GridContainer>
+      {/* <GridContainer>
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
             <CardHeader color="success">
@@ -196,70 +238,37 @@ function Dashboard() {
             </CardFooter>
           </Card>
         </GridItem>
-      </GridContainer>
+      </GridContainer> */}
       <GridContainer>
-        <GridItem xs={12} sm={12} md={6}>
+        <GridItem xs={12} sm={12} md={12}>
           <CustomTabs
             title="Tasks:"
             headerColor="dark"
             tabs={[
               {
-                tabName: "Bugs",
+                tabName: "Support Tickets",
                 tabIcon: BugReport,
                 tabContent: (
                   <Tasks
                     checkedIndexes={[0, 3]}
                     tasksIndexes={[0, 1, 2, 3]}
-                    tasks={bugs}
+                    tasks={supportTickets}
                   />
                 ),
               },
               {
-                tabName: "Website",
+                tabName: "Complaints",
                 tabIcon: Code,
                 tabContent: (
                   <Tasks
                     checkedIndexes={[0]}
                     tasksIndexes={[0, 1]}
-                    tasks={website}
-                  />
-                ),
-              },
-              {
-                tabName: "Server",
-                tabIcon: Cloud,
-                tabContent: (
-                  <Tasks
-                    checkedIndexes={[1]}
-                    tasksIndexes={[0, 1, 2]}
-                    tasks={server}
+                    tasks={complaints}
                   />
                 ),
               },
             ]}
           />
-        </GridItem>
-        <GridItem xs={12} sm={12} md={6}>
-          <Card>
-            <CardHeader color="warning">
-              <h4 className={classes.cardTitleWhite}>Employees Stats</h4>
-              <p className={classes.cardCategoryWhite}>
-                New employees on 15th September, 2016
-              </p>
-            </CardHeader>
-            <CardBody>
-              <Table
-                tableHeaderColor="warning"
-                tableHead={["ID", "Name", "Salary", "Country"]}
-                tableData={[
-                  ["1", "Dakota Rice", "$36,738", "Niger"],
-                  ["2", "Minerva Hooper", "$23,789", "Curaçao"],
-                  ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
-                  ["4", "Philip Chaney", "$38,735", "Korea, South"],
-                ]}
-              />
-            </CardBody>
-          </Card>
         </GridItem>
       </GridContainer>
     </div>
