@@ -42,22 +42,6 @@ export default function HeaderLinks(props) {
           </Button>
         </Tooltip>
       </ListItem>
-      <ListItem className={classes.listItem}>
-        <Tooltip
-          id="login"
-          title="Click here to create an account"
-          placement={"top"}
-          classes={{ tooltip: classes.tooltip }}
-        >
-          <Button
-            color="transparent"
-            className={classes.navLink}
-            href="register"
-          >
-            Sign Up
-          </Button>
-        </Tooltip>
-      </ListItem>
     </List>
   );
 }

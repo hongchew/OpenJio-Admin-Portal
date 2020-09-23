@@ -97,7 +97,7 @@ export default function LoginPage(props) {
                     <Button simple color="primary" size="lg">
                       Login
                     </Button>
-                    <Button simple color="primary" size="lg">
+                    <Button simple color="primary" size="lg" href="resetpassword">
                       Forget Password
                     </Button>
                   </CardFooter>
