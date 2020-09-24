@@ -17,8 +17,7 @@ import CardHeader from "components/logincomponents/Card/CardHeader.js";
 import CardFooter from "components/logincomponents/Card/CardFooter.js";
 import CustomInput from "components/logincomponents/CustomInput/CustomInput.js";
 //Routing of CardBody
-import {BrowserRouter as Router, Route} from 'react-router-dom';
-import {Link} from 'react-router-dom';
+import Link from "next/link";
 
 import styles from "assets/jss/nextjs-material-kit/pages/loginPage.js";
 //import background image
@@ -98,7 +97,9 @@ export default function LoginPage(props) {
                       Login
                     </Button>
                     <Button simple color="primary" size="lg">
-                      Forget Password
+                      <Link href="/admin/resetpassword">
+                        Forget Password
+                      </Link>
                     </Button>
                   </CardFooter>
                 </form>

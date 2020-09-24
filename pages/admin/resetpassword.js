@@ -55,7 +55,7 @@ export default function LoginPage(props) {
                   <CardHeader color="primary" className={classes.cardHeader}>
                     <h4>Reset Your Password</h4>
                   </CardHeader>
-                  <p className={classes.divider}>Enter your email/username</p>
+                  <p className={classes.divider}>Enter your email</p>
                   <CardBody>
                     <CustomInput
                       labelText="Email/Username"
