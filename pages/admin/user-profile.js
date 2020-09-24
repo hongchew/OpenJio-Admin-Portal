@@ -15,7 +15,7 @@ import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 
-import avatar from "assets/img/faces/marc.jpg";
+import CeoAvatar from "assets/img/faces/tanwk.png";
 
 const styles = {
   cardCategoryWhite: {
@@ -51,6 +51,32 @@ function UserProfile() {
             </CardHeader>
             <CardBody>
               <GridContainer>
+                {/* First name */}
+                <GridItem xs={12} sm={12} md={6}>
+                  <CustomInput
+                    labelText="First Name"
+                    id="first-name"
+                    formControlProps={{
+                      fullWidth: true,
+                    }}
+                  />
+                </GridItem>
+
+                {/* Last name */}
+                <GridItem xs={12} sm={12} md={6}>
+                  <CustomInput
+                    labelText="Last Name"
+                    id="last-name"
+                    formControlProps={{
+                      fullWidth: true,
+                    }}
+                  />
+                </GridItem>
+              </GridContainer>
+
+              {/* Username & email */}
+              <GridContainer>
+                {/* // Company (disabled)
                 <GridItem xs={12} sm={12} md={5}>
                   <CustomInput
                     labelText="Company (disabled)"
@@ -62,8 +88,9 @@ function UserProfile() {
                       disabled: true,
                     }}
                   />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={3}>
+                </GridItem> */}
+
+                <GridItem xs={12} sm={12} md={5}>
                   <CustomInput
                     labelText="Username"
                     id="username"
@@ -72,7 +99,8 @@ function UserProfile() {
                     }}
                   />
                 </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
+
+                <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
                     labelText="Email address"
                     id="email-address"
@@ -82,27 +110,22 @@ function UserProfile() {
                   />
                 </GridItem>
               </GridContainer>
+              
               <GridContainer>
-                <GridItem xs={12} sm={12} md={6}>
+                <GridItem xs={12} sm={12} md={5}>
                   <CustomInput
-                    labelText="First Name"
-                    id="first-name"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Last Name"
-                    id="last-name"
+                    labelText="Password"
+                    id="password"
                     formControlProps={{
                       fullWidth: true,
                     }}
                   />
                 </GridItem>
               </GridContainer>
+
+              {/* // Location container with "City, Country, Postal Code"
               <GridContainer>
+                
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
                     labelText="City"
@@ -112,6 +135,7 @@ function UserProfile() {
                     }}
                   />
                 </GridItem>
+                
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
                     labelText="Country"
@@ -121,6 +145,7 @@ function UserProfile() {
                     }}
                   />
                 </GridItem>
+                
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
                     labelText="Postal Code"
@@ -130,12 +155,15 @@ function UserProfile() {
                     }}
                   />
                 </GridItem>
-              </GridContainer>
+
+              </GridContainer> */}
+
+              {/* Profile description (Set by super admin?)
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
                   <InputLabel style={{ color: "#AAAAAA" }}>About me</InputLabel>
                   <CustomInput
-                    labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
+                    labelText="Random profile description but not needed for our project"
                     id="about-me"
                     formControlProps={{
                       fullWidth: true,
@@ -146,7 +174,8 @@ function UserProfile() {
                     }}
                   />
                 </GridItem>
-              </GridContainer>
+              </GridContainer> */}
+
             </CardBody>
             <CardFooter>
               <Button color="primary">Update Profile</Button>
@@ -157,20 +186,28 @@ function UserProfile() {
           <Card profile>
             <CardAvatar profile>
               <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                <img src={avatar} alt="..." />
+                <img src={CeoAvatar} alt="..." />
               </a>
             </CardAvatar>
             <CardBody profile>
               <h6 className={classes.cardCategory}>CEO / CO-FOUNDER</h6>
-              <h4 className={classes.cardTitle}>Alec Thompson</h4>
+              <h4 className={classes.cardTitle}>Prof. Tan Wee Kek</h4>
+
+              <strong>Description:</strong>
               <p className={classes.description}>
-                Don{"'"}t be scared of the truth because we need to restart the
-                human foundation in truth And I love you like Kanye loves Kanye
-                I love Rick Owens’ bed design but the back is...
+                I hope that everyone will play their part to fight the COVID-19
+                pandemic.
               </p>
+
+              {/* // Old description
+              <p className={classes.description}>
+                Don{"'"}t be scared of the truth
+              </p> */}
+
+              {/* // Random button for navigation next time perhaps?
               <Button color="primary" round>
                 Follow
-              </Button>
+              </Button> */}
             </CardBody>
           </Card>
         </GridItem>

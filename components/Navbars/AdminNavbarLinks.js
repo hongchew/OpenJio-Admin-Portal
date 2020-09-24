@@ -67,6 +67,8 @@ export default function AdminNavbarLinks() {
           <Search />
         </Button>
       </div>
+
+      {/* // Menu list, which is useless for us
       <Button
         color={size.width > 959 ? "transparent" : "white"}
         justIcon={size.width > 959}
@@ -78,8 +80,10 @@ export default function AdminNavbarLinks() {
         <Hidden mdUp implementation="css">
           <p className={classes.linkText}>Dashboard</p>
         </Hidden>
-      </Button>
+      </Button> */}
+
       <div className={classes.manager}>
+        
         <Button
           color={size.width > 959 ? "transparent" : "white"}
           justIcon={size.width > 959}
@@ -195,25 +199,31 @@ export default function AdminNavbarLinks() {
               <Paper>
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
+                    
                     <MenuItem
                       onClick={handleCloseProfile}
                       className={classes.dropdownItem}
                     >
                       Profile
                     </MenuItem>
+                    
+                    {/* // Since already have sidebar filters, no need more setting
                     <MenuItem
                       onClick={handleCloseProfile}
                       className={classes.dropdownItem}
                     >
                       Settings
-                    </MenuItem>
+                    </MenuItem> */}
+
                     <Divider light />
+
                     <MenuItem
                       onClick={handleCloseProfile}
                       className={classes.dropdownItem}
                     >
                       Logout
                     </MenuItem>
+
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
