@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -26,7 +26,38 @@ import image from "assets/img/login-background.jpg";
 
 const useStyles = makeStyles(styles);
 
-export default function LoginPage(props) {
+function LoginPage(props) {
+  const [creds, setCreds] = useState({
+    email: null,
+    password: null
+  })
+
+  const updateCreds = e => {
+    e.preventDefault()
+
+    const name = e.target.name //email or password
+    const value = e.target.value
+
+    setCreds({...creds, name: value })
+    console.log(creds);
+  }
+  
+
+  //fetch adminLogin API
+  const handleLogin = e => {
+    e.preventDefault()
+    fetch(url , {
+      method: "POST",
+      body: creds
+    }).then(data => {
+      // When successful, then logic
+      console.log(data)
+    }).catch(err => {
+      // When fail
+      console.error(err)
+    })
+  }
+
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
   setTimeout(function() {
     setCardAnimation("");
@@ -61,6 +92,9 @@ export default function LoginPage(props) {
                   <p className={classes.divider}>Enter your login details</p>
                   <CardBody>
                     <CustomInput
+                      name="email"
+                      value={creds.email}
+                      updateCreds={updateCreds}
                       labelText="Email"
                       id="email"
                       formControlProps={{
@@ -76,6 +110,9 @@ export default function LoginPage(props) {
                       }}
                     />
                     <CustomInput
+                      name="password"
+                      value={creds.password}
+                      updateCreds={updateCreds}
                       labelText="Password"
                       id="pass"
                       formControlProps={{
@@ -93,12 +130,12 @@ export default function LoginPage(props) {
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
-                    <Button simple color="primary" size="lg">
-                      Login
+                    <Button simple color="primary" size="lg" onClick={handleLogin}>
+                      <a>Login</a>
                     </Button>
                     <Button simple color="primary" size="lg">
                       <Link href="/admin/resetpassword">
-                        Forget Password
+                        <a>Forget Password</a>
                       </Link>
                     </Button>
                   </CardFooter>
@@ -111,3 +148,5 @@ export default function LoginPage(props) {
     </div>
   );
 }
+
+export default LoginPage;

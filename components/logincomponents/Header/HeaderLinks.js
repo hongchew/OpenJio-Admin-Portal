@@ -21,6 +21,10 @@ const useStyles = makeStyles(styles);
 
 export default function HeaderLinks(props) {
   const classes = useStyles();
+  const buttonStyle = {
+    backgroundColor: "#FFFFFF",
+    color: "#FFFFFF"
+  };
   return (
     <List className={classes.list}>
       <ListItem className={classes.listItem}>
@@ -30,12 +34,9 @@ export default function HeaderLinks(props) {
           placement={"top"}
           classes={{ tooltip: classes.tooltip }}
         >
-          <Button
-            color="#ffffff"
-            className={classes.navLink}
-          >
+          <Button>
             <Link href="/admin/login">
-              Login
+              <a>Login</a>
             </Link>
           </Button>
         </Tooltip>
