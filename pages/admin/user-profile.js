@@ -36,10 +36,7 @@ const styles = {
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: "3px",
     textDecoration: "none",
-  },
-  changePasswordButton: {
-    color: '#FFFFFF',
-  },
+  }
 };
 
 const useStyles = makeStyles(styles);
@@ -174,7 +171,7 @@ function UserProfile() {
             <CardFooter>
             <Button color="primary">Update Profile</Button>
               <Button color="primary">
-                <Link href="/admin/user-profile-password" className={classes.changePasswordButton}>
+                <Link href="/admin/user-profile-password">
                   Change password
                 </Link>
               </Button>
