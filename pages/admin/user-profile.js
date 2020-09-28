@@ -38,7 +38,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-function UserProfile() {
+function AdminProfile() {
   const classes = useStyles();
   return (
     <div>
@@ -179,6 +179,6 @@ function UserProfile() {
   );
 }
 
-UserProfile.layout = Admin;
+AdminProfile.layout = Admin;
 
-export default UserProfile;
+export default AdminProfile;

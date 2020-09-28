@@ -52,7 +52,6 @@ function Dashboard() {
           <Card>
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Admin Accounts</h4>
-              <p className={classes.cardCategoryWhite}>All admin accounts</p>
             </CardHeader>
             <CardBody>
               <Table
@@ -251,7 +250,7 @@ function Dashboard() {
                 tabContent: (
                   <Tasks
                     checkedIndexes={[0, 3]}
-                    tasksIndexes={[0, 1, 2, 3]}
+                    tasksIndexes={[0, 1, 2, 3, 4]}
                     tasks={supportTickets}
                   />
                 ),
@@ -262,7 +261,7 @@ function Dashboard() {
                 tabContent: (
                   <Tasks
                     checkedIndexes={[0]}
-                    tasksIndexes={[0, 1]}
+                    tasksIndexes={[0, 1, 2]}
                     tasks={complaints}
                   />
                 ),
