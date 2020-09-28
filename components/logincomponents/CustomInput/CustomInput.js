@@ -27,7 +27,7 @@ export default function CustomInput(props) {
     success,
     name,
     value,
-    updateCreds
+    onChange
   } = props;
 
   const labelClasses = classNames({
@@ -70,7 +70,7 @@ export default function CustomInput(props) {
       <Input 
         name={name}
         value={value}
-        onChange={updateCreds}
+        onChange={onChange}
         classes={{
           input: inputClasses,
           root: marginTop,

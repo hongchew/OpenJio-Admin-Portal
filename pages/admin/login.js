@@ -27,21 +27,20 @@ import image from "assets/img/login-background.jpg";
 const useStyles = makeStyles(styles);
 
 function LoginPage(props) {
-  const [creds, setCreds] = useState({
-    email: null,
-    password: null
-  })
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
 
-  const updateCreds = e => {
-    e.preventDefault()
-
-    const name = e.target.name //email or password
-    const value = e.target.value
-
-    setCreds({...creds, name: value })
-    console.log(creds);
+  const updateEmail = e => {
+    e.preventDefault();
+    const email = e.target.value;
+    setEmail(email);
   }
-  
+
+  const updatePassword = e => {
+    e.preventDefault();
+    const password = e.target.value;
+    setPassword(password);
+  }
 
   //fetch adminLogin API
   const handleLogin = e => {
@@ -93,8 +92,8 @@ function LoginPage(props) {
                   <CardBody>
                     <CustomInput
                       name="email"
-                      value={creds.email}
-                      updateCreds={updateCreds}
+                      value={email}
+                      onChange={updateEmail}
                       labelText="Email"
                       id="email"
                       formControlProps={{
@@ -111,8 +110,8 @@ function LoginPage(props) {
                     />
                     <CustomInput
                       name="password"
-                      value={creds.password}
-                      updateCreds={updateCreds}
+                      value={password}
+                      onChange={updatePassword}
                       labelText="Password"
                       id="pass"
                       formControlProps={{
