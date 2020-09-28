@@ -32,8 +32,8 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/user-profile",
-    name: "User Profile",
+    path: "/admin-profile",
+    name: "Admin Profile",
     icon: Person,
 
     layout: "/admin",
@@ -73,7 +73,6 @@ const dashboardRoutes = [
 
     layout: "/admin",
   },
-
 ];
 
 export default dashboardRoutes;

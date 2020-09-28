@@ -77,7 +77,6 @@ function AdminProfile() {
 
               {/* Username & email */}
               <GridContainer>
-
                 <GridItem xs={12} sm={12} md={5}>
                   <CustomInput
                     labelText="Username"
@@ -98,7 +97,7 @@ function AdminProfile() {
                   />
                 </GridItem>
               </GridContainer>
-              
+
               <GridContainer>
                 <GridItem xs={12} sm={12} md={5}>
                   <CustomInput
@@ -163,21 +162,16 @@ function AdminProfile() {
                   />
                 </GridItem>
               </GridContainer> */}
-
             </CardBody>
 
             <CardFooter>
               <Button color="primary">Update Profile</Button>
             </CardFooter>
-
           </Card>
-
         </GridItem>
 
         <GridItem xs={12} sm={12} md={4}>
-          
           <Card profile>
-
             <CardAvatar profile>
               <a href="#pablo" onClick={(e) => e.preventDefault()}>
                 <img src={CeoAvatar} alt="..." />
@@ -187,7 +181,9 @@ function AdminProfile() {
             <CardBody profile>
               <h6 className={classes.cardCategory}>CEO / CO-FOUNDER</h6>
               <h4 className={classes.cardTitle}>Prof. Tan Wee Kek</h4>
-              <Primary className={classes.cardTitle}><b>Super Admin</b></Primary>
+              <Primary className={classes.cardTitle}>
+                <b>Super Admin</b>
+              </Primary>
               <br></br>
 
               <strong>Description:</strong>
@@ -206,12 +202,9 @@ function AdminProfile() {
                 Follow
               </Button> */}
             </CardBody>
-
           </Card>
-
         </GridItem>
       </GridContainer>
-
     </div>
   );
 }
