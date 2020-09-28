@@ -2,6 +2,7 @@ import React from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
+import InputAdornment from "@material-ui/core/InputAdornment";
 // layout for this page
 import Admin from "layouts/Admin.js";
 // core components
@@ -36,12 +37,12 @@ const styles = {
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: "3px",
     textDecoration: "none",
-  }
+  },
 };
 
 const useStyles = makeStyles(styles);
 
-function AdminProfile() {
+function ChangePassword() {
   const classes = useStyles();
   return (
     <div>
@@ -49,27 +50,16 @@ function AdminProfile() {
         <GridItem xs={12} sm={12} md={8}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Edit Profile</h4>
-              <p className={classes.cardCategoryWhite}>Complete your profile</p>
+              <h4 className={classes.cardTitleWhite}>Change password</h4>
+              <p className={classes.cardCategoryWhite}>Enter your new password</p>
             </CardHeader>
             <CardBody>
               <GridContainer>
-                {/* First name */}
+                {/* Current password */}
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
-                    labelText="First Name"
-                    id="first-name"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
-                </GridItem>
-
-                {/* Last name */}
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Last Name"
-                    id="last-name"
+                    labelText="Enter your current password"
+                    id="current-password"
                     formControlProps={{
                       fullWidth: true,
                     }}
@@ -77,108 +67,53 @@ function AdminProfile() {
                 </GridItem>
               </GridContainer>
 
-              {/* Username & email */}
+              {/* New password */}
               <GridContainer>
-                <GridItem xs={12} sm={12} md={5}>
-                  <CustomInput
-                    labelText="Username"
-                    id="username"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
-                </GridItem>
-
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
-                    labelText="Email address"
-                    id="email-address"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={5}>
-                  <CustomInput
-                    labelText="Password"
-                    id="password"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-
-              {/* // Location container with "City, Country, Postal Code"
-              <GridContainer>
-                
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="City"
-                    id="city"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
-                </GridItem>
-                
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Country"
-                    id="country"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
-                </GridItem>
-                
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Postal Code"
-                    id="postal-code"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
-                </GridItem>
-
-              </GridContainer> */}
-
-              {/* Profile description (Set by super admin?)
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <InputLabel style={{ color: "#AAAAAA" }}>About me</InputLabel>
-                  <CustomInput
-                    labelText="Random profile description but not needed for our project"
-                    id="about-me"
+                    labelText="Enter your new password"
+                    id="new-password"
                     formControlProps={{
                       fullWidth: true,
                     }}
                     inputProps={{
-                      multiline: true,
-                      rows: 5,
+                      type: "password",
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <LockIcon className={classes.inputIconsColor}/>
+                        </InputAdornment>
+                      ),
+                      autoComplete: "off"
                     }}
                   />
                 </GridItem>
-              </GridContainer> */}
+              </GridContainer>
+              
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={6}>
+                  <CustomInput
+                    labelText="Re-enter your new password"
+                    id="new-password"
+                    formControlProps={{
+                      fullWidth: true,
+                    }}
+                  />
+                </GridItem>
+              </GridContainer>
             </CardBody>
 
             <CardFooter>
-            <Button color="primary">Update Profile</Button>
-              <Button color="primary">
-                <Link href="/admin/user-profile-password">
-                  Change password
-                </Link>
-              </Button>
+              <Button color="primary">Update Password</Button>
             </CardFooter>
+
           </Card>
+
         </GridItem>
 
         <GridItem xs={12} sm={12} md={4}>
+          
           <Card profile>
+
             <CardAvatar profile>
               <a href="#pablo" onClick={(e) => e.preventDefault()}>
                 <img src={CeoAvatar} alt="..." />
@@ -188,9 +123,7 @@ function AdminProfile() {
             <CardBody profile>
               <h6 className={classes.cardCategory}>CEO / CO-FOUNDER</h6>
               <h4 className={classes.cardTitle}>Prof. Tan Wee Kek</h4>
-              <Primary className={classes.cardTitle}>
-                <b>Super Admin</b>
-              </Primary>
+              <Primary className={classes.cardTitle}><b>Super Admin</b></Primary>
               <br></br>
 
               <strong>Description:</strong>
@@ -209,13 +142,16 @@ function AdminProfile() {
                 Follow
               </Button> */}
             </CardBody>
+
           </Card>
+
         </GridItem>
       </GridContainer>
+
     </div>
   );
 }
 
-AdminProfile.layout = Admin;
+ChangePassword.layout = Admin;
 
-export default AdminProfile;
+export default ChangePassword;

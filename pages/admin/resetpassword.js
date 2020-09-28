@@ -23,7 +23,7 @@ import image from "assets/img/login-background.jpg";
 
 const useStyles = makeStyles(styles);
 
-export default function LoginPage(props) {
+function ResetPassword(props) {
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
   setTimeout(function() {
     setCardAnimation("");
@@ -58,7 +58,7 @@ export default function LoginPage(props) {
                   <p className={classes.divider}>Enter your email</p>
                   <CardBody>
                     <CustomInput
-                      labelText="Email/Username"
+                      labelText="Email"
                       id="email"
                       formControlProps={{
                         fullWidth: true
@@ -87,3 +87,5 @@ export default function LoginPage(props) {
     </div>
   );
 }
+
+export default ResetPassword;
