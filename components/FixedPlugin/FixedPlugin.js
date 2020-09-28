@@ -149,6 +149,8 @@ export default function FixedPlugin(props) {
             </a>
           </li>
 
+
+          {/* // Sidebar unnecessary buttons
           <li className="button-container">
             <div className="button-container">
               <Button
@@ -182,7 +184,8 @@ export default function FixedPlugin(props) {
             >
               Documentation
             </Button>
-          </li>
+          </li> */}
+
           <li className="adjustments-line" />
         </ul>
       </div>

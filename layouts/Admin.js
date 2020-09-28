@@ -16,7 +16,10 @@ import routes from "routes.js";
 import styles from "assets/jss/nextjs-material-dashboard/layouts/adminStyle.js";
 
 import bgImage from "assets/img/sidebar-2.jpg";
-import logo from "assets/img/reactlogo.png";
+import openjiologo from "assets/img/love-hand.svg";
+// Second logo for testing below
+import openjiologo2 from "assets/img/raise-hand.svg";
+
 
 let ps;
 
@@ -80,8 +83,8 @@ export default function Admin({ children, ...rest }) {
     <div className={classes.wrapper}>
       <Sidebar
         routes={routes}
-        logoText={"Creative Tim"}
-        logo={logo}
+        logoText={"Open Jio"}
+        logo={openjiologo}
         image={image}
         handleDrawerToggle={handleDrawerToggle}
         open={mobileOpen}

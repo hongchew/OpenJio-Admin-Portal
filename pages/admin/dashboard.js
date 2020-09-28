@@ -14,7 +14,9 @@ import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import AccessTime from "@material-ui/icons/AccessTime";
 import Accessibility from "@material-ui/icons/Accessibility";
 import BugReport from "@material-ui/icons/BugReport";
+import CustomerSupport from "@material-ui/icons/LiveHelp"
 import Code from "@material-ui/icons/Code";
+import ComplaintIcon from "@material-ui/icons/Report";
 import Cloud from "@material-ui/icons/Cloud";
 // layout for this page
 import Admin from "layouts/Admin.js";
@@ -246,7 +248,7 @@ function Dashboard() {
             tabs={[
               {
                 tabName: "Support Tickets",
-                tabIcon: BugReport,
+                tabIcon: CustomerSupport,
                 tabContent: (
                   <Tasks
                     checkedIndexes={[0, 3]}
@@ -257,7 +259,7 @@ function Dashboard() {
               },
               {
                 tabName: "Complaints",
-                tabIcon: Code,
+                tabIcon: ComplaintIcon,
                 tabContent: (
                   <Tasks
                     checkedIndexes={[0]}

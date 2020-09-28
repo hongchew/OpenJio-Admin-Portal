@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
+import Primary from "components/Typography/Primary.js";
 // core components
 import styles from "assets/jss/nextjs-material-dashboard/components/footerStyle.js";
 
@@ -14,7 +15,10 @@ export default function Footer(props) {
   const classes = useStyles();
   return (
     <footer className={classes.footer}>
+
       <div className={classes.container}>
+
+        {/* // Footer Navigation
         <div className={classes.left}>
           <List className={classes.list}>
             <ListItem className={classes.inlineBlock}>
@@ -38,7 +42,16 @@ export default function Footer(props) {
               </a>
             </ListItem>
           </List>
-        </div>
+        </div> */}
+
+        <p className={classes.right}>
+          <span>
+            &copy; {1900 + new Date().getYear()}{" "}
+              Open Jio, making the world a better place
+          </span>
+        </p>
+
+        {/* // Old Code
         <p className={classes.right}>
           <span>
             &copy; {1900 + new Date().getYear()}{" "}
@@ -51,7 +64,7 @@ export default function Footer(props) {
             </a>
             , made with love for a better web
           </span>
-        </p>
+        </p> */}
       </div>
     </footer>
   );
