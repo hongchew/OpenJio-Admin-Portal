@@ -24,6 +24,33 @@ import image from "assets/img/login-background.jpg";
 const useStyles = makeStyles(styles);
 
 function ResetPassword(props) {
+
+  //state
+  const [email, setEmail] = useState()
+
+  const updateEmail = e => {
+    e.preventDefault()
+    const email = e.target.value
+    setEmail(email)
+    console.log('Input entered is' + email)
+  }
+
+  //fetch resetPassword API
+  const handleReset = e => {
+    e.preventDefault()
+    fetch(url , {
+      method: "POST",
+      body: { 
+        'email' : email
+      }
+    }).then(data => {
+      // When successful, then logic
+      console.log('Password reset attempted')
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
   setTimeout(function() {
     setCardAnimation("");
@@ -58,6 +85,9 @@ function ResetPassword(props) {
                   <p className={classes.divider}>Enter your email</p>
                   <CardBody>
                     <CustomInput
+                      name="email"
+                      value={email}
+                      onChange={updateEmail}
                       labelText="Email"
                       id="email"
                       formControlProps={{
@@ -74,7 +104,7 @@ function ResetPassword(props) {
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
-                    <Button simple color="primary" size="lg">
+                    <Button simple color="primary" size="lg" onClick={handleReset}>
                       Reset
                     </Button>
                   </CardFooter>

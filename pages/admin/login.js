@@ -27,19 +27,20 @@ import image from "assets/img/login-background.jpg";
 const useStyles = makeStyles(styles);
 
 function LoginPage(props) {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
 
   const updateEmail = e => {
-    e.preventDefault();
-    const email = e.target.value;
-    setEmail(email);
+    e.preventDefault()
+    const email = e.target.value
+    setEmail(email)
+    console.log('Input entered is' + email)
   }
 
   const updatePassword = e => {
-    e.preventDefault();
-    const password = e.target.value;
-    setPassword(password);
+    e.preventDefault()
+    const password = e.target.value
+    setPassword(password)
   }
 
   //fetch adminLogin API
@@ -47,9 +48,13 @@ function LoginPage(props) {
     e.preventDefault()
     fetch(url , {
       method: "POST",
-      body: creds
+      body: { 
+        'email' : email,
+        'password': password
+      }
     }).then(data => {
       // When successful, then logic
+      console.log('Login attempted')
       console.log(data)
     }).catch(err => {
       // When fail
