@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from 'axios';
+import Link from "next/link";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -16,15 +18,13 @@ import CardBody from "components/logincomponents/Card/CardBody.js";
 import CardHeader from "components/logincomponents/Card/CardHeader.js";
 import CardFooter from "components/logincomponents/Card/CardFooter.js";
 import CustomInput from "components/logincomponents/CustomInput/CustomInput.js";
-//Routing of CardBody
-import Link from "next/link";
 
 import styles from "assets/jss/nextjs-material-kit/pages/loginPage.js";
 //import background image
 import image from "assets/img/login-background.jpg";
 
 
-const useStyles = makeStyles(styles);
+const useStyles = makeStyles(styles)
 
 function LoginPage(props) {
   const [email, setEmail] = useState()
@@ -34,7 +34,7 @@ function LoginPage(props) {
     e.preventDefault()
     const email = e.target.value
     setEmail(email)
-    console.log('Input entered is' + email)
+    console.log('Input entered is ' + email)
   }
 
   const updatePassword = e => {
@@ -43,23 +43,34 @@ function LoginPage(props) {
     setPassword(password)
   }
 
-  //fetch adminLogin API
-  const handleLogin = e => {
-    e.preventDefault()
-    fetch(url , {
-      method: "POST",
-      body: { 
-        'email' : email,
-        'password': password
+  /*
+  //Initial API call method
+  const handleLogin2 = e => {
+    axios({
+      method: 'post',
+      url: 'http://localhost:3000/admins/adminLogin',
+      data: {
+        email: email,
+        password: password
       }
-    }).then(data => {
-      // When successful, then logic
-      console.log('Login attempted')
-      console.log(data)
-    }).catch(err => {
-      // When fail
-      console.error(err)
     })
+    .then((response) => {
+      console.log(response);
+    }, (error) => {
+      console.log(error);
+    });
+  }*/
+
+  async function handleLogin() {
+    try {
+      const response = await axios.post('http://localhost:3000/admins/adminLogin', {
+        email: email,
+        password: password
+      })
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
@@ -138,8 +149,8 @@ function LoginPage(props) {
                       <a>Login</a>
                     </Button>
                     <Button simple color="primary" size="lg">
-                      <Link href="/admin/resetpassword">
-                        <a>Forget Password</a>
+                      <Link href="resetpassword">
+                        <a>Reset Password</a>
                       </Link>
                     </Button>
                   </CardFooter>

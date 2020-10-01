@@ -80,7 +80,7 @@ function ChangePassword() {
                       type: "password",
                       endAdornment: (
                         <InputAdornment position="end">
-                          <LockIcon className={classes.inputIconsColor}/>
+                          {/* <LockIcon className={classes.inputIconsColor}/> */}
                         </InputAdornment>
                       ),
                       autoComplete: "off"
