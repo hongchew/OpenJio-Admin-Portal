@@ -1,153 +1,136 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+// @material-ui/core components
+import { makeStyles } from "@material-ui/core/styles";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Icon from "@material-ui/core/Icon";
+// @material-ui/icons
+import Email from "@material-ui/icons/Email";
+import People from "@material-ui/icons/People";
+// core components
+import Header from "components/logincomponents/Header/Header.js";
+import HeaderLinks from "components/logincomponents/Header/HeaderLinks.js";
+import GridContainer from "components/logincomponents/Grid/GridContainer.js";
+import GridItem from "components/logincomponents/Grid/GridItem.js";
+import Button from "components/logincomponents/CustomButtons/Button.js";
+import Card from "components/logincomponents/Card/Card.js";
+import CardBody from "components/logincomponents/Card/CardBody.js";
+import CardHeader from "components/logincomponents/Card/CardHeader.js";
+import CardFooter from "components/logincomponents/Card/CardFooter.js";
+import CustomInput from "components/logincomponents/CustomInput/CustomInput.js";
 
-import { userActions } from "../../actions/userActions";
+import styles from "assets/jss/nextjs-material-kit/pages/loginPage.js";
 
-class RegisterPage extends React.Component {
-  constructor(props) {
-    super(props);
+import image from "assets/img/bg7.jpg";
+import Axios from "axios";
 
-    this.state = {
-      user: {
-        name: "",
-        mobileNumber: "",
-        email: "",
-        address: "",
-        password: "",
-      },
-      submitted: false,
-    };
+const useStyles = makeStyles(styles);
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+export default function RegisterPage(props) {
+  const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
+  setTimeout(function () {
+    setCardAnimation("");
+  }, 700);
+  const classes = useStyles();
+  const { ...rest } = props;
 
-  handleChange(event) {
-    const { name, value } = event.target;
-    const { user } = this.state;
-    this.setState({
-      user: {
-        ...user,
-        [name]: value,
-      },
-    });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-
-    this.setState({ submitted: true });
-    const { user } = this.state;
-    if (
-      user.name &&
-      user.mobileNumber &&
-      user.email &&
-      user.address &&
-      user.password
-    ) {
-      this.props.register(user);
+  async function register() {
+    try {
+      const response = await Axios.post(
+        "http://localhost:3000/admins/register",
+        {
+          name: name,
+          email: email,
+        }
+      );
     }
   }
 
-  render() {
-    const { registering } = this.props;
-    const { user, submitted } = this.state;
-    return (
-      <div className="col-md-6 col-md-offset-3">
-        <h2>Register</h2>
-        <form name="form" onSubmit={this.handleSubmit}>
-          <div
-            className={
-              "form-group" + (submitted && !user.name ? " has-error" : "")
-            }
-          >
-            <label htmlFor="firstName">Name</label>
-            <input
-              type="text"
-              className="form-control"
-              name="firstName"
-              value={user.name}
-              onChange={this.handleChange}
-            />
-            {submitted && !user.firstName && (
-              <div className="help-block">First Name is required</div>
-            )}
-          </div>
-          <div
-            className={
-              "form-group" + (submitted && !user.lastName ? " has-error" : "")
-            }
-          >
-            <label htmlFor="lastName">Last Name</label>
-            <input
-              type="text"
-              className="form-control"
-              name="lastName"
-              value={user.lastName}
-              onChange={this.handleChange}
-            />
-            {submitted && !user.lastName && (
-              <div className="help-block">Last Name is required</div>
-            )}
-          </div>
-          <div
-            className={
-              "form-group" + (submitted && !user.username ? " has-error" : "")
-            }
-          >
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              className="form-control"
-              name="username"
-              value={user.username}
-              onChange={this.handleChange}
-            />
-            {submitted && !user.username && (
-              <div className="help-block">Username is required</div>
-            )}
-          </div>
-          <div
-            className={
-              "form-group" + (submitted && !user.password ? " has-error" : "")
-            }
-          >
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              className="form-control"
-              name="password"
-              value={user.password}
-              onChange={this.handleChange}
-            />
-            {submitted && !user.password && (
-              <div className="help-block">Password is required</div>
-            )}
-          </div>
-          <div className="form-group">
-            <button className="btn btn-primary">Register</button>
-            {registering && (
-              <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-            )}
-            <Link to="/login" className="btn btn-link">
-              Cancel
-            </Link>
-          </div>
-        </form>
+  return (
+    <div>
+      <Header
+        absolute
+        color="transparent"
+        brand="OpenJio Admin Portal"
+        rightLinks={<HeaderLinks />}
+        {...rest}
+      />
+      <div
+        className={classes.pageHeader}
+        style={{
+          backgroundImage: "url(" + image + ")",
+          backgroundSize: "cover",
+          backgroundPosition: "top center",
+        }}
+      >
+        <div className={classes.container}>
+          <GridContainer justify="center">
+            <GridItem xs={12} sm={6} md={4}>
+              <Card className={classes[cardAnimaton]}>
+                <form className={classes.form}>
+                  <CardHeader color="primary" className={classes.cardHeader}>
+                    <h4>Register</h4>
+                  </CardHeader>
+                  <CardBody>
+                    <CustomInput
+                      labelText="Name"
+                      id="name"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        type: "text",
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <People className={classes.inputIconsColor} />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                    <CustomInput
+                      labelText="Email"
+                      id="email"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        type: "email",
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <Email className={classes.inputIconsColor} />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                    <CustomInput
+                      labelText="Password"
+                      id="pass"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        type: "password",
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <Icon className={classes.inputIconsColor}>
+                              lock_outline
+                            </Icon>
+                          </InputAdornment>
+                        ),
+                        autoComplete: "off",
+                      }}
+                    />
+                  </CardBody>
+                  <CardFooter className={classes.cardFooter}>
+                    <Button simple color="primary" size="lg">
+                      Register
+                    </Button>
+                  </CardFooter>
+                </form>
+              </Card>
+            </GridItem>
+          </GridContainer>
+        </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-function mapState(state) {
-  const { registering } = state.registration;
-  return { registering };
-}
-
-const actionCreators = {
-  register: userActions.register,
-};
-
-// const connectedRegisterPage = connect(mapState, actionCreators)(RegisterPage);
-export { RegisterPage };

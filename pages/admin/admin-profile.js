@@ -36,7 +36,7 @@ const styles = {
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: "3px",
     textDecoration: "none",
-  }
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -49,8 +49,7 @@ function AdminProfile() {
         <GridItem xs={12} sm={12} md={8}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Edit Profile</h4>
-              <p className={classes.cardCategoryWhite}>Complete your profile</p>
+              <h4 className={classes.cardTitleWhite}>Profile</h4>
             </CardHeader>
             <CardBody>
               <GridContainer>
@@ -167,11 +166,9 @@ function AdminProfile() {
             </CardBody>
 
             <CardFooter>
-            <Button color="primary">Update Profile</Button>
+              <Button color="primary">Update Profile</Button>
               <Button color="primary">
-                <Link href="/admin/user-profile-password">
-                  Change password
-                </Link>
+                <Link href="/admin/user-profile-password">Change password</Link>
               </Button>
             </CardFooter>
           </Card>
