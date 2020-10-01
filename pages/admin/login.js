@@ -19,6 +19,7 @@ import CardHeader from "components/logincomponents/Card/CardHeader.js";
 import CardFooter from "components/logincomponents/Card/CardFooter.js";
 import CustomInput from "components/logincomponents/CustomInput/CustomInput.js";
 
+//CSS styling import
 import styles from "assets/jss/nextjs-material-kit/pages/loginPage.js";
 //import background image
 import image from "assets/img/login-background.jpg";
@@ -43,31 +44,15 @@ function LoginPage(props) {
     setPassword(password)
   }
 
-  
-  //Initial API call method
-  const handleLogin2 = e => {
-    axios({
-      method: 'post',
-      url: 'http://localhost:3000/admins/adminLogin',
-      data: {
-        email: email,
-        password: password
-      }
-    })
-    .then((response) => {
-      console.log(response);
-    }, (error) => {
-      console.log(error);
-    });
-  }
-
+  //API call for login authentication
   async function handleLogin() {
     try {
       const response = await axios.post('http://localhost:3000/admins/adminLogin', {
         email: email,
         password: password
       })
-      console.log(response);
+      console.log(response.body);
+      
     } catch (error) {
       console.error(error);
     }

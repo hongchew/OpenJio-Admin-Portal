@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from 'axios'
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -35,20 +36,17 @@ function ResetPassword(props) {
     console.log('Input entered is' + email)
   }
 
-  //fetch resetPassword API
-  const handleReset = e => {
-    e.preventDefault()
-    fetch(url , {
-      method: "POST",
-      body: { 
-        'email' : email
-      }
-    }).then(data => {
-      // When successful, then logic
-      console.log('Password reset attempted')
-    }).catch(err => {
-      console.error(err)
-    })
+  //Password reset API call
+  async function handleReset() {
+    try {
+      const response = await axios.put('http://localhost:3000/admins/reset-password', {
+        email: email
+      })
+      console.log('password reset successful')
+      console.log(response)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
