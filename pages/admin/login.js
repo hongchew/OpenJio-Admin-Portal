@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import Link from "next/link";
+import { connect } from "react-redux"
+import { setInfo } from "../../redux/action/main"
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -27,6 +29,15 @@ import image from "assets/img/login-background.jpg";
 
 const useStyles = makeStyles(styles)
 
+const mapStateToProps = state => ({
+  userInfo: state
+})
+
+const mapDispatchToProps = {
+  setInfo: setInfo
+}
+
+//start of function
 function LoginPage(props) {
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
@@ -47,11 +58,12 @@ function LoginPage(props) {
   //API call for login authentication
   async function handleLogin() {
     try {
+      console.log('fetching the login API')
       const response = await axios.post('http://localhost:3000/admins/login', {
         email: email,
         password: password
       })
-      console.log(response.body);
+      console.log('response.body is ' + response.body);
       
     } catch (error) {
       console.error(error);
@@ -149,4 +161,4 @@ function LoginPage(props) {
   );
 }
 
-export default LoginPage;
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
