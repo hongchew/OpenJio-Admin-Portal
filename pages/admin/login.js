@@ -42,6 +42,12 @@ const mapDispatchToProps = {
 
 // To enable toast notifications
 toast.configure()
+const notify = () => {
+  toast.error('Invalid user!', {
+    position: toast.POSITION.TOP_CENTER,
+    autoClose: 3000
+  })
+}
 
 //start of function
 function LoginPage(props) {
@@ -63,13 +69,6 @@ function LoginPage(props) {
     setPassword(password)
   }
 
-  const notify = () => {
-    toast.error('Invalid user!', {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 3000
-    })
-  }
-
   //API call for login authentication
   async function handleLogin() {
     try {
@@ -82,7 +81,6 @@ function LoginPage(props) {
       console.log(response.data.name)
       setInfo(response.data)
       Router.push('dashboard')
-      //console.log('Redux state:')
     } catch (error) {
       notify()
       console.error(error);

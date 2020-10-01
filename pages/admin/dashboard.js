@@ -1,5 +1,9 @@
-import React from "react";
-// react plugin for creating charts
+import React, { useState, useEffect } from "react";
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+//redux app state management
+import { connect } from "react-redux"
+import { setInfo } from "../../redux/action/main"
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
@@ -23,8 +27,29 @@ import styles from "assets/jss/nextjs-material-dashboard/views/dashboardStyle.js
 
 const useStyles = makeStyles(styles);
 
+const mapStateToProps = state => ({
+  userInfo: state.main
+})
+const mapDispatchToProps = {
+  setInfo: setInfo
+}
+
+toast.configure()
+const welcome = () => {
+  toast.success('Welcome back ${}', {
+    position: toast.POSITION.TOP_CENTER,
+    autoClose: 3000
+  })
+}
+
 function Dashboard() {
   const classes = useStyles();
+
+  //For welcome notification when page first renders
+  useEffect(() => {
+    welcome()
+  }, []);
+
   return (
     <div>
       <GridContainer>
@@ -256,4 +281,4 @@ function Dashboard() {
 
 Dashboard.layout = Admin;
 
-export default Dashboard;
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
