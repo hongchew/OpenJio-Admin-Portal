@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import Link from "next/link";
+import Router from "next/router"
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+//redux app state management
+import { connect } from "react-redux"
+import { setInfo } from "../../redux/action/main"
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -27,9 +33,22 @@ import image from "assets/img/login-background.jpg";
 
 const useStyles = makeStyles(styles)
 
+const mapStateToProps = state => ({
+  userInfo: state.main
+})
+const mapDispatchToProps = {
+  setInfo: setInfo
+}
+
+// To enable toast notifications
+toast.configure()
+
+//start of function
 function LoginPage(props) {
+
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
+  const {setInfo} = props
 
   const updateEmail = e => {
     e.preventDefault()
@@ -44,16 +63,28 @@ function LoginPage(props) {
     setPassword(password)
   }
 
+  const notify = () => {
+    toast.error('Invalid user!', {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000
+    })
+  }
+
   //API call for login authentication
   async function handleLogin() {
     try {
+      console.log('fetching the login API')
       const response = await axios.post('http://localhost:3000/admins/login', {
         email: email,
         password: password
       })
-      console.log(response.body);
-      
+      console.log(response.data)
+      console.log(response.data.name)
+      setInfo(response.data)
+      Router.push('dashboard')
+      //console.log('Redux state:')
     } catch (error) {
+      notify()
       console.error(error);
     }
   }
@@ -149,4 +180,4 @@ function LoginPage(props) {
   );
 }
 
-export default LoginPage;
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

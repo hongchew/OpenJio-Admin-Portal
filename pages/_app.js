@@ -3,6 +3,9 @@ import ReactDOM from "react-dom";
 import App from "next/app";
 import Head from "next/head";
 import Router from "next/router";
+import { Provider } from "react-redux"
+import withRedux from "next-redux-wrapper"
+import store from "../redux/store"
 
 import PageChange from "components/PageChange/PageChange.js";
 
@@ -25,7 +28,9 @@ Router.events.on("routeChangeError", () => {
   document.body.classList.remove("body-page-transition");
 });
 
-export default class MyApp extends App {
+const makeStore = () => store
+
+class MyApp extends App {
   componentDidMount() {
     let comment = document.createComment(`
 
@@ -55,10 +60,14 @@ export default class MyApp extends App {
           />
           <title>OpenJio Admin Portal</title>
         </Head>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <Provider store={store}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </Provider>
       </>
     );
   }
 }
+
+export default withRedux(makeStore)(MyApp)
