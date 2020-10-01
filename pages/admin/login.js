@@ -43,7 +43,7 @@ function LoginPage(props) {
     setPassword(password)
   }
 
-  /*
+  
   //Initial API call method
   const handleLogin2 = e => {
     axios({
@@ -59,7 +59,7 @@ function LoginPage(props) {
     }, (error) => {
       console.log(error);
     });
-  }*/
+  }
 
   async function handleLogin() {
     try {
