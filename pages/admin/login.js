@@ -47,7 +47,7 @@ function LoginPage(props) {
   //API call for login authentication
   async function handleLogin() {
     try {
-      const response = await axios.post('http://localhost:3000/admins/adminLogin', {
+      const response = await axios.post('http://localhost:3000/admins/login', {
         email: email,
         password: password
       })
