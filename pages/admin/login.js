@@ -48,7 +48,7 @@ function LoginPage(props) {
   const handleLogin2 = e => {
     axios({
       method: 'post',
-      url: 'http://localhost:3000/admins/adminLogin',
+      url: 'http://localhost:3000/admins/login',
       data: {
         email: email,
         password: password
@@ -63,7 +63,7 @@ function LoginPage(props) {
 
   async function handleLogin() {
     try {
-      const response = await axios.post('http://localhost:3000/admins/adminLogin', {
+      const response = await axios.post('http://localhost:3000/admins/login', {
         email: email,
         password: password
       })
