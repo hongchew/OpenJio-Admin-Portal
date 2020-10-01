@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import Link from "next/link";
+//redux app state management
 import { connect } from "react-redux"
 import { setInfo } from "../../redux/action/main"
 // @material-ui/core components
@@ -30,7 +31,7 @@ import image from "assets/img/login-background.jpg";
 const useStyles = makeStyles(styles)
 
 const mapStateToProps = state => ({
-  userInfo: state
+  userInfo: state.main
 })
 
 const mapDispatchToProps = {
@@ -39,8 +40,10 @@ const mapDispatchToProps = {
 
 //start of function
 function LoginPage(props) {
+
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
+  const {setInfo} = props
 
   const updateEmail = e => {
     e.preventDefault()
@@ -63,8 +66,10 @@ function LoginPage(props) {
         email: email,
         password: password
       })
-      console.log('response.body is ' + response.body);
-      
+      console.log(response.data)
+      console.log(response.data.name)
+      setInfo(response.data)
+      //console.log('Redux state:')
     } catch (error) {
       console.error(error);
     }

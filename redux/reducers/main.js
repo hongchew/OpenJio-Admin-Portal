@@ -1,15 +1,16 @@
 import * as types from "../types"
 
 const main = (state = {
-    userInfo: {
-        name: "superAdmin"
-    },
+    name: "guest",
 }, action) => {
     switch(action.type) {
-        case types.SET_NAME:
-            return { ...state, userInfo: {
-                name: action.payload
-            }}
+        case types.SET_USER:
+            return {
+                adminId: action.payload.adminId,
+                name: action.payload.name,
+                email: action.payload.email,
+                adminType: action.payload.adminType
+            }
         default:
             return {...state}
     }

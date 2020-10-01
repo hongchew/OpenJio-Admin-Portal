@@ -1,6 +1,6 @@
 import * as types from "../types"
 
-export const setInfo = () => ({
-    type: types.SET_NAME,
-    payload: name
+export const setInfo = (user) => ({
+    type: types.SET_USER,
+    payload: user
 })

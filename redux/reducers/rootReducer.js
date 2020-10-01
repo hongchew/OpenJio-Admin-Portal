@@ -5,7 +5,7 @@ import main from "./main"
 
 const rootReducer = combineReducers({
     main: main
-    //add more as there are more reducers
+    //add more if there are more reducers
 })
 
 export default rootReducer
