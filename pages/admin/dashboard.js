@@ -1,53 +1,58 @@
-import React, { useState, useEffect } from "react";
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import React, {useState, useEffect} from 'react';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 //redux app state management
-import { connect } from "react-redux"
-import { setInfo } from "../../redux/action/main"
+import {connect} from 'react-redux';
+import {setInfo} from '../../redux/action/main';
 // @material-ui/core
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from '@material-ui/core/styles';
 // @material-ui/icons
-import CustomerSupport from "@material-ui/icons/LiveHelp";
-import ComplaintIcon from "@material-ui/icons/Report";
+import CustomerSupport from '@material-ui/icons/LiveHelp';
+import ComplaintIcon from '@material-ui/icons/Report';
 // layout for this page
-import Admin from "layouts/Admin.js";
+import Admin from 'layouts/Admin.js';
 // core components
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import Table from "components/Table/Table.js";
-import Tasks from "components/Tasks/Tasks.js";
-import CustomTabs from "components/CustomTabs/CustomTabs.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
+import GridItem from 'components/Grid/GridItem.js';
+import GridContainer from 'components/Grid/GridContainer.js';
+import Table from 'components/Table/Table.js';
+import Tasks from 'components/Tasks/Tasks.js';
+import CustomTabs from 'components/CustomTabs/CustomTabs.js';
+import Card from 'components/Card/Card.js';
+import CardHeader from 'components/Card/CardHeader.js';
+import CardBody from 'components/Card/CardBody.js';
 
-import { supportTickets, complaints } from "variables/general.js";
+// import {store} from 'redux/store';
 
-import styles from "assets/jss/nextjs-material-dashboard/views/dashboardStyle.js";
+import {supportTickets, complaints} from 'variables/general.js';
+
+import styles from 'assets/jss/nextjs-material-dashboard/views/dashboardStyle.js';
 
 const useStyles = makeStyles(styles);
 
-const mapStateToProps = state => ({
-  userInfo: state.main
-})
-const mapDispatchToProps = {
-  setInfo: setInfo
-}
+const mapStateToProps = (state) => ({
+  userInfo: state.main,
+});
 
-toast.configure()
+// const state = store.getState();
+
+const mapDispatchToProps = {
+  setInfo: setInfo,
+};
+
+toast.configure();
 const welcome = () => {
   toast.success('Welcome back ${}', {
     position: toast.POSITION.TOP_CENTER,
-    autoClose: 3000
-  })
-}
+    autoClose: 3000,
+  });
+};
 
 function Dashboard() {
   const classes = useStyles();
 
   //For welcome notification when page first renders
   useEffect(() => {
-    welcome()
+    welcome();
   }, []);
 
   return (
@@ -61,14 +66,14 @@ function Dashboard() {
             <CardBody>
               <Table
                 tableHeaderColor="primary"
-                tableHead={["Name", "Admin Type"]}
+                tableHead={['Name', 'Admin Type']}
                 tableData={[
-                  ["Sylvest", "Super Admin"],
-                  ["Cheng Yang", "Admin"],
-                  ["Yizhao", "Admin"],
-                  ["Hong Chew", "Admin"],
-                  ["Ying Hui", "Admin"],
-                  ["Shu Qing", "Admin"],
+                  ['Sylvest', 'Super Admin'],
+                  ['Cheng Yang', 'Admin'],
+                  ['Yizhao', 'Admin'],
+                  ['Hong Chew', 'Admin'],
+                  ['Ying Hui', 'Admin'],
+                  ['Shu Qing', 'Admin'],
                 ]}
               />
             </CardBody>
@@ -82,13 +87,13 @@ function Dashboard() {
             <CardBody>
               <Table
                 tableHeaderColor="danger"
-                tableHead={["Name", "Strike Count"]}
+                tableHead={['Name', 'Strike Count']}
                 tableData={[
-                  ["User A", "2"],
-                  ["User B", "3"],
-                  ["User C", "1"],
-                  ["User D", "2"],
-                  ["User E", "3"],
+                  ['User A', '2'],
+                  ['User B', '3'],
+                  ['User C', '1'],
+                  ['User D', '2'],
+                  ['User E', '3'],
                 ]}
               />
             </CardBody>
@@ -250,7 +255,7 @@ function Dashboard() {
             headerColor="dark"
             tabs={[
               {
-                tabName: "Support Tickets",
+                tabName: 'Support Tickets',
                 tabIcon: CustomerSupport,
                 tabContent: (
                   <Tasks
@@ -261,7 +266,7 @@ function Dashboard() {
                 ),
               },
               {
-                tabName: "Complaints",
+                tabName: 'Complaints',
                 tabIcon: ComplaintIcon,
                 tabContent: (
                   <Tasks
