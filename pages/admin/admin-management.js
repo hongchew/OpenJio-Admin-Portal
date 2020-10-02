@@ -186,7 +186,7 @@ function AdminManagement() {
   return (
     <div>
       {/* Admin management panel */}
-      <GridContainer>
+      <GridContainer justify="center">
         <GridItem xs={11} sm={11} md={11}>
           <Card>
             <CardHeader color="primary">
@@ -225,6 +225,7 @@ function AdminManagement() {
           </Card>
         </GridItem>
       </GridContainer>
+
     </div>
   );
 }
