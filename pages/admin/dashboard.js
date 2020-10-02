@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css'
 //redux app state management
 import { connect } from "react-redux"
 import { setInfo } from "../../redux/action/main"
+//import { store } from "../../redux/store"
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
@@ -30,16 +31,10 @@ const useStyles = makeStyles(styles);
 const mapStateToProps = state => ({
   userInfo: state.main
 })
+//console.log('userInfo saved is: ' + userInfo)
+
 const mapDispatchToProps = {
   setInfo: setInfo
-}
-
-toast.configure()
-const welcome = () => {
-  toast.success('Welcome back ${}', {
-    position: toast.POSITION.TOP_CENTER,
-    autoClose: 3000
-  })
 }
 
 function Dashboard() {
@@ -49,6 +44,14 @@ function Dashboard() {
   useEffect(() => {
     welcome()
   }, []);
+  
+  toast.configure()
+  const welcome = () => {
+    toast.success(`Welcome back ${'asd'}`, {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000
+    })
+  }
 
   return (
     <div>
