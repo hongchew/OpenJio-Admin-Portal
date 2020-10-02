@@ -20,6 +20,7 @@ import openjiologo from "assets/img/love-hand.svg";
 // Second logo for testing below
 import openjiologo2 from "assets/img/raise-hand.svg";
 
+let ps;
 
 const useStyles = makeStyles(styles);
 
