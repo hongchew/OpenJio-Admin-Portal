@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import axios from 'axios';
+import Link from "next/link";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // layout for this page
@@ -45,20 +47,37 @@ const useStyles = makeStyles(styles);
 
 function TableList() {
   const classes = useStyles();
+
+  //For welcome notification when page first renders
+  useEffect(() => {
+    getAllUsers()
+  }, []);
+
+  //API call to retrieve a list of blacklisted users
+  async const allUsers= () => {
+    try {
+        console.log('fetching all users')
+        const response = await axios.get('http://localhost:3000/users/')
+        console.log(response)
+      } catch (error) {
+        console.error(error);
+      }
+  }
+
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Simple Table</h4>
+            <h4 className={classes.cardTitleWhite}>Blacklist</h4>
             <p className={classes.cardCategoryWhite}>
-              Here is a subtitle for this table
+              Here is a list of all the blacklisted users
             </p>
           </CardHeader>
           <CardBody>
-            <Table
+            <Table value={allUsers}
               tableHeaderColor="primary"
-              tableHead={["Name", "Country", "City", "Salary"]}
+              tableHead={["Name", "Email", "Mobile Number", ""]}
               tableData={[
                 ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
                 ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
@@ -66,44 +85,6 @@ function TableList() {
                 ["Philip Chaney", "Korea, South", "Overland Park", "$38,735"],
                 ["Doris Greene", "Malawi", "Feldkirchen in Kärnten", "$63,542"],
                 ["Mason Porter", "Chile", "Gloucester", "$78,615"],
-              ]}
-            />
-          </CardBody>
-        </Card>
-      </GridItem>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card plain>
-          <CardHeader plain color="primary">
-            <h4 className={classes.cardTitleWhite}>
-              Table on Plain Background
-            </h4>
-            <p className={classes.cardCategoryWhite}>
-              Here is a subtitle for this table
-            </p>
-          </CardHeader>
-          <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["ID", "Name", "Country", "City", "Salary"]}
-              tableData={[
-                ["1", "Dakota Rice", "$36,738", "Niger", "Oud-Turnhout"],
-                ["2", "Minerva Hooper", "$23,789", "Curaçao", "Sinaai-Waas"],
-                ["3", "Sage Rodriguez", "$56,142", "Netherlands", "Baileux"],
-                [
-                  "4",
-                  "Philip Chaney",
-                  "$38,735",
-                  "Korea, South",
-                  "Overland Park",
-                ],
-                [
-                  "5",
-                  "Doris Greene",
-                  "$63,542",
-                  "Malawi",
-                  "Feldkirchen in Kärnten",
-                ],
-                ["6", "Mason Porter", "$78,615", "Chile", "Gloucester"],
               ]}
             />
           </CardBody>
