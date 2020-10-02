@@ -4,8 +4,9 @@ import axios from "axios";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Edit from "@material-ui/icons/Edit";
+// import Edit from "@material-ui/icons/Edit";
 import Close from "@material-ui/icons/Close";
+import Chip from '@material-ui/core/Chip';
 
 // Toast alert
 import { toast } from "react-toastify";
@@ -24,7 +25,6 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import Button from "components/CustomButtons/Button.js";
-import { StayPrimaryLandscape } from "@material-ui/icons";
 
 // Styles section
 const styles = {
@@ -118,7 +118,7 @@ function AdminManagement() {
     let headerElement = ["Name", "Email", "Admin Type", "Actions"];
 
     return headerElement.map((key, index) => {
-      return <th key={index}>{key.toUpperCase()}</th>;
+      return <th key={index} divider>{key.toUpperCase()}</th>;
     });
   };
 
@@ -131,7 +131,15 @@ function AdminManagement() {
           <tr key={adminId}>
             <td>{name}</td>
             <td>{email}</td>
-            <td>{adminType}</td>
+
+            <td>
+              {
+                adminType === 'SUPER_ADMIN' ? 
+                <Chip label="Super Admin" color="secondary"/> : 
+                <Chip label="Admin" color="primary"/>
+              }
+            </td>
+
             <td className="opration">
               <Button
                 variant="contained"
