@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import Link from "next/link";
+import Router from "next/router"
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+//redux app state management
+import { connect } from "react-redux"
+import { setInfo } from "../../redux/action/main"
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -19,6 +25,7 @@ import CardHeader from "components/logincomponents/Card/CardHeader.js";
 import CardFooter from "components/logincomponents/Card/CardFooter.js";
 import CustomInput from "components/logincomponents/CustomInput/CustomInput.js";
 
+//CSS styling import
 import styles from "assets/jss/nextjs-material-kit/pages/loginPage.js";
 //import background image
 import image from "assets/img/login-background.jpg";
@@ -26,9 +33,28 @@ import image from "assets/img/login-background.jpg";
 
 const useStyles = makeStyles(styles)
 
+const mapStateToProps = state => ({
+  userInfo: state.main
+})
+const mapDispatchToProps = {
+  setInfo: setInfo
+}
+
+// To enable toast notifications
+toast.configure()
+const notify = () => {
+  toast.error('Invalid user!', {
+    position: toast.POSITION.TOP_CENTER,
+    autoClose: 3000
+  })
+}
+
+//start of function
 function LoginPage(props) {
+
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
+  const {setInfo} = props
 
   const updateEmail = e => {
     e.preventDefault()
@@ -43,32 +69,20 @@ function LoginPage(props) {
     setPassword(password)
   }
 
-  /*
-  //Initial API call method
-  const handleLogin2 = e => {
-    axios({
-      method: 'post',
-      url: 'http://localhost:3000/admins/adminLogin',
-      data: {
-        email: email,
-        password: password
-      }
-    })
-    .then((response) => {
-      console.log(response);
-    }, (error) => {
-      console.log(error);
-    });
-  }*/
-
+  //API call for login authentication
   async function handleLogin() {
     try {
-      const response = await axios.post('http://localhost:3000/admins/adminLogin', {
+      console.log('fetching the login API')
+      const response = await axios.post('http://localhost:3000/admins/login', {
         email: email,
         password: password
       })
-      console.log(response);
+      console.log(response.data)
+      console.log(response.data.name)
+      setInfo(response.data)
+      Router.push('dashboard')
     } catch (error) {
+      notify()
       console.error(error);
     }
   }
@@ -164,4 +178,4 @@ function LoginPage(props) {
   );
 }
 
-export default LoginPage;
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
