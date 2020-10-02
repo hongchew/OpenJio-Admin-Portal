@@ -161,22 +161,23 @@ function AdminManagement() {
 
   const classes = useStyles();
 
-  const buttons = [
-    // Remove edit button
-    // { color: "success", icon: Edit },
-    { color: "danger", icon: Close },
-  ].map((prop, key) => {
-    return (
-      <Button color={prop.color} className={classes.actionButton} key={key}>
-        <prop.icon className={classes.icon} />
-      </Button>
-    );
-  });
+  // Template buttons
+  // const buttons = [
+  //   // Remove edit button
+  //   // { color: "success", icon: Edit },
+  //   { color: "danger", icon: Close },
+  // ].map((prop, key) => {
+  //   return (
+  //     <Button color={prop.color} className={classes.actionButton} key={key}>
+  //       <prop.icon className={classes.icon} />
+  //     </Button>
+  //   );
+  // });
 
   return (
     <div>
       {/* Admin management panel */}
-      <GridContainer>
+      <GridContainer justify="center">
         <GridItem xs={11} sm={11} md={11}>
           <Card>
             <CardHeader color="primary">
@@ -215,6 +216,7 @@ function AdminManagement() {
           </Card>
         </GridItem>
       </GridContainer>
+
     </div>
   );
 }
