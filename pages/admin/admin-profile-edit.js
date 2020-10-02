@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import axios from 'axios'
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -94,13 +95,12 @@ function AdminProfileEdit(props) {
       const response = await axios.put(
         'http://localhost:3000/admins/update-admin',
         {
-          admin: {
             adminId: userInfo.adminId,
             name: name,
-            email: email,
-          },
+            email: email
         }
       );
+      console.log('change success!')
       setInfo(response.data);
       successNotify();
       Router.push('admin-profile');

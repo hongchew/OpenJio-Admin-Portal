@@ -93,7 +93,7 @@ function ChangePassword(props) {
       console.log(`Sending these user info email:${email} currentpassword:${currentPassword} newpassword:${newPassword}`)
       try {
         const response = await axios.put('http://localhost:3000/admins/change-password', {
-        email: email,
+        email: userInfo.email,
         currPassword: currentPassword,
         newPassword: newPassword
         })

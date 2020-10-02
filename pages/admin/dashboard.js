@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 //redux app state management
-
 import { connect } from "react-redux";
 import { setInfo } from "../../redux/action/main";
 // @material-ui/core
@@ -40,7 +39,7 @@ function Dashboard(props) {
   //For welcome notification when page first renders
   useEffect(() => {
     welcome();
-  });
+  },[]);
 
   toast.configure();
   const welcome = () => {
