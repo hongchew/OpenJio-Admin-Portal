@@ -17,8 +17,6 @@ import styles from "assets/jss/nextjs-material-dashboard/layouts/adminStyle.js";
 
 import bgImage from "assets/img/login-background.jpg";
 import openjiologo from "assets/img/love-hand.svg";
-// Second logo for testing below
-import openjiologo2 from "assets/img/raise-hand.svg";
 
 let ps;
 

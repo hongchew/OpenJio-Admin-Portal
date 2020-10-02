@@ -216,15 +216,7 @@ function AdminProfileEdit(props) {
                     autoComplete: 'off',
                   }}
                 /> */}
-                <label for="adminType">Admin Type:</label>
-                <select
-                  id="adminType"
-                  name="adminType"
-                  value={adminType}
-                  onChange={updateAdminType}>
-                  <option value="SUPER_ADMIN">Super Admin</option>
-                  <option value="ADMIN">Admin</option>
-                </select>
+
                 <CustomInput
                   name="password"
                   value={password}
@@ -242,6 +234,17 @@ function AdminProfileEdit(props) {
                     autoComplete: 'off',
                   }}
                 />
+                <br />
+                <br />
+                <label for="adminType">Admin Type: </label>
+                <select
+                  id="adminType"
+                  name="adminType"
+                  value={adminType}
+                  onChange={updateAdminType}>
+                  <option value="SUPER_ADMIN">Super Admin</option>
+                  <option value="ADMIN">Admin</option>
+                </select>
               </CardBody>
               <CardFooter className={classes.cardFooter}>
                 <Button
