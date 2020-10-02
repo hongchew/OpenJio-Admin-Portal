@@ -1,41 +1,41 @@
-import React from "react";
+import React from 'react';
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import InputLabel from "@material-ui/core/InputLabel";
+import {makeStyles} from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
 // layout for this page
-import Admin from "layouts/Admin.js";
+import Admin from 'layouts/Admin.js';
 // core components
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
-import Button from "components/CustomButtons/Button.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardAvatar from "components/Card/CardAvatar.js";
-import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-import Primary from "components/Typography/Primary.js";
+import GridItem from 'components/Grid/GridItem.js';
+import GridContainer from 'components/Grid/GridContainer.js';
+import CustomInput from 'components/CustomInput/CustomInput.js';
+import Button from 'components/CustomButtons/Button.js';
+import Card from 'components/Card/Card.js';
+import CardHeader from 'components/Card/CardHeader.js';
+import CardAvatar from 'components/Card/CardAvatar.js';
+import CardBody from 'components/Card/CardBody.js';
+import CardFooter from 'components/Card/CardFooter.js';
+import Primary from 'components/Typography/Primary.js';
 
-import Link from "next/link";
+import Link from 'next/link';
 
-import CeoAvatar from "assets/img/faces/tanwk.png";
+import CeoAvatar from 'assets/img/faces/tanwk.png';
 
 const styles = {
   cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0",
+    color: 'rgba(255,255,255,.62)',
+    margin: '0',
+    fontSize: '14px',
+    marginTop: '0',
+    marginBottom: '0',
   },
   cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
+    color: '#FFFFFF',
+    marginTop: '0px',
+    minHeight: 'auto',
+    fontWeight: '300',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none",
+    marginBottom: '3px',
+    textDecoration: 'none',
   },
 };
 
@@ -48,27 +48,16 @@ function AdminProfile() {
       <GridContainer>
         <GridItem xs={12} sm={12} md={8}>
           <Card>
-            <CardHeader color="primary">
+            <CardHeader color="info">
               <h4 className={classes.cardTitleWhite}>Profile</h4>
             </CardHeader>
             <CardBody>
               <GridContainer>
-                {/* First name */}
                 <GridItem xs={12} sm={12} md={6}>
+                  <Header>Name</Header>
                   <CustomInput
-                    labelText="First Name"
-                    id="first-name"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
-                </GridItem>
-
-                {/* Last name */}
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Last Name"
-                    id="last-name"
+                    labelText="Name"
+                    id="name"
                     formControlProps={{
                       fullWidth: true,
                     }}
@@ -76,22 +65,12 @@ function AdminProfile() {
                 </GridItem>
               </GridContainer>
 
-              {/* Username & email */}
               <GridContainer>
-                <GridItem xs={12} sm={12} md={5}>
-                  <CustomInput
-                    labelText="Username"
-                    id="username"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
-                </GridItem>
-
                 <GridItem xs={12} sm={12} md={6}>
+                  <h5>Email</h5>
                   <CustomInput
-                    labelText="Email address"
-                    id="email-address"
+                    labelText="Email"
+                    id="email"
                     formControlProps={{
                       fullWidth: true,
                     }}
@@ -101,6 +80,7 @@ function AdminProfile() {
 
               <GridContainer>
                 <GridItem xs={12} sm={12} md={5}>
+                  <h5>Password</h5>
                   <CustomInput
                     labelText="Password"
                     id="password"
@@ -166,10 +146,10 @@ function AdminProfile() {
             </CardBody>
 
             <CardFooter>
-              <Button color="primary">Update Profile</Button>
-              <Button color="primary">
+              <Button color="info">Update Profile</Button>
+              <Button color="info">
                 <Link href="admin-profile-password">
-                  <a>Change password</a>
+                  <a id="changePassBut">Change password</a>
                 </Link>
               </Button>
             </CardFooter>
@@ -197,16 +177,6 @@ function AdminProfile() {
                 I hope that everyone will play their part to fight the COVID-19
                 pandemic.
               </p>
-
-              {/* // Old description
-              <p className={classes.description}>
-                Don{"'"}t be scared of the truth
-              </p> */}
-
-              {/* // Random button for navigation next time perhaps?
-              <Button color="primary" round>
-                Follow
-              </Button> */}
             </CardBody>
           </Card>
         </GridItem>

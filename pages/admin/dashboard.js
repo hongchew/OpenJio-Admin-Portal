@@ -26,10 +26,6 @@ import styles from 'assets/jss/nextjs-material-dashboard/views/dashboardStyle.js
 
 const useStyles = makeStyles(styles);
 
-const mapStateToProps = (state) => ({
-  userInfo: state.main,
-});
-
 // const mapStateToProps = (state) => ({
 //   authToken: state.currentUser && state.currentUser.authToken,
 //   items: state.items,
@@ -39,29 +35,26 @@ const mapDispatchToProps = {
   setInfo: setInfo,
 };
 
-toast.configure();
-const welcome = () => {
-  toast.success('Welcome back ${}', {
-    position: toast.POSITION.TOP_CENTER,
-    autoClose: 3000,
-  });
-};
+function mapStateToProps(state) {
+  console.log(state.main.name);
+  console.log(state.main.adminId);
+  console.log(state.main.email);
+  console.log(state.main.adminType);
+}
 
 function Dashboard() {
   const classes = useStyles();
 
   //For welcome notification when page first renders
   useEffect(() => {
-    welcome();
+    toast.configure();
+    const welcome = () => {
+      toast.success(`Welcome back ${state.main.name}`, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
+    };
   }, []);
-
-  toast.configure();
-  const welcome = () => {
-    toast.success(`Welcome back ${'asd'}`, {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 3000,
-    });
-  };
 
   return (
     <div>
