@@ -81,6 +81,13 @@ const dashboardRoutes = [
 
     layout: '/admin',
   },
+  {
+    path: "/blacklist",
+    name: "Blacklist",
+    icon: Notifications,
+
+    layout: "/admin",
+  }
 ];
 
 export default dashboardRoutes;

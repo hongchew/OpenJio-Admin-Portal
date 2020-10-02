@@ -28,13 +28,10 @@ import styles from 'assets/jss/nextjs-material-dashboard/views/dashboardStyle.js
 
 const useStyles = makeStyles(styles);
 
-const mapDispatchToProps = {
-  setInfo: setInfo,
-};
 
-const mapStateToProps = (state) => ({
-  userInfo: state.main,
-});
+const mapStateToProps = state => ({
+  userInfo: state.main
+})
 
 function Dashboard(props) {
   const classes = useStyles();
@@ -139,4 +136,4 @@ function Dashboard(props) {
 
 Dashboard.layout = Admin;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps)(Dashboard);
