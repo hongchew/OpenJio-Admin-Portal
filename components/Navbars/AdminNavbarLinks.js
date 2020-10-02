@@ -3,7 +3,7 @@ import classNames from "classnames";
 import Router from "next/router"
 //redux app state management
 import { connect } from "react-redux"
-import { setInfo } from "../../redux/action/main"
+import { logout } from "../../redux/action/main"
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -32,7 +32,7 @@ const mapStateToProps = state => ({
   userInfo: state.main
 })
 const mapDispatchToProps = {
-  logout: setInfo
+  logout: logout
 }
 
 function AdminNavbarLinks(props) {
@@ -40,7 +40,7 @@ function AdminNavbarLinks(props) {
   const classes = useStyles();
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
-  const {userInfo, setInfo} = props
+  const {logout} = props
   const handleClickNotification = (event) => {
     if (openNotification && openNotification.contains(event.target)) {
       setOpenNotification(null);
@@ -65,7 +65,7 @@ function AdminNavbarLinks(props) {
   //Logs user out upon clicking logout
   const handleLogout = () => {
     handleCloseProfile()
-    setInfo({})
+    logout({})
     Router.push('login')
   }
 
