@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -59,8 +59,10 @@ const useStyles = makeStyles(styles);
 function AdminManagement() {
   // Connection to backend API
   const [admins, setAdmins] = useState([]);
-  const [currentAdmin, setCurrentAdmin] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(-1);
+
+  // For future development
+  // const [currentAdmin, setCurrentAdmin] = useState(null);
+  // const [currentIndex, setCurrentIndex] = useState(-1);
 
   useEffect(() => {
     retrieveAdmins();
@@ -78,29 +80,30 @@ function AdminManagement() {
       });
   };
 
-  const refreshList = () => {
-    retrieveTutorials();
-    setCurrentTutorial(null);
-    setCurrentIndex(-1);
-  };
-
-  const setActiveAdmin = (admin, index) => {
-    setCurrentAdmin(admin);
-    setCurrentIndex(index);
-  };
-
   const deleteAdminAccount = (adminId) => {
+    let deleteHttpReq = `http://localhost:3000/admins/${adminId}`;
 
-    let deleteHttpReq = `http://localhost:3000/admins/${adminId}`
+    axios.delete(deleteHttpReq).then((res) => {
+      // Or retrieveAdmins after deleting
+      const afterDeleteList = admins.filter(
+        (admin) => adminId !== admin.adminId
+      );
+      setAdmins(afterDeleteList);
+      console.log("res", res);
+    });
+  };
 
-    axios.delete(deleteHttpReq).then(res => {
+  // For future development
+  // const refreshList = () => {
+  //   retrieveTutorials();
+  //   setCurrentTutorial(null);
+  //   setCurrentIndex(-1);
+  // };
 
-        // Or retrieveAdmins after deleting
-        const afterDeleteList = admins.filter(admin => adminId !== admin.adminId);
-        setAdmins(afterDeleteList);
-        console.log('res', res);
-    })
-}
+  // const setActiveAdmin = (admin, index) => {
+  //   setCurrentAdmin(admin);
+  //   setCurrentIndex(index);
+  // };
 
   // End of connection to backend API
 
@@ -162,6 +165,7 @@ function AdminManagement() {
       <GridContainer>
         <GridItem xs={11} sm={11} md={11}>
           <Card>
+
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Admin Management Panel</h4>
               <p className={classes.cardCategoryWhite}>
@@ -169,22 +173,18 @@ function AdminManagement() {
               </p>
             </CardHeader>
 
-            {/* Table card body */}
             <CardBody>
 
-              <table id="admin-management-table" style={{width: '70vw'}}>
-
+              {/* Custom table */}
+              <table id="admin-management-table" style={{ width: "70vw" }}>
                 <thead align="left">
                   <tr>{renderTableHeader()}</tr>
                 </thead>
 
-                <tbody>
-                  {renderTableBody()}
-                </tbody>
-
+                <tbody>{renderTableBody()}</tbody>
               </table>
 
-              {/* Custom Table Not Intuitive */}
+              {/* Template table not intuitive */}
               {/* <Table
                 tableHeaderColor="primary"
                 tableHead={["Name", "Email", "Admin Type", "Actions"]}
@@ -193,28 +193,15 @@ function AdminManagement() {
                   renderTableBody()
                 ]}
 
-                // --- UI problem so ignore this section below ---
-                // tableData={[
-                //   admins &&
-                //     admins.map(
-                //       (admin) => (
-                //         [{admin.name}], [admin.email], [admin.adminType]
-                //         <tr key = {admin.adminId}>
-                //          <td> {admin.name}, {admin.email} </td>
-                //          <td> {admin.email}, </td>
-                //          <td> {admin.adminType}</td>
-                //         </tr>
-                //       )
-                //     ),
-                // ]}
-
-                // Placeholder data
-                // tableData={[
-                //   ["Prof. Tan Wee Kek", "tanwk@comp.nus.edu.sg", "Super Admin", buttons],
-                //   ["Ying Hui", "yinghuiseah@u.nus.edu", "Super Admin", buttons],
-                // ]}
+                Placeholder data
+                tableData={[
+                  ["Prof. Tan Wee Kek", "tanwk@comp.nus.edu.sg", "Super Admin", buttons],
+                  ["Ying Hui", "yinghuiseah@u.nus.edu", "Super Admin", buttons],
+                ]}
               /> */}
+              
             </CardBody>
+
           </Card>
         </GridItem>
       </GridContainer>
