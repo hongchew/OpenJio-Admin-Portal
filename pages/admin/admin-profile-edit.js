@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 // layout for this page
+import axios from 'axios';
 import Admin from 'layouts/Admin.js';
 //redux app state management
 import {connect} from 'react-redux';
@@ -74,11 +75,6 @@ function AdminProfileEdit(props) {
     setEmail(email);
     console.log('Updated email is ' + email);
   };
-
-  // useEffect(() => {
-  //   setName(userInfo.name);
-  //   setEmail(userInfo.email);
-  // });
 
   async function handleUpdateProfile() {
     try {

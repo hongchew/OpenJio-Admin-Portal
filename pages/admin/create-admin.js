@@ -8,6 +8,7 @@ import Admin from 'layouts/Admin.js';
 import {connect} from 'react-redux';
 import {setInfo} from '../../redux/action/main';
 import {toast} from 'react-toastify';
+import axios from 'axios';
 import Link from 'next/link';
 
 import Email from '@material-ui/icons/Email';
@@ -103,11 +104,6 @@ function AdminProfileEdit(props) {
     setPassword(password);
     console.log('Updated password is ' + password);
   };
-
-  // useEffect(() => {
-  //   setName(userInfo.name);
-  //   setEmail(userInfo.email);
-  // });
 
   async function handleCreateAdmin() {
     try {

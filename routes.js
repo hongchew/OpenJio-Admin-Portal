@@ -16,13 +16,13 @@
 
 */
 // @material-ui/icons
-import Dashboard from "@material-ui/icons/Dashboard";
-import Person from "@material-ui/icons/Person";
-import LibraryBooks from "@material-ui/icons/LibraryBooks";
-import BubbleChart from "@material-ui/icons/BubbleChart";
-import LocationOn from "@material-ui/icons/LocationOn";
+import Dashboard from '@material-ui/icons/Dashboard';
+import Person from '@material-ui/icons/Person';
+import LibraryBooks from '@material-ui/icons/LibraryBooks';
+import BubbleChart from '@material-ui/icons/BubbleChart';
+import LocationOn from '@material-ui/icons/LocationOn';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import Notifications from "@material-ui/icons/Notifications";
+import Notifications from '@material-ui/icons/Notifications';
 
 const dashboardRoutes = [
   {
@@ -40,16 +40,16 @@ const dashboardRoutes = [
     layout: '/admin',
   },
   {
-    path: "/admin-management",
-    name: "Admin Management",
+    path: '/admin-management',
+    name: 'Admin Management',
     icon: SupervisorAccountIcon,
 
-    layout: "/admin",
+    layout: '/admin',
   },
   {
-    path: "/table-list",
-    name: "Table List",
-    icon: "content_paste",
+    path: '/create-admin',
+    name: 'Create New Admin',
+    icon: 'content_paste',
 
     layout: '/admin',
   },
@@ -82,12 +82,12 @@ const dashboardRoutes = [
     layout: '/admin',
   },
   {
-    path: "/blacklist",
-    name: "Blacklist",
+    path: '/blacklist',
+    name: 'Blacklist',
     icon: Notifications,
 
-    layout: "/admin",
-  }
+    layout: '/admin',
+  },
 ];
 
 export default dashboardRoutes;
