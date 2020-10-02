@@ -132,6 +132,7 @@ function AdminManagement() {
             <td>{name}</td>
             <td>{email}</td>
 
+            {/* Conditional argument according to the admin type */}
             <td>
               {
                 adminType === 'SUPER_ADMIN' ? 
