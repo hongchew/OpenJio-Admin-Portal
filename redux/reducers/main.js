@@ -1,4 +1,4 @@
-import * as types from "../types"
+import * as types from '../types';
 
 const main = (state = {
     adminId: "",
@@ -28,6 +28,9 @@ const main = (state = {
         default:
             return {...state}
     }
-}
+    default:
+      return {...state};
+  }
+};
 
-export default main
+export default main;

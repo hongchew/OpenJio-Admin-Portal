@@ -21,20 +21,28 @@ import Person from "@material-ui/icons/Person";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import BubbleChart from "@material-ui/icons/BubbleChart";
 import LocationOn from "@material-ui/icons/LocationOn";
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import Notifications from "@material-ui/icons/Notifications";
 
 const dashboardRoutes = [
   {
-    path: "/dashboard",
-    name: "Dashboard",
+    path: '/dashboard',
+    name: 'Dashboard',
     icon: Dashboard,
 
-    layout: "/admin",
+    layout: '/admin',
   },
   {
-    path: "/admin-profile",
-    name: "Admin Profile",
+    path: '/admin-profile',
+    name: 'Admin Profile',
     icon: Person,
+
+    layout: '/admin',
+  },
+  {
+    path: "/admin-management",
+    name: "Admin Management",
+    icon: SupervisorAccountIcon,
 
     layout: "/admin",
   },
@@ -43,35 +51,35 @@ const dashboardRoutes = [
     name: "Table List",
     icon: "content_paste",
 
-    layout: "/admin",
+    layout: '/admin',
   },
   {
-    path: "/typography",
-    name: "Typography",
+    path: '/typography',
+    name: 'Typography',
     icon: LibraryBooks,
 
-    layout: "/admin",
+    layout: '/admin',
   },
   {
-    path: "/icons",
-    name: "Icons",
+    path: '/icons',
+    name: 'Icons',
     icon: BubbleChart,
 
-    layout: "/admin",
+    layout: '/admin',
   },
   {
-    path: "/maps",
-    name: "Maps",
+    path: '/maps',
+    name: 'Maps',
     icon: LocationOn,
 
-    layout: "/admin",
+    layout: '/admin',
   },
   {
-    path: "/notifications",
-    name: "Notifications",
+    path: '/notifications',
+    name: 'Notifications',
     icon: Notifications,
 
-    layout: "/admin",
+    layout: '/admin',
   },
   {
     path: "/blacklist",
