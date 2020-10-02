@@ -160,6 +160,10 @@ legend {
   color: white;
 }
 
+#editProfileBut {
+  color: white;
+}
+
 a:focus,
 a:active,
 button:active,
