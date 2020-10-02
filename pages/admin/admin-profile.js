@@ -4,6 +4,9 @@ import {makeStyles} from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 // layout for this page
 import Admin from 'layouts/Admin.js';
+//redux app state management
+import {connect} from 'react-redux';
+import {setInfo} from '../../redux/action/main';
 // core components
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
@@ -19,6 +22,14 @@ import Primary from 'components/Typography/Primary.js';
 import Link from 'next/link';
 
 import CeoAvatar from 'assets/img/faces/tanwk.png';
+
+const mapDispatchToProps = {
+  setInfo: setInfo,
+};
+
+const mapStateToProps = (state) => ({
+  userInfo: state.main,
+});
 
 const styles = {
   cardCategoryWhite: {
@@ -39,10 +50,15 @@ const styles = {
   },
 };
 
+//API call to update
+async function updateProfile() {}
+
 const useStyles = makeStyles(styles);
 
-function AdminProfile() {
+function AdminProfile(props) {
+  const {userInfo} = props;
   const classes = useStyles();
+
   return (
     <div>
       <GridContainer>
@@ -54,95 +70,24 @@ function AdminProfile() {
             <CardBody>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
-                  <Header>Name</Header>
-                  <CustomInput
-                    labelText="Name"
-                    id="name"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
+                  <b>Name</b>
+                  <p>{userInfo.name}</p>
                 </GridItem>
               </GridContainer>
 
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
-                  <h5>Email</h5>
-                  <CustomInput
-                    labelText="Email"
-                    id="email"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
+                  <b>Email</b>
+                  <h6>{userInfo.email}</h6>
                 </GridItem>
               </GridContainer>
 
               <GridContainer>
                 <GridItem xs={12} sm={12} md={5}>
-                  <h5>Password</h5>
-                  <CustomInput
-                    labelText="Password"
-                    id="password"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
+                  <b>Password</b>
+                  <h6>***************</h6>
                 </GridItem>
               </GridContainer>
-
-              {/* // Location container with "City, Country, Postal Code"
-              <GridContainer>
-                
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="City"
-                    id="city"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
-                </GridItem>
-                
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Country"
-                    id="country"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
-                </GridItem>
-                
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Postal Code"
-                    id="postal-code"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
-                </GridItem>
-
-              </GridContainer> */}
-
-              {/* Profile description (Set by super admin?)
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <InputLabel style={{ color: "#AAAAAA" }}>About me</InputLabel>
-                  <CustomInput
-                    labelText="Random profile description but not needed for our project"
-                    id="about-me"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    inputProps={{
-                      multiline: true,
-                      rows: 5,
-                    }}
-                  />
-                </GridItem>
-              </GridContainer> */}
             </CardBody>
 
             <CardFooter>
@@ -165,10 +110,9 @@ function AdminProfile() {
             </CardAvatar>
 
             <CardBody profile>
-              <h6 className={classes.cardCategory}>CEO / CO-FOUNDER</h6>
-              <h4 className={classes.cardTitle}>Prof. Tan Wee Kek</h4>
+              <strong className={classes.cardTitle}>{userInfo.name}</strong>
               <Primary className={classes.cardTitle}>
-                <b>Super Admin</b>
+                <b>{userInfo.adminType}</b>
               </Primary>
               <br></br>
 
@@ -187,4 +131,4 @@ function AdminProfile() {
 
 AdminProfile.layout = Admin;
 
-export default AdminProfile;
+export default connect(mapStateToProps, mapDispatchToProps)(AdminProfile);
