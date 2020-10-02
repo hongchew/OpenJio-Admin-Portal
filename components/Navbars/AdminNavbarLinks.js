@@ -65,7 +65,7 @@ function AdminNavbarLinks(props) {
   //Logs user out upon clicking logout
   const handleLogout = () => {
     handleCloseProfile()
-    setInfo
+    setInfo({})
     Router.push('login')
   }
 
