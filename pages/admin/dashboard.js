@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css'
 //redux app state management
 import { connect } from "react-redux"
 import { setInfo } from "../../redux/action/main"
+//import { store } from "../../redux/store"
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
@@ -51,7 +52,6 @@ function Dashboard() {
       autoClose: 3000
     })
   }
-
 
   return (
     <div>
