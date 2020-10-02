@@ -1,8 +1,17 @@
-import React, { useEffect } from "react";
-import axios from 'axios';
-import Link from "next/link";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import DeleteIcon from "@material-ui/icons/Delete";
+// import Edit from "@material-ui/icons/Edit";
+import Close from "@material-ui/icons/Close";
+import Chip from '@material-ui/core/Chip';
+
+// Toast alert
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // layout for this page
 import Admin from "layouts/Admin.js";
 // core components
@@ -12,7 +21,10 @@ import Table from "components/Table/Table.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
+import Button from "components/CustomButtons/Button.js";
+import { updateAsExpression } from "typescript";
 
+// Styles section
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -44,56 +56,152 @@ const styles = {
 };
 
 const useStyles = makeStyles(styles);
+// End of styles section
 
-function TableList() {
-  const classes = useStyles();
+function BlacklistManagement() {
+  // Connection to backend API
+  const [users, setUsers] = useState([]);
 
-  //For welcome notification when page first renders
+  //Retrieve all users when page first renders
   useEffect(() => {
-    getAllUsers()
+    retrieveUsers()
+    console.log(users)
   }, []);
 
-  //API call to retrieve a list of blacklisted users
-  async const allUsers= () => {
+  const retrieveUsers = async () => {
     try {
-        console.log('fetching all users')
         const response = await axios.get('http://localhost:3000/users/')
-        console.log(response)
+        const body = response.data
+        //Get only blacklisted users
+        const blacklisted = body.filter(function(user) {
+            return user.isBlackListed === true
+        }) 
+        setUsers(blacklisted)
       } catch (error) {
         console.error(error);
       }
   }
 
+  const editUserBlacklist = (userId, name) => {
+    let deleteHttpReq = `http://localhost:3000/users/${userId}`;
+
+    axios.put(deleteHttpReq).then(() => {
+      // Or retrieveAdmins after deleting
+      const afterEditList = users.filter(
+        (user) => userId !== user.userId
+      );
+      setUsers(afterEditList);
+      editSuccessfulAlert(name);
+      console.log(users);
+    });
+  };
+  const renderTableHeader = () => {
+    let headerElement = ["Name", "Email", "Mobile Number", "Strike Count"];
+
+    return headerElement.map((key, index) => {
+      return <th key={index}>{key.toUpperCase()}</th>;
+    });
+  };
+
+  // Render table body
+  const renderTableBody = () => {
+    return (
+      users &&
+      users.map(({ userId, name, email, mobileNumber, strikeCount }) => {
+        return (
+          <tr key={userId}>
+            <td>{name}</td>
+            <td>{email}</td>
+            <td>{mobileNumber}</td>
+            <td>{strikeCount}</td>
+
+            <td className="operation">
+              <Button
+                variant="contained"
+                color="danger"
+                className={classes.button}
+                startIcon={<DeleteIcon />}
+                onClick={() => editUserBlacklist(userId, name)}
+              >
+                Remove
+              </Button>
+            </td>
+          </tr>
+        );
+      })
+    );
+  };
+  // End of rendering table
+
+  // To enable toast notifications
+  toast.configure();
+  const editSuccessfulAlert = (userName) => {
+    toast.success("Successfully deleted: " + userName, {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+    });
+  };
+
+  const classes = useStyles();
+
+  const buttons = [
+    // Remove edit button
+    // { color: "success", icon: Edit },
+    { color: "danger", icon: Close },
+  ].map((prop, key) => {
+    return (
+      <Button color={prop.color} className={classes.actionButton} key={key}>
+        <prop.icon className={classes.icon} />
+      </Button>
+    );
+  });
+
   return (
-    <GridContainer>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Blacklist</h4>
-            <p className={classes.cardCategoryWhite}>
-              Here is a list of all the blacklisted users
-            </p>
-          </CardHeader>
-          <CardBody>
-            <Table value={allUsers}
-              tableHeaderColor="primary"
-              tableHead={["Name", "Email", "Mobile Number", ""]}
-              tableData={[
-                ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
-                ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
-                ["Sage Rodriguez", "Netherlands", "Baileux", "$56,142"],
-                ["Philip Chaney", "Korea, South", "Overland Park", "$38,735"],
-                ["Doris Greene", "Malawi", "Feldkirchen in Kärnten", "$63,542"],
-                ["Mason Porter", "Chile", "Gloucester", "$78,615"],
-              ]}
-            />
-          </CardBody>
-        </Card>
-      </GridItem>
-    </GridContainer>
+    <div>
+      {/* Admin management panel */}
+      <GridContainer>
+        <GridItem xs={11} sm={11} md={11}>
+          <Card>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>Blacklist Management Panel</h4>
+              <p className={classes.cardCategoryWhite}>
+                List of users who have been blacklisted.
+              </p>
+            </CardHeader>
+
+            <CardBody>
+              {/* Custom table */}
+              <table id="admin-management-table" style={{ width: "70vw" }}>
+                <thead align="left">
+                  <tr>{renderTableHeader()}</tr>
+                </thead>
+
+                <tbody>{renderTableBody()}</tbody>
+              </table>
+
+              {/* Template table not intuitive */}
+              {/* <Table
+                tableHeaderColor="primary"
+                tableHead={["Name", "Email", "Admin Type", "Actions"]}
+                // Just to prevent error
+                tableData={[
+                  renderTableBody()
+                ]}
+
+                Placeholder data
+                tableData={[
+                  ["Prof. Tan Wee Kek", "tanwk@comp.nus.edu.sg", "Super Admin", buttons],
+                  ["Ying Hui", "yinghuiseah@u.nus.edu", "Super Admin", buttons],
+                ]}
+              /> */}
+            </CardBody>
+          </Card>
+        </GridItem>
+      </GridContainer>
+    </div>
   );
 }
 
-TableList.layout = Admin;
+BlacklistManagement.layout = Admin;
 
-export default TableList;
+export default BlacklistManagement;

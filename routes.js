@@ -23,6 +23,7 @@ import BubbleChart from "@material-ui/icons/BubbleChart";
 import LocationOn from "@material-ui/icons/LocationOn";
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import Notifications from "@material-ui/icons/Notifications";
+import MoodBadIcon from '@material-ui/icons/MoodBad';
 
 const dashboardRoutes = [
   {
@@ -43,6 +44,13 @@ const dashboardRoutes = [
     path: "/admin-management",
     name: "Admin Management",
     icon: SupervisorAccountIcon,
+
+    layout: "/admin",
+  },
+  {
+    path: "/blacklist",
+    name: "Blacklist Management",
+    icon: MoodBadIcon,
 
     layout: "/admin",
   },
@@ -80,13 +88,6 @@ const dashboardRoutes = [
     icon: Notifications,
 
     layout: '/admin',
-  },
-  {
-    path: "/blacklist",
-    name: "Blacklist",
-    icon: Notifications,
-
-    layout: "/admin",
   }
 ];
 
