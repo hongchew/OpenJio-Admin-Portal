@@ -231,17 +231,7 @@ function AdminNavbarLinks(props) {
                     >
                       Profile
                     </MenuItem>
-                    
-                    {/* // Since already have sidebar filters, no need more setting
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
-                    >
-                      Settings
-                    </MenuItem> */}
-
                     <Divider light />
-
                     <MenuItem
                       onClick={handleLogout}
                       className={classes.dropdownItem}

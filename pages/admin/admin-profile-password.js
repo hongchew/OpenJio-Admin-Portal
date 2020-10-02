@@ -3,6 +3,8 @@ import Router from 'next/router'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
+//redux app state management
+import { connect } from "react-redux"
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -44,13 +46,18 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-function ChangePassword() {
+const mapStateToProps = state => ({
+  userInfo: state.main
+})
+
+function ChangePassword(props) {
   const classes = useStyles();
 
   //State of password entry
   const [currentPassword, setCurrentPassword] = useState()
   const [newPassword, setNewPassword] = useState()
   const [newPassword2, setNewPassword2] = useState()
+  const {userInfo} = props
 
   const updateCurrPassword = e => {
     e.preventDefault()
@@ -83,13 +90,19 @@ function ChangePassword() {
         throw "New password entered is different"
       }
       console.log('fetching the change-password API')
-      const response = await axios.put('http://localhost:3000/admins/change-password', {
+      console.log(`Sending these user info email:${email} currentpassword:${currentPassword} newpassword:${newPassword}`)
+      try {
+        const response = await axios.put('http://localhost:3000/admins/change-password', {
         email: email,
         currPassword: currentPassword,
         newPassword: newPassword
-      })
-      successNotify()
-      Router.push('admin-profile')
+        })
+        successNotify()
+        Router.push('admin-profile')
+      } catch (error){
+        errorNotify()
+        console.error(error)
+      }
     } catch (error) {
       console.error(error);
     }
@@ -98,7 +111,7 @@ function ChangePassword() {
   // To enable toast notifications
   toast.configure()
   const errorNotify = () => {
-    toast.error('New password entered is different.', {
+    toast.error('Current password is incorrect or the new passwords does not match.', {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 3000
     })
@@ -201,16 +214,6 @@ function ChangePassword() {
                 I hope that everyone will play their part to fight the COVID-19
                 pandemic.
               </p>
-
-              {/* // Old description
-              <p className={classes.description}>
-                Don{"'"}t be scared of the truth
-              </p> */}
-
-              {/* // Random button for navigation next time perhaps?
-              <Button color="primary" round>
-                Follow
-              </Button> */}
             </CardBody>
 
           </Card>
@@ -224,4 +227,4 @@ function ChangePassword() {
 
 ChangePassword.layout = Admin;
 
-export default ChangePassword;
+export default connect(mapStateToProps)(ChangePassword);

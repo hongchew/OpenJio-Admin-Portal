@@ -4,7 +4,8 @@ const main = (state = {
     adminId: "",
     name: "guest",
     email: "",
-    adminType: ""
+    adminType: "",
+    password: ""
 }, action) => {
     switch(action.type) {
         case types.SET_USER:
@@ -12,14 +13,16 @@ const main = (state = {
                 adminId: action.payload.adminId,
                 name: action.payload.name,
                 email: action.payload.email,
-                adminType: action.payload.adminType
+                adminType: action.payload.adminType,
+                password: action.payload.password
             }
         case types.LOGOUT: {
             return {
                 adminId: "",
-                name: "",
+                name: "guest",
                 email: "",
-                adminType: ""
+                adminType: "",
+                password: ""
             }
         }
         default:
