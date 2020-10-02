@@ -7,6 +7,10 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Edit from "@material-ui/icons/Edit";
 import Close from "@material-ui/icons/Close";
 
+// Toast alert
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // Backend API services
 import adminService from "../../services/adminService.js";
 
@@ -80,7 +84,7 @@ function AdminManagement() {
       });
   };
 
-  const deleteAdminAccount = (adminId) => {
+  const deleteAdminAccount = (adminId, name) => {
     let deleteHttpReq = `http://localhost:3000/admins/${adminId}`;
 
     axios.delete(deleteHttpReq).then((res) => {
@@ -89,6 +93,7 @@ function AdminManagement() {
         (admin) => adminId !== admin.adminId
       );
       setAdmins(afterDeleteList);
+      deleteSuccessfulAlert(name);
       console.log("res", res);
     });
   };
@@ -133,7 +138,7 @@ function AdminManagement() {
                 color="danger"
                 className={classes.button}
                 startIcon={<DeleteIcon />}
-                onClick={() => deleteAdminAccount(adminId)}
+                onClick={() => deleteAdminAccount(adminId, name)}
               >
                 Delete
               </Button>
@@ -144,6 +149,15 @@ function AdminManagement() {
     );
   };
   // End of rendering table
+
+  // To enable toast notifications
+  toast.configure();
+  const deleteSuccessfulAlert = (adminName) => {
+    toast.success("Successfully deleted: " + adminName, {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+    });
+  };
 
   const classes = useStyles();
 
@@ -165,7 +179,6 @@ function AdminManagement() {
       <GridContainer>
         <GridItem xs={11} sm={11} md={11}>
           <Card>
-
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Admin Management Panel</h4>
               <p className={classes.cardCategoryWhite}>
@@ -174,7 +187,6 @@ function AdminManagement() {
             </CardHeader>
 
             <CardBody>
-
               {/* Custom table */}
               <table id="admin-management-table" style={{ width: "70vw" }}>
                 <thead align="left">
@@ -199,9 +211,7 @@ function AdminManagement() {
                   ["Ying Hui", "yinghuiseah@u.nus.edu", "Super Admin", buttons],
                 ]}
               /> */}
-              
             </CardBody>
-
           </Card>
         </GridItem>
       </GridContainer>
