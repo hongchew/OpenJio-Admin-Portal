@@ -118,7 +118,7 @@ function AdminManagement() {
     let headerElement = ["Name", "Email", "Admin Type", "Actions"];
 
     return headerElement.map((key, index) => {
-      return <th key={index} divider>{key.toUpperCase()}</th>;
+      return <th key={index}>{key.toUpperCase()}</th>;
     });
   };
 
