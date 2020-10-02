@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import Router from 'next/router'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import axios from 'axios'
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -16,8 +20,6 @@ import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import Primary from "components/Typography/Primary.js";
-
-import Link from "next/link";
 
 import CeoAvatar from "assets/img/faces/tanwk.png";
 
@@ -44,6 +46,70 @@ const useStyles = makeStyles(styles);
 
 function ChangePassword() {
   const classes = useStyles();
+
+  //State of password entry
+  const [currentPassword, setCurrentPassword] = useState()
+  const [newPassword, setNewPassword] = useState()
+  const [newPassword2, setNewPassword2] = useState()
+
+  const updateCurrPassword = e => {
+    e.preventDefault()
+    console.log("Input is updating")
+    const currPass = e.target.value
+    setCurrentPassword(currPass)
+    console.log('Current password entered is ' + currentPassword)
+  }
+
+  const updateNewPassword = e => {
+    e.preventDefault()
+    const newPass = e.target.value
+    setNewPassword(newPass)
+    console.log('New password entered is ' + newPassword)
+  }
+
+  const updateNewPassword2 = e => {
+    e.preventDefault()
+    const newPass2 = e.target.value
+    setNewPassword2(newPass2)
+    console.log('Current password re-entered is ' + newPassword2)
+  }
+
+  //API call to change password
+  async function handlePassChange(){
+    try {
+      const email = "superadmin@openjio.com"
+      if (newPassword !== newPassword2){
+        errorNotify()
+        throw "New password entered is different"
+      }
+      console.log('fetching the change-password API')
+      const response = await axios.put('http://localhost:3000/admins/change-password', {
+        email: email,
+        currPassword: currentPassword,
+        newPassword: newPassword
+      })
+      successNotify()
+      Router.push('admin-profile')
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  // To enable toast notifications
+  toast.configure()
+  const errorNotify = () => {
+    toast.error('New password entered is different.', {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000
+    })
+  }
+  const successNotify = () => {
+    toast.success('Password is successfully changed.', {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000
+    })
+  }
+
   return (
     <div>
       <GridContainer>
@@ -58,10 +124,16 @@ function ChangePassword() {
                 {/* Current password */}
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
+                    name="currentPassword"
+                    value={currentPassword}
+                    onChange={updateCurrPassword}
                     labelText="Enter your current password"
                     id="current-password"
                     formControlProps={{
                       fullWidth: true,
+                    }}
+                    inputProps={{
+                      type: "text"
                     }}
                   />
                 </GridItem>
@@ -71,19 +143,13 @@ function ChangePassword() {
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
+                    name="newPassword"
+                    value={newPassword}
+                    onChange={updateNewPassword}
                     labelText="Enter your new password"
                     id="new-password"
                     formControlProps={{
                       fullWidth: true,
-                    }}
-                    inputProps={{
-                      type: "password",
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          {/* <LockIcon className={classes.inputIconsColor}/> */}
-                        </InputAdornment>
-                      ),
-                      autoComplete: "off"
                     }}
                   />
                 </GridItem>
@@ -92,10 +158,16 @@ function ChangePassword() {
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
+                    name="newPassword2"
+                    value={newPassword2}
+                    onChange={updateNewPassword2}
                     labelText="Re-enter your new password"
-                    id="new-password"
+                    id="new-password-2"
                     formControlProps={{
                       fullWidth: true,
+                    }}
+                    inputProps={{
+                      type: "text"
                     }}
                   />
                 </GridItem>
@@ -103,11 +175,9 @@ function ChangePassword() {
             </CardBody>
 
             <CardFooter>
-              <Button color="primary">Update Password</Button>
+              <Button color="primary" onClick={handlePassChange}>Update Password</Button>
             </CardFooter>
-
           </Card>
-
         </GridItem>
 
         <GridItem xs={12} sm={12} md={4}>

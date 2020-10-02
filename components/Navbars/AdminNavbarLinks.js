@@ -1,5 +1,9 @@
 import React from "react";
 import classNames from "classnames";
+import Router from "next/router"
+//redux app state management
+import { connect } from "react-redux"
+import { setInfo } from "../../redux/action/main"
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -24,11 +28,19 @@ import styles from "assets/jss/nextjs-material-dashboard/components/headerLinksS
 
 const useStyles = makeStyles(styles);
 
-export default function AdminNavbarLinks() {
+const mapStateToProps = state => ({
+  userInfo: state.main
+})
+const mapDispatchToProps = {
+  logout: setInfo
+}
+
+function AdminNavbarLinks(props) {
   const size = useWindowSize();
   const classes = useStyles();
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
+  const {userInfo, setInfo} = props
   const handleClickNotification = (event) => {
     if (openNotification && openNotification.contains(event.target)) {
       setOpenNotification(null);
@@ -49,6 +61,19 @@ export default function AdminNavbarLinks() {
   const handleCloseProfile = () => {
     setOpenProfile(null);
   };
+
+  //Logs user out upon clicking logout
+  const handleLogout = () => {
+    handleCloseProfile()
+    setInfo
+    Router.push('login')
+  }
+
+  const handleUserProfile = () => {
+    handleCloseProfile()
+    Router.push('admin-profile')
+  }
+
   return (
     <div>
       <div className={classes.searchWrapper}>
@@ -201,7 +226,7 @@ export default function AdminNavbarLinks() {
                   <MenuList role="menu">
                     
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={handleUserProfile}
                       className={classes.dropdownItem}
                     >
                       Profile
@@ -218,7 +243,7 @@ export default function AdminNavbarLinks() {
                     <Divider light />
 
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={handleLogout}
                       className={classes.dropdownItem}
                     >
                       Logout
@@ -234,3 +259,5 @@ export default function AdminNavbarLinks() {
     </div>
   );
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminNavbarLinks);

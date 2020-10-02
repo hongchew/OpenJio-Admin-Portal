@@ -30,16 +30,10 @@ const useStyles = makeStyles(styles);
 const mapStateToProps = state => ({
   userInfo: state.main
 })
+//console.log('userInfo saved is: ' + userInfo)
+
 const mapDispatchToProps = {
   setInfo: setInfo
-}
-
-toast.configure()
-const welcome = () => {
-  toast.success('Welcome back ${}', {
-    position: toast.POSITION.TOP_CENTER,
-    autoClose: 3000
-  })
 }
 
 function Dashboard() {
@@ -49,6 +43,15 @@ function Dashboard() {
   useEffect(() => {
     welcome()
   }, []);
+  
+  toast.configure()
+  const welcome = () => {
+    toast.success(`Welcome back ${'asd'}`, {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000
+    })
+  }
+
 
   return (
     <div>
