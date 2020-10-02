@@ -168,7 +168,9 @@ function AdminProfile() {
             <CardFooter>
               <Button color="primary">Update Profile</Button>
               <Button color="primary">
-                <Link href="/admin/user-profile-password">Change password</Link>
+                <Link href="admin-profile-password">
+                  <a>Change password</a>
+                </Link>
               </Button>
             </CardFooter>
           </Card>

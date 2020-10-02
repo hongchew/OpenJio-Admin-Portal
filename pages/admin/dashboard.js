@@ -21,10 +21,7 @@ import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import CardBody from 'components/Card/CardBody.js';
 
-// import {store} from 'redux/store';
-
 import {supportTickets, complaints} from 'variables/general.js';
-
 import styles from 'assets/jss/nextjs-material-dashboard/views/dashboardStyle.js';
 
 const useStyles = makeStyles(styles);
@@ -33,7 +30,10 @@ const mapStateToProps = (state) => ({
   userInfo: state.main,
 });
 
-// const state = store.getState();
+// const mapStateToProps = (state) => ({
+//   authToken: state.currentUser && state.currentUser.authToken,
+//   items: state.items,
+// });
 
 const mapDispatchToProps = {
   setInfo: setInfo,
@@ -54,6 +54,14 @@ function Dashboard() {
   useEffect(() => {
     welcome();
   }, []);
+
+  toast.configure();
+  const welcome = () => {
+    toast.success(`Welcome back ${'asd'}`, {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+    });
+  };
 
   return (
     <div>

@@ -54,7 +54,7 @@ function LoginPage(props) {
 
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
-  const {setInfo} = props
+  const {userInfo, setInfo} = props
 
   const updateEmail = e => {
     e.preventDefault()
@@ -78,7 +78,6 @@ function LoginPage(props) {
         password: password
       })
       console.log(response.data)
-      console.log(response.data.name)
       setInfo(response.data)
       Router.push('dashboard')
     } catch (error) {
