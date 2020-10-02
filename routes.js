@@ -38,41 +38,41 @@ const dashboardRoutes = [
 
     layout: '/admin',
   },
-  // {
-  //   path: "/table-list",
-  //   name: "Table List",
-  //   icon: "content_paste",
+  {
+    path: '/table-list',
+    name: 'Table List',
+    icon: 'content_paste',
 
-  //   layout: "/admin",
-  // },
-  // {
-  //   path: "/typography",
-  //   name: "Typography",
-  //   icon: LibraryBooks,
+    layout: '/admin',
+  },
+  {
+    path: '/typography',
+    name: 'Typography',
+    icon: LibraryBooks,
 
-  //   layout: "/admin",
-  // },
-  // {
-  //   path: "/icons",
-  //   name: "Icons",
-  //   icon: BubbleChart,
+    layout: '/admin',
+  },
+  {
+    path: '/icons',
+    name: 'Icons',
+    icon: BubbleChart,
 
-  //   layout: "/admin",
-  // },
-  // {
-  //   path: "/maps",
-  //   name: "Maps",
-  //   icon: LocationOn,
+    layout: '/admin',
+  },
+  {
+    path: '/maps',
+    name: 'Maps',
+    icon: LocationOn,
 
-  //   layout: "/admin",
-  // },
-  // {
-  //   path: "/notifications",
-  //   name: "Notifications",
-  //   icon: Notifications,
+    layout: '/admin',
+  },
+  {
+    path: '/notifications',
+    name: 'Notifications',
+    icon: Notifications,
 
-  //   layout: "/admin",
-  // },
+    layout: '/admin',
+  },
 ];
 
 export default dashboardRoutes;

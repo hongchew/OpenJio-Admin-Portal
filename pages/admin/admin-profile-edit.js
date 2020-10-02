@@ -1,13 +1,13 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 // layout for this page
 import Admin from 'layouts/Admin.js';
-
 //redux app state management
 import {connect} from 'react-redux';
 import {setInfo} from '../../redux/action/main';
+import {toast} from 'react-toastify';
 // core components
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
@@ -20,8 +20,6 @@ import CardBody from 'components/Card/CardBody.js';
 import CardFooter from 'components/Card/CardFooter.js';
 import Primary from 'components/Typography/Primary.js';
 import Router from 'next/router';
-
-import Link from 'next/link';
 
 import CeoAvatar from 'assets/img/faces/tanwk.png';
 
@@ -52,16 +50,78 @@ const styles = {
   },
 };
 
-//API call to update
-async function updateProfile() {
-  Router.push('admin-profile-edit-form');
-}
-
 const useStyles = makeStyles(styles);
 
-function AdminProfile(props) {
-  const {userInfo} = props;
+function AdminProfileEdit(props) {
   const classes = useStyles();
+
+  const {userInfo, setInfo} = props;
+  const [name, setName] = useState(props.userInfo.name);
+  const [email, setEmail] = useState(props.userInfo.email);
+
+  const updateName = (e) => {
+    e.preventDefault();
+    console.log('Input is updating');
+    const name = e.target.value;
+    setName(name);
+    console.log('Updated name is ' + name);
+  };
+
+  const updateEmail = (e) => {
+    e.preventDefault();
+    console.log('Input is updating');
+    const email = e.target.value;
+    setEmail(email);
+    console.log('Updated email is ' + email);
+  };
+
+  // useEffect(() => {
+  //   setName(userInfo.name);
+  //   setEmail(userInfo.email);
+  // });
+
+  async function handleUpdateProfile() {
+    try {
+      console.log('handle update profile');
+      if (!name) {
+        errorNotify('Name field is empty');
+        throw 'Name field is blank';
+      } else if (!email) {
+        errorNotify('Email field is empty');
+        throw 'Email field is blank';
+      }
+      console.log('Call update profile API');
+      const response = await axios.put(
+        'http://localhost:3000/admins/update-admin',
+        {
+          admin: {
+            adminId: userInfo.adminId,
+            name: name,
+            email: email,
+          },
+        }
+      );
+      setInfo(response.data);
+      successNotify();
+      Router.push('admin-profile');
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  toast.configure();
+  const errorNotify = (err) => {
+    toast.error(err, {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+    });
+  };
+  const successNotify = () => {
+    toast.success('Password is successfully changed.', {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+    });
+  };
 
   return (
     <div>
@@ -70,76 +130,66 @@ function AdminProfile(props) {
           <Card>
             <CardHeader color="info">
               <h4
-                className={classes.cardTitleWhite}
-                style={{textAlign: 'center'}}>
+                style={{textAlign: 'center'}}
+                className={classes.cardTitleWhite}>
                 Profile
               </h4>
             </CardHeader>
             <CardBody>
-              <br />
               <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <CardHeader color="success">
-                    <h4
+                <GridItem xs={12} sm={12} md={6}>
+                  <br />
+                  <CardHeader color="primary">
+                    <h6
                       style={{textAlign: 'center'}}
                       className={classes.cardTitleWhite}>
                       Name
-                    </h4>
+                    </h6>
                   </CardHeader>
-                  <h6 style={{textAlign: 'center'}}>{userInfo.name}</h6>
+                  <CustomInput
+                    name="name"
+                    value={name}
+                    onChange={updateName}
+                    id="name"
+                    formControlProps={{
+                      fullWidth: true,
+                    }}
+                    inputProps={{
+                      type: 'text',
+                    }}
+                  />
                 </GridItem>
               </GridContainer>
               <br />
+
               <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <CardHeader color="success">
-                    <h4
+                <GridItem xs={12} sm={12} md={6}>
+                  <CardHeader color="primary">
+                    <h6
                       style={{textAlign: 'center'}}
                       className={classes.cardTitleWhite}>
                       Email
-                    </h4>
+                    </h6>
                   </CardHeader>
-                  <h6 style={{textAlign: 'center'}}>{userInfo.email}</h6>
-                </GridItem>
-              </GridContainer>
-              <br />
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <CardHeader color="success">
-                    <h4
-                      style={{textAlign: 'center'}}
-                      className={classes.cardTitleWhite}>
-                      Admin Type
-                    </h4>
-                  </CardHeader>
-                  <h6 style={{textAlign: 'center'}}>{userInfo.adminType}</h6>
-                </GridItem>
-              </GridContainer>
-              <br />
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <CardHeader color="success">
-                    <h4
-                      style={{textAlign: 'center'}}
-                      className={classes.cardTitleWhite}>
-                      Password
-                    </h4>
-                  </CardHeader>
-                  <h6 style={{textAlign: 'center'}}>***************</h6>
+                  <CustomInput
+                    name="email"
+                    value={email}
+                    onChange={updateEmail}
+                    id="email"
+                    formControlProps={{
+                      fullWidth: true,
+                    }}
+                    inputProps={{
+                      type: 'text',
+                    }}
+                  />
                 </GridItem>
               </GridContainer>
             </CardBody>
 
             <CardFooter>
-              <Button color="info">
-                <Link href="admin-profile-edit">
-                  <a id="editProfileBut">Edit Profile</a>
-                </Link>
-              </Button>
-              <Button color="info">
-                <Link href="admin-profile-password">
-                  <a id="changePassBut">Change password</a>
-                </Link>
+              <Button color="info" onClick={handleUpdateProfile}>
+                Confirm
               </Button>
             </CardFooter>
           </Card>
@@ -155,7 +205,7 @@ function AdminProfile(props) {
 
             <CardBody profile>
               <strong className={classes.cardTitle}>{userInfo.name}</strong>
-              <Primary className={classes.cardTitle} onClick={updateProfile}>
+              <Primary className={classes.cardTitle}>
                 <b>{userInfo.adminType}</b>
               </Primary>
               <br></br>
@@ -173,6 +223,6 @@ function AdminProfile(props) {
   );
 }
 
-AdminProfile.layout = Admin;
+AdminProfileEdit.layout = Admin;
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminProfileEdit);
