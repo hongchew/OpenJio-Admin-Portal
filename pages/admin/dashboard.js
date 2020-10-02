@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 //redux app state management
-import {connect} from 'react-redux';
-import {setInfo} from '../../redux/action/main';
+
+import { connect } from "react-redux";
+import { setInfo } from "../../redux/action/main";
 // @material-ui/core
 import {makeStyles} from '@material-ui/core/styles';
 // @material-ui/icons
