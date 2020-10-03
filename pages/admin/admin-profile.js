@@ -91,7 +91,7 @@ function AdminProfile(props) {
               </GridContainer>
               <br />
               <GridContainer>
-                <GridItem xs={12} sm={12} md={8}>
+                <GridItem xs={12} sm={12} md={12}>
                   <CardHeader color="success">
                     <h4
                       style={{textAlign: 'center'}}

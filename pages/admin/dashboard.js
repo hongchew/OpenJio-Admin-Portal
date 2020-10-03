@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 //redux app state management
-import { connect } from "react-redux";
-import { setInfo } from "../../redux/action/main";
+import {connect} from 'react-redux';
+import {setInfo} from '../../redux/action/main';
 // @material-ui/core
 import {makeStyles} from '@material-ui/core/styles';
 // @material-ui/icons
@@ -27,19 +27,35 @@ import styles from 'assets/jss/nextjs-material-dashboard/views/dashboardStyle.js
 
 const useStyles = makeStyles(styles);
 
-
-const mapStateToProps = state => ({
-  userInfo: state.main
-})
+const mapStateToProps = (state) => ({
+  userInfo: state.main,
+});
 
 function Dashboard(props) {
   const classes = useStyles();
   const {userInfo} = props;
+  const [blacklistedUsers, setBlacklistedUsers] = useState();
 
   //For welcome notification when page first renders
   useEffect(() => {
+    console.log('im in');
     welcome();
-  },[]);
+    retrieveUsers();
+  }, []);
+
+  const retrieveUsers = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/users/');
+      const body = response.data;
+      //Get only blacklisted users
+      const blacklisted = body.filter(function (user) {
+        return user.isBlackListed === true;
+      });
+      setBlacklistedUsers(blacklisted);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   toast.configure();
   const welcome = () => {
@@ -49,6 +65,45 @@ function Dashboard(props) {
     });
     console.log('userInfo saved is: ');
     console.log(userInfo);
+  };
+
+  const renderTableHeader = () => {
+    let headerElement = ['Name', 'Email', 'Strike Count'];
+
+    return headerElement.map((key, index) => {
+      return <th key={index}></th>;
+    });
+  };
+
+  //return blacklisted users' name, email and strike count
+  const selectCol = (user) => {
+    return [user.name, user.email, user.strikeCount];
+  };
+
+  // Render table body
+  const renderTableBody = () => {
+    // return (
+    //   blacklistedUsers &&
+    //   blacklistedUsers.map(({userId, name, email, strikeCount}) => {
+    //     return (
+    //       <tr key={userId}>
+    //         <td>{name}</td>
+    //         <td>{email}</td>
+    //         <td>{strikeCount}</td>
+    //         <td className="operation">
+    //           <Button
+    //             variant="contained"
+    //             color="danger"
+    //             className={classes.button}
+    //             startIcon={<DeleteIcon />}>
+    //             Remove
+    //           </Button>
+    //         </td>
+    //       </tr>
+    //     );
+    //   })
+    // );
+    return blacklistedUsers && blacklistedUsers.map(selectCol);
   };
 
   return (
@@ -61,15 +116,14 @@ function Dashboard(props) {
             </CardHeader>
             <CardBody>
               <Table
-                tableHeaderColor="primary"
+                tableHeaderColor="danger"
                 tableHead={['Name', 'Admin Type']}
                 tableData={[
-                  ['Sylvest', 'Super Admin'],
-                  ['Cheng Yang', 'Admin'],
-                  ['Yizhao', 'Admin'],
-                  ['Hong Chew', 'Admin'],
-                  ['Ying Hui', 'Admin'],
-                  ['Shu Qing', 'Admin'],
+                  ['User A', '2'],
+                  ['User B', '3'],
+                  ['User C', '1'],
+                  ['User D', '2'],
+                  ['User E', '3'],
                 ]}
               />
             </CardBody>
@@ -81,17 +135,11 @@ function Dashboard(props) {
               <h4 className={classes.cardTitleWhite}>Blacklisted Users</h4>
             </CardHeader>
             <CardBody>
-              <Table
+              {/* <Table
                 tableHeaderColor="danger"
-                tableHead={['Name', 'Strike Count']}
-                tableData={[
-                  ['User A', '2'],
-                  ['User B', '3'],
-                  ['User C', '1'],
-                  ['User D', '2'],
-                  ['User E', '3'],
-                ]}
-              />
+                tableHead={['Name', 'Email', 'Strike Count']}
+                tableData={renderTableBody()}
+              /> */}
             </CardBody>
           </Card>
         </GridItem>

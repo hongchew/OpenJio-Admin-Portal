@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios'
+import axios from 'axios';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -9,7 +9,6 @@ import Admin from 'layouts/Admin.js';
 import {connect} from 'react-redux';
 import {setInfo} from '../../redux/action/main';
 import {toast} from 'react-toastify';
-import axios from 'axios';
 import Link from 'next/link';
 
 import Email from '@material-ui/icons/Email';

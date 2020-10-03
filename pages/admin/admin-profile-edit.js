@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios'
+import axios from 'axios';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 // layout for this page
-import axios from 'axios';
 import Admin from 'layouts/Admin.js';
 //redux app state management
 import {connect} from 'react-redux';
@@ -91,12 +90,12 @@ function AdminProfileEdit(props) {
       const response = await axios.put(
         'http://localhost:3000/admins/update-admin',
         {
-            adminId: userInfo.adminId,
-            name: name,
-            email: email
+          adminId: userInfo.adminId,
+          name: name,
+          email: email,
         }
       );
-      console.log('change success!')
+      console.log('change success!');
       setInfo(response.data);
       successNotify();
       Router.push('admin-profile');

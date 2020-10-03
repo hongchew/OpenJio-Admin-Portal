@@ -22,12 +22,8 @@ import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import BubbleChart from '@material-ui/icons/BubbleChart';
 import LocationOn from '@material-ui/icons/LocationOn';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-<<<<<<< HEAD
 import Notifications from '@material-ui/icons/Notifications';
-=======
-import Notifications from "@material-ui/icons/Notifications";
 import MoodBadIcon from '@material-ui/icons/MoodBad';
->>>>>>> 7cb2c419fa9f794874e27307cb159fe8878995ce
 
 const dashboardRoutes = [
   {
@@ -52,16 +48,16 @@ const dashboardRoutes = [
     layout: '/admin',
   },
   {
-    path: "/blacklist",
-    name: "Blacklist Management",
+    path: '/blacklist',
+    name: 'Blacklist Management',
     icon: MoodBadIcon,
 
-    layout: "/admin",
+    layout: '/admin',
   },
   {
-    path: "/table-list",
-    name: "Table List",
-    icon: "content_paste",
+    path: '/table-list',
+    name: 'Table List',
+    icon: 'content_paste',
 
     layout: '/admin',
   },
@@ -92,7 +88,7 @@ const dashboardRoutes = [
     icon: Notifications,
 
     layout: '/admin',
-  }
+  },
 ];
 
 export default dashboardRoutes;
