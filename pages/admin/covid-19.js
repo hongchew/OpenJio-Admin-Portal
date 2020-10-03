@@ -128,12 +128,7 @@ function Covid19() {
                 variant="contained"
                 color="success"
                 className={classes.button}
-                startIcon={<VisibilityIcon />}>
-                <Link
-                  href={{pathname: '/specific-covid-19', 
-                  query: {userId: 'userId'}}}>
-                  <a>View</a>
-                </Link>
+                startIcon={<VisibilityIcon />}>View
               </Button>
             </td>
           </tr>
