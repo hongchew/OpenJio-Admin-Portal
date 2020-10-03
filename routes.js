@@ -22,11 +22,7 @@ import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import BubbleChart from '@material-ui/icons/BubbleChart';
 import LocationOn from '@material-ui/icons/LocationOn';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-<<<<<<< HEAD
 import Notifications from '@material-ui/icons/Notifications';
-=======
-import Notifications from "@material-ui/icons/Notifications";
->>>>>>> b338ec9f249b9e8596be657301d3807c8fb1d0cb
 import MoodBadIcon from '@material-ui/icons/MoodBad';
 
 const dashboardRoutes = [

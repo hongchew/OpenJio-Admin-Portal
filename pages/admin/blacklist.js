@@ -5,7 +5,7 @@ import axios from 'axios';
 import {makeStyles} from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 // import Edit from "@material-ui/icons/Edit";
-import Close from "@material-ui/icons/Close";
+import Close from '@material-ui/icons/Close';
 // Toast alert
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,13 +13,13 @@ import 'react-toastify/dist/ReactToastify.css';
 // layout for this page
 import Admin from 'layouts/Admin.js';
 // core components
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import Table from "components/Table/Table.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
-import Button from "components/CustomButtons/Button.js";
+import GridItem from 'components/Grid/GridItem.js';
+import GridContainer from 'components/Grid/GridContainer.js';
+import Table from 'components/Table/Table.js';
+import Card from 'components/Card/Card.js';
+import CardHeader from 'components/Card/CardHeader.js';
+import CardBody from 'components/Card/CardBody.js';
+import Button from 'components/CustomButtons/Button.js';
 
 // Styles section
 const styles = {
@@ -60,12 +60,7 @@ function BlacklistManagement() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-<<<<<<< HEAD
     retrieveUsers();
-    console.log(users);
-=======
-    retrieveUsers()
->>>>>>> b338ec9f249b9e8596be657301d3807c8fb1d0cb
   }, []);
 
   //Retrieve all users when page first renders using useEffect
@@ -83,31 +78,34 @@ function BlacklistManagement() {
     }
   };
 
-  async function editBlacklistedUser (userId, name) {
-      try {
-        console.log(users)
-        const afterRemovalList = users.filter((user) => userId !== user.userId)
-        console.log(`Users left in the blacklist are: ${JSON.stringify(afterRemovalList)}`)
-        const userToUpdate = users.filter((user) => userId === user.userId)[0]
-        console.log(`User to update blacklist is: ${JSON.stringify(userToUpdate)}`)
-        //clearing the blacklist and strike counts
-        const updatedUser = updateUser(userToUpdate)
-        console.log(`User value updated to: ${JSON.stringify(updatedUser)}`)
-        console.log('Calling edit user API')
-        axios.put('http://localhost:3000/users/update-user-details', updatedUser)
-        console.log('user successfully removed')
-        setUsers(afterRemovalList)
-        editSuccessfulAlert(name)
-
-      } catch(error) {
-          console.log(error)
-      }
+  async function editBlacklistedUser(userId, name) {
+    try {
+      console.log(users);
+      const afterRemovalList = users.filter((user) => userId !== user.userId);
+      console.log(
+        `Users left in the blacklist are: ${JSON.stringify(afterRemovalList)}`
+      );
+      const userToUpdate = users.filter((user) => userId === user.userId)[0];
+      console.log(
+        `User to update blacklist is: ${JSON.stringify(userToUpdate)}`
+      );
+      //clearing the blacklist and strike counts
+      const updatedUser = updateUser(userToUpdate);
+      console.log(`User value updated to: ${JSON.stringify(updatedUser)}`);
+      console.log('Calling edit user API');
+      axios.put('http://localhost:3000/users/update-user-details', updatedUser);
+      console.log('user successfully removed');
+      setUsers(afterRemovalList);
+      editSuccessfulAlert(name);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function updateUser(userToUpdate) {
-      userToUpdate.isBlackListed = false
-      userToUpdate.strikeCount = 0
-      return userToUpdate
+    userToUpdate.isBlackListed = false;
+    userToUpdate.strikeCount = 0;
+    return userToUpdate;
   }
 
   const editUserBlacklist = (userId, name) => {
@@ -148,8 +146,7 @@ function BlacklistManagement() {
                 color="danger"
                 className={classes.button}
                 startIcon={<DeleteIcon />}
-                onClick={() => editBlacklistedUser(userId, name)}
-              >
+                onClick={() => editBlacklistedUser(userId, name)}>
                 Remove
               </Button>
             </td>
@@ -171,9 +168,7 @@ function BlacklistManagement() {
 
   const classes = useStyles();
 
-  const buttons = [
-    { color: "danger", icon: Close },
-  ].map((prop, key) => {
+  const buttons = [{color: 'danger', icon: Close}].map((prop, key) => {
     return (
       <Button color={prop.color} className={classes.actionButton} key={key}>
         <prop.icon className={classes.icon} />
