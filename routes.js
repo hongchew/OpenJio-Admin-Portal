@@ -56,11 +56,11 @@ const dashboardRoutes = [
     layout: '/admin',
   },
   {
-    path: "/covid-19",
-    name: "Covid-19 Management",
+    path: '/covid-19',
+    name: 'Covid-19 Management',
     icon: HealthcareIcon,
 
-    layout: "/admin",
+    layout: '/admin',
   },
   /*
   {

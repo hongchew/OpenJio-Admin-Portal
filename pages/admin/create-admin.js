@@ -141,7 +141,7 @@ function CreateAdmin(props) {
         e != 'Email field is blank' ||
         e != 'Name field is blank'
       ) {
-        e = 'Failed to create admin';
+        e = 'Email is in use';
       }
       errorNotify(e);
 
@@ -247,8 +247,8 @@ function CreateAdmin(props) {
                   <select
                     style={{alignItems: 'center'}}
                     id="adminType"
-                    name="adminType"
                     value={adminType}
+                    name="adminType"
                     onChange={updateAdminType}>
                     <option value="SUPER_ADMIN">Super Admin</option>
                     <option value="ADMIN">Admin</option>
