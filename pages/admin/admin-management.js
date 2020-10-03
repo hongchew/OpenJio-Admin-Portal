@@ -68,10 +68,10 @@ function AdminManagement() {
   // const [currentIndex, setCurrentIndex] = useState(-1);
 
   useEffect(() => {
-    if (userInfo.adminId === '') {
-      Router.push('login');
-      return;
-    }
+    // if (userInfo.adminId === '') {
+    //   Router.push('login');
+    //   return;
+    // }
     retrieveAdmins();
   }, []);
 

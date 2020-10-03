@@ -125,7 +125,7 @@ function Dashboard(props) {
             <CardBody>
               <Table
                 tableHeaderColor="danger"
-                tableHead={['Name', 'Email', 'Admin Type']}
+                tableHead={['Name', 'Email', 'Strike Count']}
                 tableData={blacklistedUsers.map(selectCol)}
               />
             </CardBody>

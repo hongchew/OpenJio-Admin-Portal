@@ -32,12 +32,12 @@ const mapStateToProps = (state) => ({
   userInfo: state.main,
 });
 
-useEffect(() => {
-  if (userInfo.adminId === '') {
-    Router.push('login');
-    return;
-  }
-}, []);
+// useEffect(() => {
+//   if (userInfo.adminId === '') {
+//     Router.push('login');
+//     return;
+//   }
+// }, []);
 
 const styles = {
   cardCategoryWhite: {
