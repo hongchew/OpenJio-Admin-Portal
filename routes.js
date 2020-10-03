@@ -54,7 +54,7 @@ const dashboardRoutes = [
 
     layout: '/admin',
   },
-  {
+  /*{
     path: '/table-list',
     name: 'Table List',
     icon: 'content_paste',
@@ -88,7 +88,7 @@ const dashboardRoutes = [
     icon: Notifications,
 
     layout: '/admin',
-  },
+  },*/
 ];
 
 export default dashboardRoutes;

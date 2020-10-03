@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -42,12 +44,21 @@ function ResetPassword(props) {
       const response = await axios.put('http://localhost:3000/admins/reset-password', {
         email: email
       })
-      console.log('password reset successful')
+      notify()
       console.log(response)
     } catch (error) {
       console.error(error)
     }
   }
+
+  // To enable toast notifications
+  toast.configure()
+  const notify = () => {
+    toast.success('Password reset successful, please check your email', {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000
+    })
+  }   
 
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
   setTimeout(function() {

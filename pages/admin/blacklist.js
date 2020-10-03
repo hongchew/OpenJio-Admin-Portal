@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import Link from 'next/router'
 import axios from 'axios';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
@@ -106,17 +106,6 @@ function BlacklistManagement() {
     return userToUpdate;
   }
 
-  const editUserBlacklist = (userId, name) => {
-    let deleteHttpReq = `http://localhost:3000/users/${userId}`;
-
-    axios.put(deleteHttpReq).then(() => {
-      // Or retrieveAdmins after deleting
-      const afterEditList = users.filter((user) => userId !== user.userId);
-      setUsers(afterEditList);
-      editSuccessfulAlert(name);
-      console.log(users);
-    });
-  };
   const renderTableHeader = () => {
     let headerElement = ['Name', 'Email', 'Mobile Number', 'Strike Count'];
 
@@ -132,16 +121,27 @@ function BlacklistManagement() {
       users.map(({userId, name, email, mobileNumber, strikeCount}) => {
         return (
           <tr key={userId}>
-            <td>{name}</td>
+            <td>
+              {name}
+            </td>
             <td>{email}</td>
             <td>{mobileNumber}</td>
             <td>{strikeCount}</td>
-
+            <td className="operation">
+              <Button 
+                simple 
+                color="primary" 
+                size="lg"
+                href="blacklist-user">
+                  View
+              </Button>
+            </td>
             <td className="operation">
               <Button
+                simple
                 size="lg"
-                variant="contained"
                 color="danger"
+                variant="contained"
                 className={classes.button}
                 startIcon={<DeleteIcon />}
                 onClick={() => editBlacklistedUser(userId, name)}>
@@ -153,7 +153,6 @@ function BlacklistManagement() {
       })
     );
   };
-  // End of rendering table
 
   // To enable toast notifications
   toast.configure();
