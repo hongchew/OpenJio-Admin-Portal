@@ -5,8 +5,6 @@ import axios from 'axios';
 import {makeStyles} from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-// import Edit from "@material-ui/icons/Edit";
-// import Close from '@material-ui/icons/Close';
 import Chip from '@material-ui/core/Chip';
 
 // Toast alert
