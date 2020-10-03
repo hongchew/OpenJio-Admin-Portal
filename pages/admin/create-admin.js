@@ -133,7 +133,7 @@ function CreateAdmin(props) {
       );
       console.log(response.data);
       successNotify();
-      Router.push('create-admin');
+      Router.push('admin-management');
     } catch (e) {
       if (
         e != 'Password is empty' ||
