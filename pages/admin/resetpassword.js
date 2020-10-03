@@ -47,6 +47,7 @@ function ResetPassword(props) {
       notify()
       console.log(response)
     } catch (error) {
+      failednotify()
       console.error(error)
     }
   }
@@ -55,6 +56,12 @@ function ResetPassword(props) {
   toast.configure()
   const notify = () => {
     toast.success('Password reset successful, please check your email', {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000
+    })
+  }
+  const failednotify = () => {
+    toast.error('Email is invalid.', {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 3000
     })
