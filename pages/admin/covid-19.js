@@ -22,7 +22,7 @@ import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import CardBody from 'components/Card/CardBody.js';
 import Button from 'components/CustomButtons/Button.js';
-import { method } from 'lodash';
+import {method} from 'lodash';
 
 // Styles section
 const styles = {
@@ -37,6 +37,9 @@ const styles = {
     '& a,& a:hover,& a:focus': {
       color: '#FFFFFF',
     },
+  },
+  a: {
+    color: '#FFFFFF',
   },
   cardTitleWhite: {
     color: '#FFFFFF',
@@ -67,7 +70,6 @@ function Covid19() {
   }, []);
 
   const retrieveCovidUsers = () => {
-
     covidUserService
       .getAllCovidUserAccounts()
       .then((response) => {
@@ -78,21 +80,6 @@ function Covid19() {
         console.log(e);
       });
   };
-
-  // // Delete method
-  // const deleteAdminAccount = (adminId, name) => {
-  //   let deleteHttpReq = `http://localhost:3000/admins/${adminId}`;
-
-  //   axios.delete(deleteHttpReq).then((res) => {
-  //     // Or retrieveAdmins after deleting
-  //     const afterDeleteList = admins.filter(
-  //       (admin) => adminId !== admin.adminId
-  //     );
-  //     setAdmins(afterDeleteList);
-  //     deleteSuccessfulAlert(name);
-  //     console.log('res', res);
-  //   });
-  // };
 
   // Direct to individual case (dynamically created)
   // const viewSpecificCase = async (userId) => {
@@ -130,22 +117,23 @@ function Covid19() {
             <td>{name}</td>
             <td>{email}</td>
             <td>
-              <Chip label={new Date(updatedAt).toLocaleDateString('en-GB')} color="primary" />
+              <Chip
+                label={new Date(updatedAt).toLocaleDateString('en-GB')}
+                color="primary"
+              />
             </td>
 
             <td className="operation">
-              {/* onClick={() => viewSpecificCase(userId)} */}
               <Button
                 variant="contained"
                 color="success"
                 className={classes.button}
-                startIcon={<VisibilityIcon />}
-                href={{
-                  pathname: '/specific-covid-19/',
-                  query: {userId: userId}
-                }}
-                >
-                View
+                startIcon={<VisibilityIcon />}>
+                <Link
+                  href={{pathname: '/specific-covid-19', 
+                  query: {userId: 'userId'}}}>
+                  <a>View</a>
+                </Link>
               </Button>
             </td>
           </tr>
@@ -179,7 +167,6 @@ function Covid19() {
             </CardHeader>
 
             <CardBody>
-
               {/* Custom table */}
               <table id="covid-19-management-table" style={{width: '100%'}}>
                 <thead align="left">
@@ -188,7 +175,6 @@ function Covid19() {
 
                 <tbody>{renderTableBody()}</tbody>
               </table>
-
             </CardBody>
           </Card>
         </GridItem>
