@@ -112,7 +112,7 @@ function AdminProfileEdit(props) {
     });
   };
   const successNotify = () => {
-    toast.success('Password is successfully changed.', {
+    toast.success('User profile updated successfully!', {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 3000,
     });
