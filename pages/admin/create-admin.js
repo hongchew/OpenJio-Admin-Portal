@@ -58,7 +58,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-function AdminProfileEdit(props) {
+function CreateAdmin(props) {
   const [cardAnimaton, setCardAnimation] = React.useState('cardHidden');
   setTimeout(function () {
     setCardAnimation('');
@@ -70,7 +70,7 @@ function AdminProfileEdit(props) {
 
   const [name, setName] = useState();
   const [email, setEmail] = useState();
-  const [adminType, setAdminType] = useState();
+  const [adminType, setAdminType] = useState('SUPER_ADMIN');
   const [password, setPassword] = useState();
 
   const updateName = (e) => {
@@ -109,16 +109,16 @@ function AdminProfileEdit(props) {
     try {
       console.log('handle create admin');
       if (!name) {
-        errorNotify('Name field is empty');
+        // errorNotify('Name field is empty');
         throw 'Name field is blank';
       } else if (!email) {
-        errorNotify('Email field is empty');
+        // errorNotify('Email field is empty');
         throw 'Email field is blank';
       } else if (!adminType) {
-        errorNotify('Admin Type field is empty');
+        // errorNotify('Admin Type field is empty');
         throw 'Admin Type field is empty';
       } else if (!password) {
-        errorNotify('Password is empty');
+        // errorNotify('Password is empty');
         throw 'Password is empty';
       }
       console.log('Call create admin profile');
@@ -133,8 +133,18 @@ function AdminProfileEdit(props) {
       );
       console.log(response.data);
       successNotify();
-      Router.push('create-admin');
+      Router.push('admin-management');
     } catch (e) {
+      if (
+        e != 'Password is empty' ||
+        e != 'Admin Type field is empty' ||
+        e != 'Email field is blank' ||
+        e != 'Name field is blank'
+      ) {
+        e = 'Failed to create admin';
+      }
+      errorNotify(e);
+
       console.error(e);
     }
   }
@@ -232,15 +242,18 @@ function AdminProfileEdit(props) {
                 />
                 <br />
                 <br />
-                <label for="adminType">Admin Type: </label>
-                <select
-                  id="adminType"
-                  name="adminType"
-                  value={adminType}
-                  onChange={updateAdminType}>
-                  <option value="SUPER_ADMIN">Super Admin</option>
-                  <option value="ADMIN">Admin</option>
-                </select>
+                <label for="adminType">Admin Type</label>
+                <div class="search_categories">
+                  <select
+                    style={{alignItems: 'center'}}
+                    id="adminType"
+                    name="adminType"
+                    value={adminType}
+                    onChange={updateAdminType}>
+                    <option value="SUPER_ADMIN">Super Admin</option>
+                    <option value="ADMIN">Admin</option>
+                  </select>
+                </div>
               </CardBody>
               <CardFooter className={classes.cardFooter}>
                 <Button
@@ -259,6 +272,6 @@ function AdminProfileEdit(props) {
   );
 }
 
-AdminProfileEdit.layout = Admin;
+CreateAdmin.layout = Admin;
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminProfileEdit);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateAdmin);

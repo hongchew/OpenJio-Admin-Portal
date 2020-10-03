@@ -21,6 +21,8 @@ import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import CardBody from 'components/Card/CardBody.js';
 
+import axios from 'axios';
+
 import {supportTickets, complaints} from 'variables/general.js';
 
 import styles from 'assets/jss/nextjs-material-dashboard/views/dashboardStyle.js';
@@ -34,23 +36,39 @@ const mapStateToProps = (state) => ({
 function Dashboard(props) {
   const classes = useStyles();
   const {userInfo} = props;
-  const [blacklistedUsers, setBlacklistedUsers] = useState();
+  const [blacklistedUsers, setBlacklistedUsers] = useState([]);
+  const [admins, setAdmins] = useState([]);
 
   //For welcome notification when page first renders
   useEffect(() => {
-    console.log('im in');
     welcome();
-    retrieveUsers();
+    retrieveBlacklistedUsers();
+    retrieveAdmins();
   }, []);
 
-  const retrieveUsers = async () => {
+  const retrieveAdmins = async () => {
     try {
+      const response = await axios.get(
+        'http://localhost:3000/admins/retrieve-all'
+      );
+      const body = response.data;
+      console.log(body);
+      setAdmins(body);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const retrieveBlacklistedUsers = async () => {
+    try {
+      console.log('calling API');
       const response = await axios.get('http://localhost:3000/users/');
       const body = response.data;
       //Get only blacklisted users
       const blacklisted = body.filter(function (user) {
         return user.isBlackListed === true;
       });
+      console.log(blacklisted);
       setBlacklistedUsers(blacklisted);
     } catch (error) {
       console.error(error);
@@ -67,43 +85,13 @@ function Dashboard(props) {
     console.log(userInfo);
   };
 
-  const renderTableHeader = () => {
-    let headerElement = ['Name', 'Email', 'Strike Count'];
-
-    return headerElement.map((key, index) => {
-      return <th key={index}></th>;
-    });
-  };
-
   //return blacklisted users' name, email and strike count
   const selectCol = (user) => {
     return [user.name, user.email, user.strikeCount];
   };
 
-  // Render table body
-  const renderTableBody = () => {
-    // return (
-    //   blacklistedUsers &&
-    //   blacklistedUsers.map(({userId, name, email, strikeCount}) => {
-    //     return (
-    //       <tr key={userId}>
-    //         <td>{name}</td>
-    //         <td>{email}</td>
-    //         <td>{strikeCount}</td>
-    //         <td className="operation">
-    //           <Button
-    //             variant="contained"
-    //             color="danger"
-    //             className={classes.button}
-    //             startIcon={<DeleteIcon />}>
-    //             Remove
-    //           </Button>
-    //         </td>
-    //       </tr>
-    //     );
-    //   })
-    // );
-    return blacklistedUsers && blacklistedUsers.map(selectCol);
+  const selectColAdmin = (admin) => {
+    return [admin.name, admin.email, admin.adminType];
   };
 
   return (
@@ -117,14 +105,8 @@ function Dashboard(props) {
             <CardBody>
               <Table
                 tableHeaderColor="danger"
-                tableHead={['Name', 'Admin Type']}
-                tableData={[
-                  ['User A', '2'],
-                  ['User B', '3'],
-                  ['User C', '1'],
-                  ['User D', '2'],
-                  ['User E', '3'],
-                ]}
+                tableHead={['Name', 'Email', 'Admin Type']}
+                tableData={admins.map(selectColAdmin)}
               />
             </CardBody>
           </Card>
@@ -135,11 +117,11 @@ function Dashboard(props) {
               <h4 className={classes.cardTitleWhite}>Blacklisted Users</h4>
             </CardHeader>
             <CardBody>
-              {/* <Table
+              <Table
                 tableHeaderColor="danger"
-                tableHead={['Name', 'Email', 'Strike Count']}
-                tableData={renderTableBody()}
-              /> */}
+                tableHead={['Name', 'Email', 'Admin Type']}
+                tableData={blacklistedUsers.map(selectCol)}
+              />
             </CardBody>
           </Card>
         </GridItem>
