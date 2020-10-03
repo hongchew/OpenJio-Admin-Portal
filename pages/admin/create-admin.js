@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios'
+import axios from 'axios';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -104,11 +104,6 @@ function AdminProfileEdit(props) {
     setPassword(password);
     console.log('Updated password is ' + password);
   };
-
-  // useEffect(() => {
-  //   setName(userInfo.name);
-  //   setEmail(userInfo.email);
-  // });
 
   async function handleCreateAdmin() {
     try {

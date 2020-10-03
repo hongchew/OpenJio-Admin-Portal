@@ -16,13 +16,13 @@
 
 */
 // @material-ui/icons
-import Dashboard from "@material-ui/icons/Dashboard";
-import Person from "@material-ui/icons/Person";
-import LibraryBooks from "@material-ui/icons/LibraryBooks";
-import BubbleChart from "@material-ui/icons/BubbleChart";
-import LocationOn from "@material-ui/icons/LocationOn";
+import Dashboard from '@material-ui/icons/Dashboard';
+import Person from '@material-ui/icons/Person';
+import LibraryBooks from '@material-ui/icons/LibraryBooks';
+import BubbleChart from '@material-ui/icons/BubbleChart';
+import LocationOn from '@material-ui/icons/LocationOn';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import Notifications from "@material-ui/icons/Notifications";
+import Notifications from '@material-ui/icons/Notifications';
 import MoodBadIcon from '@material-ui/icons/MoodBad';
 import HealthcareIcon from '@material-ui/icons/LocalHospital';
 
@@ -42,18 +42,18 @@ const dashboardRoutes = [
     layout: '/admin',
   },
   {
-    path: "/admin-management",
-    name: "Admin Management",
+    path: '/admin-management',
+    name: 'Admin Management',
     icon: SupervisorAccountIcon,
 
-    layout: "/admin",
+    layout: '/admin',
   },
   {
-    path: "/blacklist",
-    name: "Blacklist Management",
+    path: '/blacklist',
+    name: 'Blacklist Management',
     icon: MoodBadIcon,
 
-    layout: "/admin",
+    layout: '/admin',
   },
   {
     path: "/covid-19",
@@ -96,7 +96,7 @@ const dashboardRoutes = [
     icon: Notifications,
 
     layout: '/admin',
-  }
+  },
 ];
 
 export default dashboardRoutes;
