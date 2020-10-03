@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
 // layout for this page
 import Admin from 'layouts/Admin.js';
 //redux app state management
@@ -25,6 +24,11 @@ import CardAvatar from 'components/Card/CardAvatar.js';
 import CardBody from 'components/Card/CardBody.js';
 import CardFooter from 'components/Card/CardFooter.js';
 import Primary from 'components/Typography/Primary.js';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import Router from 'next/router';
 
 import CeoAvatar from 'assets/img/faces/tanwk.png';
@@ -242,7 +246,25 @@ function CreateAdmin(props) {
                 />
                 <br />
                 <br />
-                <label for="adminType">Admin Type</label>
+
+                <FormControl
+                  style={{textAlign: 'middle'}}
+                  className={classes.formControl}>
+                  <div style={{margin: 'auto'}}>
+                    <InputLabel id="demo-simple-select-label">
+                      Admin Type
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={adminType}
+                      onChange={updateAdminType}>
+                      <MenuItem value="SUPER_ADMIN">Super Admin</MenuItem>
+                      <MenuItem value="ADMIN">Admin</MenuItem>
+                    </Select>
+                  </div>
+                </FormControl>
+                {/* <label for="adminType">Admin Type</label>
                 <div class="search_categories">
                   <select
                     style={{alignItems: 'center'}}
@@ -253,10 +275,11 @@ function CreateAdmin(props) {
                     <option value="SUPER_ADMIN">Super Admin</option>
                     <option value="ADMIN">Admin</option>
                   </select>
-                </div>
+                </div> */}
               </CardBody>
               <CardFooter className={classes.cardFooter}>
                 <Button
+                  style={{margin: 'auto'}}
                   simple
                   color="primary"
                   size="lg"

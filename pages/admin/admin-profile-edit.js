@@ -32,17 +32,6 @@ const mapStateToProps = (state) => ({
   userInfo: state.main,
 });
 
-<<<<<<< HEAD
-// useEffect(() => {
-//   if (userInfo.adminId === '') {
-//     Router.push('login');
-//     return;
-//   }
-// }, []);
-=======
-
->>>>>>> 540d1e962af8483b2d36b49adab50a3ad9dcce17
-
 const styles = {
   cardCategoryWhite: {
     color: 'rgba(255,255,255,.62)',
@@ -148,7 +137,7 @@ function AdminProfileEdit(props) {
             </CardHeader>
             <CardBody>
               <GridContainer>
-                <GridItem xs={12} sm={12} md={6}>
+                <GridItem style={{margin: 'auto'}} xs={12} sm={12} md={6}>
                   <br />
                   <CardHeader color="primary">
                     <h6
@@ -174,7 +163,7 @@ function AdminProfileEdit(props) {
               <br />
 
               <GridContainer>
-                <GridItem xs={12} sm={12} md={6}>
+                <GridItem style={{margin: 'auto'}} xs={12} sm={12} md={6}>
                   <CardHeader color="primary">
                     <h6
                       style={{textAlign: 'center'}}
@@ -198,7 +187,7 @@ function AdminProfileEdit(props) {
               </GridContainer>
             </CardBody>
 
-            <CardFooter>
+            <CardFooter style={{margin: 'auto'}}>
               <Button color="info" onClick={handleUpdateProfile}>
                 Confirm
               </Button>

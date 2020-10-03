@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import {React, useEffect} from 'react';
-=======
 import React, {useState, useEffect} from 'react';
->>>>>>> 540d1e962af8483b2d36b49adab50a3ad9dcce17
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -37,11 +33,6 @@ const mapStateToProps = (state) => ({
   userInfo: state.main,
 });
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 540d1e962af8483b2d36b49adab50a3ad9dcce17
 const styles = {
   cardCategoryWhite: {
     color: 'rgba(255,255,255,.62)',
@@ -94,7 +85,7 @@ function AdminProfile(props) {
             <CardBody>
               <br />
               <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
+                <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
                   <CardHeader color="success">
                     <h4
                       style={{textAlign: 'center'}}
@@ -107,7 +98,7 @@ function AdminProfile(props) {
               </GridContainer>
               <br />
               <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
+                <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
                   <CardHeader color="success">
                     <h4
                       style={{textAlign: 'center'}}
@@ -120,7 +111,7 @@ function AdminProfile(props) {
               </GridContainer>
               <br />
               <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
+                <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
                   <CardHeader color="success">
                     <h4
                       style={{textAlign: 'center'}}
@@ -133,7 +124,7 @@ function AdminProfile(props) {
               </GridContainer>
               <br />
               <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
+                <GridItem style={{margin: 'auto'}} xs={12} sm={12} md={5}>
                   <CardHeader color="success">
                     <h4
                       style={{textAlign: 'center'}}
