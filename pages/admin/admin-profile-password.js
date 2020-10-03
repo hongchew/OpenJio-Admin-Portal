@@ -50,15 +50,17 @@ const mapStateToProps = (state) => ({
   userInfo: state.main,
 });
 
-useEffect(() => {
-  if (userInfo.adminId === '') {
-    Router.push('login');
-    return;
-  }
-}, []);
 
 function ChangePassword(props) {
   const classes = useStyles();
+  
+  useEffect(() => {
+    if (userInfo.adminId === '') {
+      Router.push('login');
+      return;
+    }
+  }, []);
+  
 
   //State of password entry
   const [currentPassword, setCurrentPassword] = useState();
