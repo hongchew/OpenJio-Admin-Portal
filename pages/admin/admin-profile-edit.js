@@ -32,12 +32,7 @@ const mapStateToProps = (state) => ({
   userInfo: state.main,
 });
 
-useEffect(() => {
-  if (userInfo.adminId === '') {
-    Router.push('login');
-    return;
-  }
-}, []);
+
 
 const styles = {
   cardCategoryWhite: {
@@ -62,7 +57,12 @@ const useStyles = makeStyles(styles);
 
 function AdminProfileEdit(props) {
   const classes = useStyles();
-
+  useEffect(() => {
+    if (userInfo.adminId === '') {
+      Router.push('login');
+      return;
+    }
+  }, []);
   const {userInfo, setInfo} = props;
   const [name, setName] = useState(props.userInfo.name);
   const [email, setEmail] = useState(props.userInfo.email);

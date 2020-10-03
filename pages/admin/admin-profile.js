@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -33,12 +33,7 @@ const mapStateToProps = (state) => ({
   userInfo: state.main,
 });
 
-useEffect(() => {
-  if (userInfo.adminId === '') {
-    Router.push('login');
-    return;
-  }
-}, []);
+
 
 const styles = {
   cardCategoryWhite: {
@@ -69,6 +64,13 @@ const useStyles = makeStyles(styles);
 function AdminProfile(props) {
   const {userInfo} = props;
   const classes = useStyles();
+
+  useEffect(() => {
+    if (userInfo.adminId === '') {
+      Router.push('login');
+      return;
+    }
+  }, []);
 
   return (
     <div>
