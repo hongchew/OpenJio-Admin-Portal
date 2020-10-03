@@ -33,13 +33,6 @@ const mapStateToProps = (state) => ({
   userInfo: state.main,
 });
 
-// useEffect(() => {
-//   if (userInfo.adminId === '') {
-//     Router.push('login');
-//     return;
-//   }
-// }, []);
-
 const styles = {
   cardCategoryWhite: {
     color: 'rgba(255,255,255,.62)',
@@ -69,6 +62,13 @@ const useStyles = makeStyles(styles);
 function AdminProfile(props) {
   const {userInfo} = props;
   const classes = useStyles();
+
+  // useEffect(() => {
+  //   if (userInfo.adminId === '') {
+  //     Router.push('login');
+  //     return;
+  //   }
+  // }, []);
 
   return (
     <div>
