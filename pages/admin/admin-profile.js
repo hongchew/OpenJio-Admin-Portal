@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import {React, useEffect} from 'react';
+=======
+import React, {useState, useEffect} from 'react';
+>>>>>>> 540d1e962af8483b2d36b49adab50a3ad9dcce17
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -33,6 +37,11 @@ const mapStateToProps = (state) => ({
   userInfo: state.main,
 });
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 540d1e962af8483b2d36b49adab50a3ad9dcce17
 const styles = {
   cardCategoryWhite: {
     color: 'rgba(255,255,255,.62)',
@@ -63,12 +72,12 @@ function AdminProfile(props) {
   const {userInfo} = props;
   const classes = useStyles();
 
-  // useEffect(() => {
-  //   if (userInfo.adminId === '') {
-  //     Router.push('login');
-  //     return;
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (userInfo.adminId === '') {
+      Router.push('login');
+      return;
+    }
+  }, []);
 
   return (
     <div>
