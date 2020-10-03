@@ -5,7 +5,7 @@ import axios from 'axios';
 import {makeStyles} from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 // import Edit from "@material-ui/icons/Edit";
-import Close from "@material-ui/icons/Close";
+import Close from '@material-ui/icons/Close';
 // Toast alert
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,13 +13,13 @@ import 'react-toastify/dist/ReactToastify.css';
 // layout for this page
 import Admin from 'layouts/Admin.js';
 // core components
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import Table from "components/Table/Table.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
-import Button from "components/CustomButtons/Button.js";
+import GridItem from 'components/Grid/GridItem.js';
+import GridContainer from 'components/Grid/GridContainer.js';
+import Table from 'components/Table/Table.js';
+import Card from 'components/Card/Card.js';
+import CardHeader from 'components/Card/CardHeader.js';
+import CardBody from 'components/Card/CardBody.js';
+import Button from 'components/CustomButtons/Button.js';
 
 // Styles section
 const styles = {
@@ -101,9 +101,9 @@ function BlacklistManagement() {
   }
 
   function updateUser(userToUpdate) {
-      userToUpdate.isBlackListed = false
-      userToUpdate.strikeCount = 0
-      return userToUpdate
+    userToUpdate.isBlackListed = false;
+    userToUpdate.strikeCount = 0;
+    return userToUpdate;
   }
 
   const editUserBlacklist = (userId, name) => {
@@ -144,8 +144,7 @@ function BlacklistManagement() {
                 color="danger"
                 className={classes.button}
                 startIcon={<DeleteIcon />}
-                onClick={() => editBlacklistedUser(userId, name)}
-              >
+                onClick={() => editBlacklistedUser(userId, name)}>
                 Remove
               </Button>
             </td>
@@ -167,9 +166,7 @@ function BlacklistManagement() {
 
   const classes = useStyles();
 
-  const buttons = [
-    { color: "danger", icon: Close },
-  ].map((prop, key) => {
+  const buttons = [{color: 'danger', icon: Close}].map((prop, key) => {
     return (
       <Button color={prop.color} className={classes.actionButton} key={key}>
         <prop.icon className={classes.icon} />
