@@ -209,7 +209,6 @@ function AdminManagement() {
                 Admin Management Panel
               </h3>
               <div style={{float: 'right'}}>
-
                 {/* onClick={() => history.push('/create-admin')} */}
                 <Button
                   variant="contained"
@@ -217,8 +216,7 @@ function AdminManagement() {
                   size="sm"
                   className={classes.button}
                   startIcon={<PersonAddIcon />}
-                  href="create-admin"
-                  >
+                  href="create-admin">
                   Create
                 </Button>
               </div>
