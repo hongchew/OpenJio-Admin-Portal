@@ -2,6 +2,7 @@ import React from 'react';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
+import axios from 'axios';
 // layout for this page
 import Admin from 'layouts/Admin.js';
 
@@ -16,7 +17,6 @@ import CardAvatar from 'components/Card/CardAvatar.js';
 import CardBody from 'components/Card/CardBody.js';
 import CardFooter from 'components/Card/CardFooter.js';
 import Primary from 'components/Typography/Primary.js';
-import {useRouter} from 'next/router';
 
 import CeoAvatar from 'assets/img/faces/tanwk.png';
 
@@ -44,8 +44,48 @@ const useStyles = makeStyles(styles);
 function SpecificCovidCase(props) {
   const classes = useStyles();
 
-  const router = useRouter();
-  console.log(router.query);
+  const urlPath = window.location.search;
+  console.log('pathname user id is: ' + urlPath);
+  // printed: ?userId=09c4a8d1-bef4-41c4-88fa-87fca7e321c0
+
+  let userId = urlPath.split('?')[1]; // removed ?
+  console.log('pathname user id is: ' + userId);
+  // printed: userId=09c4a8d1-bef4-41c4-88fa-87fca7e321c0
+
+  userId = userId.substring(7);
+  console.log('pathname user id is: ' + userId);
+  // printed: 09c4a8d1-bef4-41c4-88fa-87fca7e321c0
+
+  // Direct to individual case (dynamically created)
+  const retrieveSpecificCase = async (userId) => {
+    let retrieveUserDetailsHttpReq = `http://localhost:3000/users/${userId}`;
+    try {
+      let user = await axios.get(retrieveUserDetailsHttpReq);
+      console.log('testing1: ' + user.name);
+      this.setState({user: user});
+      return user;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  // Comment out
+  //   const renderSpecificCovidUi = (userId) => {
+  //     let user = retrieveSpecificCase(userId);
+  //     console.log("testing2: " + user);
+  //     // return (
+  //     //   user &&
+  //     //   user.map(({userId, name, email, address}) => {
+  //     //     return (
+  //     //       <tr key={userId}>
+  //     //         <td>{name}</td>
+  //     //         <td>{email}</td>
+  //     //         <td>{address}</td>
+  //     //       </tr>
+  //     //     );
+  //     //   })
+  //     // );
+  //   };
 
   return (
     <div>
@@ -59,16 +99,16 @@ function SpecificCovidCase(props) {
             </CardAvatar>
 
             <CardBody profile>
-              <strong className={classes.cardTitle}>Something</strong>
+              <strong className={classes.cardTitle}>{this.state.user.name}</strong>
               <Primary className={classes.cardTitle}>
-                <b>Super Admin</b>
+                <b>{this.state.user.email}</b>
               </Primary>
-              <br></br>
+              {/* <br></br>
               <strong>Description:</strong>
               <p className={classes.description}>
                 I hope that everyone will play their part to fight the COVID-19
                 pandemic.
-              </p>
+              </p> */}
             </CardBody>
           </Card>
         </GridItem>
