@@ -24,6 +24,7 @@ import LocationOn from '@material-ui/icons/LocationOn';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import Notifications from '@material-ui/icons/Notifications';
 import MoodBadIcon from '@material-ui/icons/MoodBad';
+import HealthcareIcon from '@material-ui/icons/LocalHospital';
 
 const dashboardRoutes = [
   {
@@ -54,10 +55,18 @@ const dashboardRoutes = [
 
     layout: '/admin',
   },
-  /*{
-    path: '/table-list',
-    name: 'Table List',
-    icon: 'content_paste',
+  {
+    path: "/covid-19",
+    name: "Covid-19 Management",
+    icon: HealthcareIcon,
+
+    layout: "/admin",
+  },
+  /*
+  {
+    path: "/table-list",
+    name: "Table List",
+    icon: "content_paste",
 
     layout: '/admin',
   },
