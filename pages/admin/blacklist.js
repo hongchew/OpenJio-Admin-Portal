@@ -118,21 +118,21 @@ function BlacklistManagement() {
   const renderTableBody = () => {
     return (
       users &&
-      users.map(({userId, name, email, mobileNumber, strikeCount}) => {
+      users.map((user) => {
         return (
-          <tr key={userId}>
-            <td>
-              {name}
-            </td>
-            <td>{email}</td>
-            <td>{mobileNumber}</td>
-            <td>{strikeCount}</td>
+          <tr key={user.userId}>
+            <td>{user.name}</td>
+            <td>{user.email}</td>
+            <td>{user.mobileNumber}</td>
+            <td>{user.strikeCount}</td>
             <td className="operation">
-              <Button 
+              <Button
+                value={user} 
                 simple 
                 color="primary" 
                 size="lg"
-                href="blacklist-user">
+                href="blacklist-user"
+                onClick="">
                   View
               </Button>
             </td>
@@ -144,7 +144,7 @@ function BlacklistManagement() {
                 variant="contained"
                 className={classes.button}
                 startIcon={<DeleteIcon />}
-                onClick={() => editBlacklistedUser(userId, name)}>
+                onClick={() => editBlacklistedUser(user.userId, name)}>
                 Remove
               </Button>
             </td>
