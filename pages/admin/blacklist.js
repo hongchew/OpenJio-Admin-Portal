@@ -60,12 +60,7 @@ function BlacklistManagement() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-<<<<<<< HEAD
     retrieveUsers();
-    console.log(users);
-=======
-    retrieveUsers()
->>>>>>> b338ec9f249b9e8596be657301d3807c8fb1d0cb
   }, []);
 
   //Retrieve all users when page first renders using useEffect
@@ -83,6 +78,7 @@ function BlacklistManagement() {
     }
   };
 
+  //Edit blacklisted user
   async function editBlacklistedUser (userId, name) {
       try {
         console.log(users)
