@@ -158,13 +158,12 @@ function AdminProfile(props) {
               <Primary className={classes.cardTitle} onClick={updateProfile}>
                 <b>{userInfo.adminType}</b>
               </Primary>
-              <br></br>
-
+              {/* <br></br>
               <strong>Description:</strong>
               <p className={classes.description}>
                 I hope that everyone will play their part to fight the COVID-19
                 pandemic.
-              </p>
+              </p> */}
             </CardBody>
           </Card>
         </GridItem>
