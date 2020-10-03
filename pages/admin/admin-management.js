@@ -1,58 +1,59 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, {useState, useEffect} from 'react';
+// import {Link, useHistory} from 'react-router-dom';
+import axios from 'axios';
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import DeleteIcon from "@material-ui/icons/Delete";
+import {makeStyles} from '@material-ui/core/styles';
+import DeleteIcon from '@material-ui/icons/Delete';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 // import Edit from "@material-ui/icons/Edit";
-import Close from "@material-ui/icons/Close";
+// import Close from '@material-ui/icons/Close';
 import Chip from '@material-ui/core/Chip';
 
 // Toast alert
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Backend API services
-import adminService from "../../services/adminService.js";
+import adminService from '../../services/adminService.js';
 
 // layout for this page
-import Admin from "layouts/Admin.js";
+import Admin from 'layouts/Admin.js';
 // core components
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import Table from "components/Table/Table.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
-import Button from "components/CustomButtons/Button.js";
+import GridItem from 'components/Grid/GridItem.js';
+import GridContainer from 'components/Grid/GridContainer.js';
+import Table from 'components/Table/Table.js';
+import Card from 'components/Card/Card.js';
+import CardHeader from 'components/Card/CardHeader.js';
+import CardBody from 'components/Card/CardBody.js';
+import Button from 'components/CustomButtons/Button.js';
 
 // Styles section
 const styles = {
   cardCategoryWhite: {
-    "&,& a,& a:hover,& a:focus": {
-      color: "rgba(255,255,255,.62)",
-      margin: "0",
-      fontSize: "14px",
-      marginTop: "0",
-      marginBottom: "0",
+    '&,& a,& a:hover,& a:focus': {
+      color: 'rgba(255,255,255,.62)',
+      margin: '0',
+      fontSize: '14px',
+      marginTop: '0',
+      marginBottom: '0',
     },
-    "& a,& a:hover,& a:focus": {
-      color: "#FFFFFF",
+    '& a,& a:hover,& a:focus': {
+      color: '#FFFFFF',
     },
   },
   cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
+    color: '#FFFFFF',
+    marginTop: '0px',
+    minHeight: 'auto',
+    fontWeight: '300',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none",
-    "& small": {
-      color: "#777",
-      fontSize: "65%",
-      fontWeight: "400",
-      lineHeight: "1",
+    marginBottom: '3px',
+    textDecoration: 'none',
+    '& small': {
+      color: '#777',
+      fontSize: '65%',
+      fontWeight: '400',
+      lineHeight: '1',
     },
   },
 };
@@ -94,7 +95,7 @@ function AdminManagement() {
       );
       setAdmins(afterDeleteList);
       deleteSuccessfulAlert(name);
-      console.log("res", res);
+      console.log('res', res);
     });
   };
 
@@ -115,7 +116,7 @@ function AdminManagement() {
   // Rendering custom  table
   // Render table header
   const renderTableHeader = () => {
-    let headerElement = ["Name", "Email", "Admin Type", "Actions"];
+    let headerElement = ['Name', 'Email', 'Admin Type', 'Actions'];
 
     return headerElement.map((key, index) => {
       return <th key={index}>{key.toUpperCase()}</th>;
@@ -126,7 +127,7 @@ function AdminManagement() {
   const renderTableBody = () => {
     return (
       admins &&
-      admins.map(({ adminId, name, email, adminType }) => {
+      admins.map(({adminId, name, email, adminType}) => {
         return (
           <tr key={adminId}>
             <td>{name}</td>
@@ -134,11 +135,11 @@ function AdminManagement() {
 
             {/* Conditional argument according to the admin type */}
             <td>
-              {
-                adminType === 'SUPER_ADMIN' ? 
-                <Chip label="Super Admin" color="secondary"/> : 
-                <Chip label="Admin" color="primary"/>
-              }
+              {adminType === 'SUPER_ADMIN' ? (
+                <Chip label="Super Admin" color="secondary" />
+              ) : (
+                <Chip label="Admin" color="primary" />
+              )}
             </td>
 
             <td className="opration">
@@ -147,8 +148,7 @@ function AdminManagement() {
                 color="danger"
                 className={classes.button}
                 startIcon={<DeleteIcon />}
-                onClick={() => deleteAdminAccount(adminId, name)}
-              >
+                onClick={() => deleteAdminAccount(adminId, name)}>
                 Delete
               </Button>
             </td>
@@ -162,13 +162,24 @@ function AdminManagement() {
   // To enable toast notifications
   toast.configure();
   const deleteSuccessfulAlert = (adminName) => {
-    toast.success("Successfully deleted: " + adminName, {
+    toast.success('Successfully deleted: ' + adminName, {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 3000,
     });
   };
 
   const classes = useStyles();
+
+  // Routing history and pointing
+  // const history = useHistory();
+  // const goToRoute = path => {
+  //   props.history.push(path);
+  // };
+
+  // const goToCreateAdmin = {
+  //   pathname: ('/create-admin'),
+  //   state: {from: "admin management"},
+  // };
 
   // Template buttons
   // const buttons = [
@@ -190,15 +201,38 @@ function AdminManagement() {
         <GridItem xs={11} sm={11} md={11}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Admin Management Panel</h4>
-              <p className={classes.cardCategoryWhite}>
-                {/* Can include subtitle here  */}
-              </p>
+              <h3
+                className={classes.cardTitleWhite}
+                style={{
+                  display: 'inline-block',
+                  float: 'left',
+                  alignItems: 'center',
+                }}>
+                Admin Management Panel
+              </h3>
+              <div style={{float: 'right'}}>
+
+                {/* onClick={() => history.push('/create-admin')} */}
+                <Button
+                  variant="contained"
+                  color="warning"
+                  size="sm"
+                  className={classes.button}
+                  startIcon={<PersonAddIcon />}
+                  href="create-admin"
+                  >
+                  Create
+                </Button>
+              </div>
+
+              {/* <p className={classes.cardCategoryWhite}>
+                Can include subtitle here 
+              </p> */}
             </CardHeader>
 
             <CardBody>
               {/* Custom table */}
-              <table id="admin-management-table" style={{ width: "70vw" }}>
+              <table id="admin-management-table" style={{width: '100%'}}>
                 <thead align="left">
                   <tr>{renderTableHeader()}</tr>
                 </thead>
@@ -225,7 +259,6 @@ function AdminManagement() {
           </Card>
         </GridItem>
       </GridContainer>
-
     </div>
   );
 }
