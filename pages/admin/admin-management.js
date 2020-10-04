@@ -63,10 +63,6 @@ function AdminManagement() {
   // Connection to backend API
   const [admins, setAdmins] = useState([]);
 
-  // For future development
-  // const [currentAdmin, setCurrentAdmin] = useState(null);
-  // const [currentIndex, setCurrentIndex] = useState(-1);
-
   useEffect(() => {
     // if (userInfo.adminId === '') {
     //   Router.push('login');
@@ -100,18 +96,6 @@ function AdminManagement() {
       console.log('res', res);
     });
   };
-
-  // For future development
-  // const refreshList = () => {
-  //   retrieveTutorials();
-  //   setCurrentTutorial(null);
-  //   setCurrentIndex(-1);
-  // };
-
-  // const setActiveAdmin = (admin, index) => {
-  //   setCurrentAdmin(admin);
-  //   setCurrentIndex(index);
-  // };
 
   // End of connection to backend API
 
@@ -172,30 +156,6 @@ function AdminManagement() {
 
   const classes = useStyles();
 
-  // Routing history and pointing
-  // const history = useHistory();
-  // const goToRoute = path => {
-  //   props.history.push(path);
-  // };
-
-  // const goToCreateAdmin = {
-  //   pathname: ('/create-admin'),
-  //   state: {from: "admin management"},
-  // };
-
-  // Template buttons
-  // const buttons = [
-  //   // Remove edit button
-  //   // { color: "success", icon: Edit },
-  //   { color: "danger", icon: Close },
-  // ].map((prop, key) => {
-  //   return (
-  //     <Button color={prop.color} className={classes.actionButton} key={key}>
-  //       <prop.icon className={classes.icon} />
-  //     </Button>
-  //   );
-  // });
-
   return (
     <div>
       {/* Admin management panel */}
@@ -213,7 +173,6 @@ function AdminManagement() {
                 Admin Management Panel
               </h3>
               <div style={{float: 'right'}}>
-                {/* onClick={() => history.push('/create-admin')} */}
                 <Button
                   variant="contained"
                   color="warning"
@@ -224,10 +183,6 @@ function AdminManagement() {
                   Create
                 </Button>
               </div>
-
-              {/* <p className={classes.cardCategoryWhite}>
-                Can include subtitle here 
-              </p> */}
             </CardHeader>
 
             <CardBody>
@@ -255,6 +210,7 @@ function AdminManagement() {
                   ["Ying Hui", "yinghuiseah@u.nus.edu", "Super Admin", buttons],
                 ]}
               /> */}
+              
             </CardBody>
           </Card>
         </GridItem>

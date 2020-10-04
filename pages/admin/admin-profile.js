@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
 // layout for this page
 import Admin from 'layouts/Admin.js';
 
@@ -165,12 +164,6 @@ function AdminProfile(props) {
               <Primary className={classes.cardTitle} onClick={updateProfile}>
                 <b>{userInfo.adminType}</b>
               </Primary>
-              {/* <br></br>
-              <strong>Description:</strong>
-              <p className={classes.description}>
-                I hope that everyone will play their part to fight the COVID-19
-                pandemic.
-              </p> */}
             </CardBody>
           </Card>
         </GridItem>

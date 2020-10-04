@@ -81,20 +81,6 @@ function Covid19() {
       });
   };
 
-  // Direct to individual case (dynamically created)
-  // const viewSpecificCase = async (userId) => {
-
-  //   let viewUserDetailsHttpReq = `http://localhost:3000/users/${userId}`;
-
-  //   try {
-  //     let user = await axios.get(viewUserDetailsHttpReq);
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-
-  //   return null;
-  // };
-
   // End of connection to backend API
 
   // Rendering custom  table
