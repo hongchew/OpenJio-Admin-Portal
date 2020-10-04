@@ -229,12 +229,6 @@ function ChangePassword(props) {
                 <b>Super Admin</b>
               </Primary>
               <br></br>
-
-              <strong>Description:</strong>
-              <p className={classes.description}>
-                I hope that everyone will play their part to fight the COVID-19
-                pandemic.
-              </p>
             </CardBody>
           </Card>
         </GridItem>
