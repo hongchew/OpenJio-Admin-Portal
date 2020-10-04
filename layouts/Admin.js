@@ -15,8 +15,8 @@ import routes from "routes.js";
 
 import styles from "assets/jss/nextjs-material-dashboard/layouts/adminStyle.js";
 
-import bgImage from "assets/img/sidebar-2.jpg";
-import logo from "assets/img/reactlogo.png";
+import bgImage from "assets/img/login-background.jpg";
+import openjiologo from "assets/img/love-hand.svg";
 
 let ps;
 
@@ -80,8 +80,8 @@ export default function Admin({ children, ...rest }) {
     <div className={classes.wrapper}>
       <Sidebar
         routes={routes}
-        logoText={"Creative Tim"}
-        logo={logo}
+        logoText={"Open Jio"}
+        logo={openjiologo}
         image={image}
         handleDrawerToggle={handleDrawerToggle}
         open={mobileOpen}
@@ -103,14 +103,14 @@ export default function Admin({ children, ...rest }) {
           <div className={classes.map}>{children}</div>
         )}
         {getRoute() ? <Footer /> : null}
-        <FixedPlugin
+        {/*<FixedPlugin
           handleImageClick={handleImageClick}
           handleColorClick={handleColorClick}
           bgColor={color}
           bgImage={image}
           handleFixedClick={handleFixedClick}
           fixedClasses={fixedClasses}
-        />
+        />*/}
       </div>
     </div>
   );

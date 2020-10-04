@@ -1,5 +1,9 @@
 import React from "react";
 import classNames from "classnames";
+import Router from "next/router"
+//redux app state management
+import { connect } from "react-redux"
+import { logout } from "../../redux/action/main"
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -24,11 +28,19 @@ import styles from "assets/jss/nextjs-material-dashboard/components/headerLinksS
 
 const useStyles = makeStyles(styles);
 
-export default function AdminNavbarLinks() {
+const mapStateToProps = state => ({
+  userInfo: state.main
+})
+const mapDispatchToProps = {
+  logout: logout
+}
+
+function AdminNavbarLinks(props) {
   const size = useWindowSize();
   const classes = useStyles();
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
+  const {logout} = props
   const handleClickNotification = (event) => {
     if (openNotification && openNotification.contains(event.target)) {
       setOpenNotification(null);
@@ -49,6 +61,19 @@ export default function AdminNavbarLinks() {
   const handleCloseProfile = () => {
     setOpenProfile(null);
   };
+
+  //Logs user out upon clicking logout
+  const handleLogout = () => {
+    handleCloseProfile()
+    logout({})
+    Router.push('login')
+  }
+
+  const handleUserProfile = () => {
+    handleCloseProfile()
+    Router.push('admin-profile')
+  }
+
   return (
     <div>
       <div className={classes.searchWrapper}>
@@ -67,6 +92,8 @@ export default function AdminNavbarLinks() {
           <Search />
         </Button>
       </div>
+
+      {/* // Menu list, which is useless for us
       <Button
         color={size.width > 959 ? "transparent" : "white"}
         justIcon={size.width > 959}
@@ -78,8 +105,10 @@ export default function AdminNavbarLinks() {
         <Hidden mdUp implementation="css">
           <p className={classes.linkText}>Dashboard</p>
         </Hidden>
-      </Button>
+      </Button> */}
+
       <div className={classes.manager}>
+        
         <Button
           color={size.width > 959 ? "transparent" : "white"}
           justIcon={size.width > 959}
@@ -195,25 +224,21 @@ export default function AdminNavbarLinks() {
               <Paper>
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
+                    
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={handleUserProfile}
                       className={classes.dropdownItem}
                     >
                       Profile
                     </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
-                    >
-                      Settings
-                    </MenuItem>
                     <Divider light />
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={handleLogout}
                       className={classes.dropdownItem}
                     >
                       Logout
                     </MenuItem>
+
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
@@ -224,3 +249,5 @@ export default function AdminNavbarLinks() {
     </div>
   );
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminNavbarLinks);

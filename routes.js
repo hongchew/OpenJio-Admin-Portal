@@ -16,88 +16,88 @@
 
 */
 // @material-ui/icons
-import Dashboard from "@material-ui/icons/Dashboard";
-import Person from "@material-ui/icons/Person";
-import LibraryBooks from "@material-ui/icons/LibraryBooks";
-import BubbleChart from "@material-ui/icons/BubbleChart";
-import LocationOn from "@material-ui/icons/LocationOn";
-import Notifications from "@material-ui/icons/Notifications";
-import Unarchive from "@material-ui/icons/Unarchive";
-import Language from "@material-ui/icons/Language";
+import Dashboard from '@material-ui/icons/Dashboard';
+import Person from '@material-ui/icons/Person';
+import LibraryBooks from '@material-ui/icons/LibraryBooks';
+import BubbleChart from '@material-ui/icons/BubbleChart';
+import LocationOn from '@material-ui/icons/LocationOn';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import Notifications from '@material-ui/icons/Notifications';
+import MoodBadIcon from '@material-ui/icons/MoodBad';
+import HealthcareIcon from '@material-ui/icons/LocalHospital';
 
 const dashboardRoutes = [
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    rtlName: "لوحة القيادة",
+    path: '/dashboard',
+    name: 'Dashboard',
     icon: Dashboard,
 
-    layout: "/admin",
+    layout: '/admin',
   },
   {
-    path: "/user-profile",
-    name: "User Profile",
-    rtlName: "ملف تعريفي للمستخدم",
+    path: '/admin-profile',
+    name: 'Admin Profile',
     icon: Person,
 
-    layout: "/admin",
+    layout: '/admin',
   },
+  {
+    path: '/admin-management',
+    name: 'Admin Management',
+    icon: SupervisorAccountIcon,
+
+    layout: '/admin',
+  },
+  {
+    path: '/blacklist',
+    name: 'Blacklist Management',
+    icon: MoodBadIcon,
+
+    layout: '/admin',
+  },
+  {
+    path: '/covid-19',
+    name: 'Covid-19 Management',
+    icon: HealthcareIcon,
+
+    layout: '/admin',
+  },
+  /*
   {
     path: "/table-list",
     name: "Table List",
-    rtlName: "قائمة الجدول",
     icon: "content_paste",
 
-    layout: "/admin",
+    layout: '/admin',
   },
   {
-    path: "/typography",
-    name: "Typography",
-    rtlName: "طباعة",
+    path: '/typography',
+    name: 'Typography',
     icon: LibraryBooks,
 
-    layout: "/admin",
+    layout: '/admin',
   },
   {
-    path: "/icons",
-    name: "Icons",
-    rtlName: "الرموز",
+    path: '/icons',
+    name: 'Icons',
     icon: BubbleChart,
 
-    layout: "/admin",
+    layout: '/admin',
   },
   {
-    path: "/maps",
-    name: "Maps",
-    rtlName: "خرائط",
+    path: '/maps',
+    name: 'Maps',
     icon: LocationOn,
 
-    layout: "/admin",
+    layout: '/admin',
   },
   {
-    path: "/notifications",
-    name: "Notifications",
-    rtlName: "إخطارات",
+    path: '/notifications',
+    name: 'Notifications',
     icon: Notifications,
 
-    layout: "/admin",
-  },
-  {
-    path: "/rtl-page",
-    name: "RTL Support",
-    rtlName: "پشتیبانی از راست به چپ",
-    icon: Language,
-
-    layout: "/rtl",
-  },
-  {
-    path: "/upgrade-to-pro",
-    name: "Upgrade To PRO",
-    rtlName: "التطور للاحترافية",
-    icon: Unarchive,
-
-    layout: "/admin",
-  },
+    layout: '/admin',
+  },*/
 ];
 
 export default dashboardRoutes;
