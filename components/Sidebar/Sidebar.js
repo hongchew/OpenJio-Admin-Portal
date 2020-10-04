@@ -37,16 +37,11 @@ function Sidebar(props) {
     return router.route.indexOf(routeName) > -1 ? true : false;
   }
   const {userInfo} = props;
-  console.log(userInfo);
 
   const {color, logo, image, logoText} = props;
   var {routes} = props
-  console.log('Routes: ');
-  console.log(routes);
 
   const newRoutes = retrieveRoutes(routes);
-  console.log('New Routes: ');
-  console.log(newRoutes);
   routes = newRoutes
 
   function retrieveRoutes(routes) {
