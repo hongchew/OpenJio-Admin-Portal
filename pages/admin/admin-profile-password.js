@@ -5,10 +5,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 //redux app state management
 import {connect} from 'react-redux';
+import {setInfo} from '../../redux/action/main';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
 // layout for this page
 import Admin from 'layouts/Admin.js';
 // core components
@@ -50,6 +49,9 @@ const mapStateToProps = (state) => ({
   userInfo: state.main,
 });
 
+const mapDispatchToProps = {
+  setInfo: setInfo,
+};
 
 function ChangePassword(props) {
   const classes = useStyles();
@@ -70,7 +72,6 @@ function ChangePassword(props) {
 
   const updateCurrPassword = (e) => {
     e.preventDefault();
-    console.log('Input is updating');
     const currPass = e.target.value;
     setCurrentPassword(currPass);
     console.log('Current password entered is ' + currentPassword);
@@ -93,14 +94,13 @@ function ChangePassword(props) {
   //API call to change password
   async function handlePassChange() {
     try {
-      const email = 'superadmin@openjio.com';
       if (newPassword !== newPassword2) {
-        errorNotify();
+        errorNotify('You sure the new password entered is the same bro?');
         throw 'New password entered is different';
       }
       console.log('fetching the change-password API');
       console.log(
-        `Sending these user info email:${email} currentpassword:${currentPassword} newpassword:${newPassword}`
+        `Sending these user info email:${userInfo.email} currentpassword:${currentPassword} newpassword:${newPassword}`
       );
       try {
         const response = await axios.put(
@@ -112,9 +112,10 @@ function ChangePassword(props) {
           }
         );
         successNotify();
+        setInfo(response.data)
         Router.push('admin-profile');
       } catch (error) {
-        errorNotify();
+        errorNotify('Current password is incorrect!');
         console.error(error);
       }
     } catch (error) {
@@ -124,9 +125,9 @@ function ChangePassword(props) {
 
   // To enable toast notifications
   toast.configure();
-  const errorNotify = () => {
+  const errorNotify = (error) => {
     toast.error(
-      'Current password is incorrect or the new passwords does not match.',
+      error,
       {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
@@ -239,4 +240,4 @@ function ChangePassword(props) {
 
 ChangePassword.layout = Admin;
 
-export default connect(mapStateToProps)(ChangePassword);
+export default connect(mapStateToProps, mapDispatchToProps)(ChangePassword);

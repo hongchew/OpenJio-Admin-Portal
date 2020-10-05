@@ -42,6 +42,8 @@ export default function RegisterPage(props) {
           email: email,
         }
       );
+    } catch (err){
+      console.error(err)
     }
   }
 

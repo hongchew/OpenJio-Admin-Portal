@@ -101,6 +101,7 @@ function AdminProfileEdit(props) {
         }
       );
       console.log('change success!');
+      console.log(response.data)
       setInfo(response.data);
       successNotify();
       Router.push('admin-profile');

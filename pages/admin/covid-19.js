@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Link from 'next/link';
+import {connect} from 'react-redux';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -59,13 +60,21 @@ const styles = {
 };
 
 const useStyles = makeStyles(styles);
-// End of styles section
 
-function Covid19() {
+const mapStateToProps = (state) => ({
+  userInfo: state.main,
+});
+
+function Covid19(props) {
   // Connection to backend API
   const [covidUsers, setCovidUsers] = useState([]);
+  const {userInfo} = props
 
   useEffect(() => {
+    if (userInfo.adminId === '') {
+      Router.push('login');
+      return;
+    }
     retrieveCovidUsers();
   }, []);
 
@@ -166,4 +175,4 @@ function Covid19() {
 
 Covid19.layout = Admin;
 
-export default Covid19;
+export default connect(mapStateToProps)(Covid19);
