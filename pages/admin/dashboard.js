@@ -4,7 +4,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import Router from 'next/router';
 //redux app state management
 import {connect} from 'react-redux';
-import {setInfo} from '../../redux/action/main';
 // @material-ui/core
 import {makeStyles} from '@material-ui/core/styles';
 // @material-ui/icons
@@ -40,13 +39,11 @@ function Dashboard(props) {
   const [blacklistedUsers, setBlacklistedUsers] = useState([]);
   const [admins, setAdmins] = useState([]);
 
-  //For welcome notification when page first renders
   useEffect(() => {
     if (userInfo.adminId === '') {
       Router.push('login');
       return;
     }
-
     welcome();
     retrieveBlacklistedUsers();
     retrieveAdmins();
@@ -58,8 +55,9 @@ function Dashboard(props) {
         'http://localhost:3000/admins/retrieve-all'
       );
       const body = response.data;
-      console.log(body);
       setAdmins(body);
+      console.log('Admins are:')
+      console.log(body)
     } catch (error) {
       console.log(error);
     }
@@ -67,14 +65,14 @@ function Dashboard(props) {
 
   const retrieveBlacklistedUsers = async () => {
     try {
-      console.log('calling API');
       const response = await axios.get('http://localhost:3000/users/');
       const body = response.data;
       //Get only blacklisted users
       const blacklisted = body.filter(function (user) {
         return user.isBlackListed === true;
       });
-      console.log(blacklisted);
+      console.log('Blacklisted users are:')
+      console.log(blacklisted)
       setBlacklistedUsers(blacklisted);
     } catch (error) {
       console.error(error);
@@ -87,13 +85,11 @@ function Dashboard(props) {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 3000,
     });
-    console.log('userInfo saved is: ');
-    console.log(userInfo);
   };
 
   //return blacklisted users' name, email and strike count
   const selectCol = (user) => {
-    return [user.name, user.email, user.strikeCount];
+    return [user.name, user.email, user.strikeCount.toString()];
   };
 
   const selectColAdmin = (admin) => {

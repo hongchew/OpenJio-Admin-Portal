@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react';
+import Router from 'next/router';
 // import {Link, useHistory} from 'react-router-dom';
 import axios from 'axios';
+//redux app state management
+import {connect} from 'react-redux';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -59,15 +62,24 @@ const styles = {
 const useStyles = makeStyles(styles);
 // End of styles section
 
-function AdminManagement() {
+const mapStateToProps = (state) => ({
+  userInfo: state.main,
+});
+
+function AdminManagement(props) {
   // Connection to backend API
   const [admins, setAdmins] = useState([]);
+  const {userInfo} = props
 
   useEffect(() => {
-    // if (userInfo.adminId === '') {
-    //   Router.push('login');
-    //   return;
-    // }
+    if (userInfo.adminId === '') {
+      Router.push('login');
+      return;
+    }
+    //Deny normal admins access to this page
+    if(userInfo.adminType === 'ADMIN') {
+      Router.push('dashboard')
+    }
     retrieveAdmins();
   }, []);
 
@@ -221,4 +233,4 @@ function AdminManagement() {
 
 AdminManagement.layout = Admin;
 
-export default AdminManagement;
+export default connect(mapStateToProps)(AdminManagement);

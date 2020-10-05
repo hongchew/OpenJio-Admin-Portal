@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import Link from 'next/router'
 import axios from 'axios';
+import {connect} from 'react-redux';
+import Router from 'next/router';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -53,13 +55,20 @@ const styles = {
 };
 
 const useStyles = makeStyles(styles);
-// End of styles section
 
-function BlacklistManagement() {
-  // Connection to backend API
+const mapStateToProps = (state) => ({
+  userInfo: state.main,
+});
+
+function BlacklistManagement(props) {
   const [users, setUsers] = useState([]);
+  const {userInfo} = props
 
   useEffect(() => {
+    if (userInfo.adminId === '') {
+      Router.push('login');
+      return;
+    }
     retrieveUsers();
   }, []);
 
@@ -83,13 +92,10 @@ function BlacklistManagement() {
       try {
         console.log(users)
         const afterRemovalList = users.filter((user) => userId !== user.userId)
-        console.log(`Users left in the blacklist are: ${JSON.stringify(afterRemovalList)}`)
         const userToUpdate = users.filter((user) => userId === user.userId)[0]
         console.log(`User to update blacklist is: ${JSON.stringify(userToUpdate)}`)
         //clearing the blacklist and strike counts
         const updatedUser = updateUser(userToUpdate)
-        console.log(`User value updated to: ${JSON.stringify(updatedUser)}`)
-        console.log('Calling edit user API')
         axios.put('http://localhost:3000/users/update-user-details', updatedUser)
         console.log('user successfully removed')
         setUsers(afterRemovalList)
@@ -156,7 +162,7 @@ function BlacklistManagement() {
 
   // To enable toast notifications
   toast.configure();
-  const editSuccessfulAlert = (name) => {
+  const editSuccessfulAlert = name => {
     toast.success(`${name} has been removed from the blacklist!`, {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 3000,
@@ -206,5 +212,4 @@ function BlacklistManagement() {
 }
 
 BlacklistManagement.layout = Admin;
-
-export default BlacklistManagement;
+export default connect(mapStateToProps)(BlacklistManagement);

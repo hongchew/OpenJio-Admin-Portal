@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import Router from 'next/router'
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -19,7 +20,6 @@ import CardAvatar from 'components/Card/CardAvatar.js';
 import CardBody from 'components/Card/CardBody.js';
 import CardFooter from 'components/Card/CardFooter.js';
 import Primary from 'components/Typography/Primary.js';
-import Router from 'next/router';
 
 import Link from 'next/link';
 
@@ -52,16 +52,18 @@ const styles = {
   },
 };
 
-//API call to update
-async function updateProfile() {
-  Router.push('admin-profile-edit-form');
-}
-
 const useStyles = makeStyles(styles);
 
 function BlacklistProfile(props) {
   const {userInfo} = props;
   const classes = useStyles();
+
+  useEffect(() => {
+    if (userInfo.adminId === '') {
+      Router.push('login');
+      return;
+    }
+  }, []);
 
   return (
     <div>
@@ -142,7 +144,7 @@ function BlacklistProfile(props) {
 
             <CardBody profile>
               <strong className={classes.cardTitle}>{userInfo.name}</strong>
-              <Primary className={classes.cardTitle} onClick={updateProfile}>
+              <Primary className={classes.cardTitle}>
                 <b>{userInfo.adminType}</b>
               </Primary>
               {/* <br></br>

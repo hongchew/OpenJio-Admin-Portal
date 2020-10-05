@@ -77,6 +77,17 @@ function CreateAdmin(props) {
   const [adminType, setAdminType] = useState('SUPER_ADMIN');
   const [password, setPassword] = useState();
 
+  useEffect(() => {
+    if (userInfo.adminId === '') {
+      Router.push('login');
+      return;
+    }
+    //Deny normal admins access to this page
+    if(userInfo.adminType === 'ADMIN') {
+      Router.push('dashboard')
+    }
+  }, []);
+
   const updateName = (e) => {
     e.preventDefault();
     console.log('Input is updating');
