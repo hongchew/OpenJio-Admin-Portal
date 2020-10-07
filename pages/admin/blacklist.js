@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import Link from 'next/router'
+import Link from 'next/router';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import Router from 'next/router';
@@ -62,7 +62,7 @@ const mapStateToProps = (state) => ({
 
 function BlacklistManagement(props) {
   const [users, setUsers] = useState([]);
-  const {userInfo} = props
+  const {userInfo} = props;
 
   useEffect(() => {
     if (userInfo.adminId === '') {
@@ -88,22 +88,23 @@ function BlacklistManagement(props) {
   };
 
   //Edit blacklisted user
-  async function editBlacklistedUser (userId, name) {
-      try {
-        console.log(users)
-        const afterRemovalList = users.filter((user) => userId !== user.userId)
-        const userToUpdate = users.filter((user) => userId === user.userId)[0]
-        console.log(`User to update blacklist is: ${JSON.stringify(userToUpdate)}`)
-        //clearing the blacklist and strike counts
-        const updatedUser = updateUser(userToUpdate)
-        axios.put('http://localhost:3000/users/update-user-details', updatedUser)
-        console.log('user successfully removed')
-        setUsers(afterRemovalList)
-        editSuccessfulAlert(name)
-
-      } catch(error) {
-          console.log(error)
-      }
+  async function editBlacklistedUser(userId, name) {
+    try {
+      console.log(users);
+      const afterRemovalList = users.filter((user) => userId !== user.userId);
+      const userToUpdate = users.filter((user) => userId === user.userId)[0];
+      console.log(
+        `User to update blacklist is: ${JSON.stringify(userToUpdate)}`
+      );
+      //clearing the blacklist and strike counts
+      const updatedUser = updateUser(userToUpdate);
+      axios.put('http://localhost:3000/users/update-user-details', updatedUser);
+      console.log('user successfully removed');
+      setUsers(afterRemovalList);
+      editSuccessfulAlert(name);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function updateUser(userToUpdate) {
@@ -120,6 +121,18 @@ function BlacklistManagement(props) {
     });
   };
 
+  async function handleViewUser(name, mobileNumber, email, strikeCount) {
+    Router.push({
+      pathname: 'user-profile',
+      query: {
+        name: name,
+        email: email,
+        mobileNumber: mobileNumber,
+        strikeCount: strikeCount,
+      },
+    });
+  }
+
   // Render table body
   const renderTableBody = () => {
     return (
@@ -133,13 +146,19 @@ function BlacklistManagement(props) {
             <td>{user.strikeCount}</td>
             <td className="operation">
               <Button
-                value={user} 
-                simple 
-                color="primary" 
+                value={user}
+                simple
+                color="primary"
                 size="lg"
-                href="blacklist-user"
-                onClick="">
-                  View
+                onClick={() =>
+                  handleViewUser(
+                    user.name,
+                    user.mobileNumber,
+                    user.email,
+                    user.strikeCount
+                  )
+                }>
+                View
               </Button>
             </td>
             <td className="operation">
@@ -162,7 +181,7 @@ function BlacklistManagement(props) {
 
   // To enable toast notifications
   toast.configure();
-  const editSuccessfulAlert = name => {
+  const editSuccessfulAlert = (name) => {
     toast.success(`${name} has been removed from the blacklist!`, {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 3000,

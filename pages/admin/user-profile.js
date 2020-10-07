@@ -1,8 +1,6 @@
-import React, {useEffect} from 'react';
-import Router from 'next/router'
+import React, {useState, useEffect} from 'react';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
 // layout for this page
 import Admin from 'layouts/Admin.js';
 
@@ -20,6 +18,7 @@ import CardAvatar from 'components/Card/CardAvatar.js';
 import CardBody from 'components/Card/CardBody.js';
 import CardFooter from 'components/Card/CardFooter.js';
 import Primary from 'components/Typography/Primary.js';
+import Router from 'next/router';
 
 import Link from 'next/link';
 
@@ -52,9 +51,14 @@ const styles = {
   },
 };
 
+//API call to update
+async function updateProfile() {
+  Router.push('admin-profile-edit-form');
+}
+
 const useStyles = makeStyles(styles);
 
-function BlacklistProfile(props) {
+function UserProfile(props) {
   const {userInfo} = props;
   const classes = useStyles();
 
@@ -68,19 +72,19 @@ function BlacklistProfile(props) {
   return (
     <div>
       <GridContainer>
-        <GridItem xs={12} sm={12} md={8}>
+        <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="info">
               <h4
                 className={classes.cardTitleWhite}
                 style={{textAlign: 'center'}}>
-                Profile
+                User Profile
               </h4>
             </CardHeader>
             <CardBody>
               <br />
               <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
+                <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
                   <CardHeader color="success">
                     <h4
                       style={{textAlign: 'center'}}
@@ -88,25 +92,12 @@ function BlacklistProfile(props) {
                       Name
                     </h4>
                   </CardHeader>
-                  <h6 style={{textAlign: 'center'}}>{userInfo.name}</h6>
+                  <h6 style={{textAlign: 'center'}}>{Router.query.name}</h6>
                 </GridItem>
               </GridContainer>
               <br />
               <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <CardHeader color="success">
-                    <h4
-                      style={{textAlign: 'center'}}
-                      className={classes.cardTitleWhite}>
-                      Email
-                    </h4>
-                  </CardHeader>
-                  <h6 style={{textAlign: 'center'}}>{userInfo.email}</h6>
-                </GridItem>
-              </GridContainer>
-              <br />
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
+                <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
                   <CardHeader color="success">
                     <h4
                       style={{textAlign: 'center'}}
@@ -114,45 +105,39 @@ function BlacklistProfile(props) {
                       Mobile Number
                     </h4>
                   </CardHeader>
-                  <h6 style={{textAlign: 'center'}}>{userInfo.adminType}</h6>
+                  <h6 style={{textAlign: 'center'}}>
+                    {Router.query.mobileNumber}
+                  </h6>
                 </GridItem>
               </GridContainer>
               <br />
               <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
+                <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
                   <CardHeader color="success">
                     <h4
                       style={{textAlign: 'center'}}
                       className={classes.cardTitleWhite}>
-                      Covid Status
+                      Email
                     </h4>
                   </CardHeader>
-                  <h6 style={{textAlign: 'center'}}>{userInfo.adminType}</h6>
+                  <h6 style={{textAlign: 'center'}}>{Router.query.email}</h6>
                 </GridItem>
               </GridContainer>
-            </CardBody>
-          </Card>
-        </GridItem>
-
-        <GridItem xs={12} sm={12} md={4}>
-          <Card profile>
-            <CardAvatar profile>
-              <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                <img src={CeoAvatar} alt="..." />
-              </a>
-            </CardAvatar>
-
-            <CardBody profile>
-              <strong className={classes.cardTitle}>{userInfo.name}</strong>
-              <Primary className={classes.cardTitle}>
-                <b>{userInfo.adminType}</b>
-              </Primary>
-              {/* <br></br>
-              <strong>Description:</strong>
-              <p className={classes.description}>
-                I hope that everyone will play their part to fight the COVID-19
-                pandemic.
-              </p> */}
+              <br />
+              <GridContainer>
+                <GridItem style={{margin: 'auto'}} xs={12} sm={12} md={5}>
+                  <CardHeader color="success">
+                    <h4
+                      style={{textAlign: 'center'}}
+                      className={classes.cardTitleWhite}>
+                      Strike Count
+                    </h4>
+                  </CardHeader>
+                  <h6 style={{textAlign: 'center'}}>
+                    {Router.query.strikeCount}
+                  </h6>
+                </GridItem>
+              </GridContainer>
             </CardBody>
           </Card>
         </GridItem>
@@ -161,6 +146,6 @@ function BlacklistProfile(props) {
   );
 }
 
-BlacklistProfile.layout = Admin;
+UserProfile.layout = Admin;
 
-export default connect(mapStateToProps, mapDispatchToProps)(BlacklistProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

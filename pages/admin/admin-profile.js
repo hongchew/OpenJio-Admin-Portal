@@ -53,7 +53,7 @@ const styles = {
 
 //API call to update
 async function updateProfile() {
-  Router.push('admin-profile-edit-form');
+  Router.push('/admin-profile-edit');
 }
 
 const useStyles = makeStyles(styles);

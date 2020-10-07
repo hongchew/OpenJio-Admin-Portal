@@ -6,6 +6,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Chip from '@material-ui/core/Chip';
+import Router from 'next/router';
 import axios from 'axios';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -68,7 +69,7 @@ const mapStateToProps = (state) => ({
 function Covid19(props) {
   // Connection to backend API
   const [covidUsers, setCovidUsers] = useState([]);
-  const {userInfo} = props
+  const {userInfo} = props;
 
   useEffect(() => {
     if (userInfo.adminId === '') {
@@ -90,6 +91,18 @@ function Covid19(props) {
       });
   };
 
+  async function handleViewUser(name, mobileNumber, email, strikeCount) {
+    Router.push({
+      pathname: 'user-profile',
+      query: {
+        name: name,
+        email: email,
+        mobileNumber: mobileNumber,
+        strikeCount: strikeCount,
+      },
+    });
+  }
+
   // End of connection to backend API
 
   // Rendering custom  table
@@ -106,29 +119,35 @@ function Covid19(props) {
   const renderTableBody = () => {
     return (
       covidUsers &&
-      covidUsers.map(({userId, name, email, updatedAt}) => {
-        return (
-          <tr key={userId}>
-            <td>{name}</td>
-            <td>{email}</td>
-            <td>
-              <Chip
-                label={new Date(updatedAt).toLocaleDateString('en-GB')}
-                color="primary"
-              />
-            </td>
+      covidUsers.map(
+        ({userId, name, mobileNumber, strikeCount, email, updatedAt}) => {
+          return (
+            <tr key={userId}>
+              <td>{name}</td>
+              <td>{email}</td>
+              <td>
+                <Chip
+                  label={new Date(updatedAt).toLocaleDateString('en-GB')}
+                  color="primary"
+                />
+              </td>
 
-            <td className="operation">
-              <Button
-                variant="contained"
-                color="success"
-                className={classes.button}
-                startIcon={<VisibilityIcon />}>View
-              </Button>
-            </td>
-          </tr>
-        );
-      })
+              <td className="operation">
+                <Button
+                  variant="contained"
+                  color="success"
+                  className={classes.button}
+                  onClick={() =>
+                    handleViewUser(name, mobileNumber, email, strikeCount)
+                  }
+                  startIcon={<VisibilityIcon />}>
+                  View
+                </Button>
+              </td>
+            </tr>
+          );
+        }
+      )
     );
   };
   // End of rendering table
