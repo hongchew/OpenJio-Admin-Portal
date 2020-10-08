@@ -8,6 +8,9 @@ import {connect} from 'react-redux';
 import {setInfo} from '../../redux/action/main';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 // layout for this page
 import Admin from 'layouts/Admin.js';
 // core components
@@ -55,20 +58,20 @@ const mapDispatchToProps = {
 
 function ChangePassword(props) {
   const classes = useStyles();
-  
+
   useEffect(() => {
     if (userInfo.adminId === '') {
       Router.push('login');
       return;
     }
   }, []);
-  
 
   //State of password entry
   const [currentPassword, setCurrentPassword] = useState();
   const [newPassword, setNewPassword] = useState();
   const [newPassword2, setNewPassword2] = useState();
   const {userInfo} = props;
+  const [visible, setVisible] = useState(false);
 
   const updateCurrPassword = (e) => {
     e.preventDefault();
@@ -89,6 +92,11 @@ function ChangePassword(props) {
     const newPass2 = e.target.value;
     setNewPassword2(newPass2);
     console.log('Current password re-entered is ' + newPassword2);
+  };
+
+  const updateVisibility = (e) => {
+    e.preventDefault();
+    setVisible(!visible);
   };
 
   //API call to change password
@@ -112,7 +120,7 @@ function ChangePassword(props) {
           }
         );
         successNotify();
-        setInfo(response.data)
+        setInfo(response.data);
         Router.push('admin-profile');
       } catch (error) {
         errorNotify('Current password is incorrect!');
@@ -126,13 +134,10 @@ function ChangePassword(props) {
   // To enable toast notifications
   toast.configure();
   const errorNotify = (error) => {
-    toast.error(
-      error,
-      {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000,
-      }
-    );
+    toast.error(error, {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+    });
   };
   const successNotify = () => {
     toast.success('Password is successfully changed.', {
@@ -153,56 +158,163 @@ function ChangePassword(props) {
               </p>
             </CardHeader>
             <CardBody>
+              {/* Current Password */}
               <GridContainer>
                 {/* Current password */}
                 <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    name="currentPassword"
-                    value={currentPassword}
-                    onChange={updateCurrPassword}
-                    labelText="Enter your current password"
-                    id="current-password"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    inputProps={{
-                      type: 'text',
-                    }}
-                  />
+                  {visible ? (
+                    <CustomInput
+                      name="currentPassword"
+                      value={currentPassword}
+                      onChange={updateCurrPassword}
+                      labelText="Enter your current password"
+                      id="current-password"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        type: 'text',
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <VisibilityIcon
+                              className={classes.inputIconsColor}
+                              onClick={updateVisibility}
+                            />
+                          </InputAdornment>
+                        ),
+                        autoComplete: 'off',
+                      }}
+                    />
+                  ) : (
+                    <CustomInput
+                      name="currentPassword"
+                      value={currentPassword}
+                      onChange={updateCurrPassword}
+                      labelText="Enter your current password"
+                      id="current-password"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        type: 'password',
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <VisibilityOffIcon
+                              className={classes.inputIconsColor}
+                              onClick={updateVisibility}
+                            />
+                          </InputAdornment>
+                        ),
+                        autoComplete: 'off',
+                      }}
+                    />
+                  )}
                 </GridItem>
               </GridContainer>
 
               {/* New password */}
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    name="newPassword"
-                    value={newPassword}
-                    onChange={updateNewPassword}
-                    labelText="Enter your new password"
-                    id="new-password"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                  />
+                  {visible ? (
+                    <CustomInput
+                      name="newPassword"
+                      value={newPassword}
+                      onChange={updateNewPassword}
+                      labelText="Enter your new password"
+                      id="new-password"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        type: 'text',
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <VisibilityIcon
+                              className={classes.inputIconsColor}
+                              onClick={updateVisibility}
+                            />
+                          </InputAdornment>
+                        ),
+                        autoComplete: 'off',
+                      }}
+                    />
+                  ) : (
+                    <CustomInput
+                      name="newPassword"
+                      value={newPassword}
+                      onChange={updateNewPassword}
+                      labelText="Enter your new password"
+                      id="new-password"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        type: 'password',
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <VisibilityOffIcon
+                              className={classes.inputIconsColor}
+                              onClick={updateVisibility}
+                            />
+                          </InputAdornment>
+                        ),
+                        autoComplete: 'off',
+                      }}
+                    />
+                  )}
                 </GridItem>
               </GridContainer>
 
+              {/* Repeat new password */}
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    name="newPassword2"
-                    value={newPassword2}
-                    onChange={updateNewPassword2}
-                    labelText="Re-enter your new password"
-                    id="new-password-2"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    inputProps={{
-                      type: 'text',
-                    }}
-                  />
+                  {visible ? (
+                    <CustomInput
+                      name="newPassword2"
+                      value={newPassword2}
+                      onChange={updateNewPassword2}
+                      labelText="Re-enter your new password"
+                      id="new-password-2"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        type: 'text',
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <VisibilityIcon
+                              className={classes.inputIconsColor}
+                              onClick={updateVisibility}
+                            />
+                          </InputAdornment>
+                        ),
+                        autoComplete: 'off',
+                      }}
+                    />
+                  ) : (
+                    <CustomInput
+                      name="newPassword2"
+                      value={newPassword2}
+                      onChange={updateNewPassword2}
+                      labelText="Re-enter your new password"
+                      id="new-password-2"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        type: 'password',
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <VisibilityOffIcon
+                              className={classes.inputIconsColor}
+                              onClick={updateVisibility}
+                            />
+                          </InputAdornment>
+                        ),
+                        autoComplete: 'off',
+                      }}
+                    />
+                  )}
                 </GridItem>
               </GridContainer>
             </CardBody>

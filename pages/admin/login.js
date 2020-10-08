@@ -74,7 +74,7 @@ function LoginPage(props) {
       console.log(response.data);
       console.log(response);
       setInfo(response.data);
-      if (response.status===200) Router.push('dashboard')
+      if (response.status === 200) Router.push('dashboard');
     } catch (error) {
       notify();
       console.error(error);

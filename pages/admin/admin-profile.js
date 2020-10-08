@@ -74,7 +74,7 @@ function AdminProfile(props) {
       <GridContainer>
         <GridItem xs={12} sm={12} md={8}>
           <Card>
-            <CardHeader color="info">
+            <CardHeader color="primary">
               <h4
                 className={classes.cardTitleWhite}
                 style={{textAlign: 'center'}}>
@@ -86,11 +86,11 @@ function AdminProfile(props) {
               <GridContainer>
                 <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
                   <CardHeader color="success">
-                    <h4
+                    <h6
                       style={{textAlign: 'center'}}
                       className={classes.cardTitleWhite}>
                       Name
-                    </h4>
+                    </h6>
                   </CardHeader>
                   <h6 style={{textAlign: 'center'}}>{userInfo.name}</h6>
                 </GridItem>
@@ -99,11 +99,11 @@ function AdminProfile(props) {
               <GridContainer>
                 <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
                   <CardHeader color="success">
-                    <h4
+                    <h6
                       style={{textAlign: 'center'}}
                       className={classes.cardTitleWhite}>
                       Email
-                    </h4>
+                    </h6>
                   </CardHeader>
                   <h6 style={{textAlign: 'center'}}>{userInfo.email}</h6>
                 </GridItem>
@@ -112,11 +112,11 @@ function AdminProfile(props) {
               <GridContainer>
                 <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
                   <CardHeader color="success">
-                    <h4
+                    <h6
                       style={{textAlign: 'center'}}
                       className={classes.cardTitleWhite}>
                       Admin Type
-                    </h4>
+                    </h6>
                   </CardHeader>
                   <h6 style={{textAlign: 'center'}}>{userInfo.adminType}</h6>
                 </GridItem>
@@ -125,11 +125,11 @@ function AdminProfile(props) {
               <GridContainer>
                 <GridItem style={{margin: 'auto'}} xs={12} sm={12} md={5}>
                   <CardHeader color="success">
-                    <h4
+                    <h6
                       style={{textAlign: 'center'}}
                       className={classes.cardTitleWhite}>
                       Password
-                    </h4>
+                    </h6>
                   </CardHeader>
                   <h6 style={{textAlign: 'center'}}>***************</h6>
                 </GridItem>
@@ -137,12 +137,12 @@ function AdminProfile(props) {
             </CardBody>
 
             <CardFooter>
-              <Button color="info">
+              <Button color="primary">
                 <Link href="admin-profile-edit">
                   <a id="editProfileBut">Edit Profile</a>
                 </Link>
               </Button>
-              <Button color="info">
+              <Button color="primary">
                 <Link href="admin-profile-password">
                   <a id="changePassBut">Change password</a>
                 </Link>

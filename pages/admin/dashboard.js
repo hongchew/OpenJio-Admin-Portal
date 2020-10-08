@@ -106,7 +106,7 @@ function Dashboard(props) {
             </CardHeader>
             <CardBody>
               <Table
-                tableHeaderColor="danger"
+                tableHeaderColor="primary"
                 tableHead={['Name', 'Email', 'Admin Type']}
                 tableData={admins.map(selectColAdmin)}
               />
@@ -115,12 +115,12 @@ function Dashboard(props) {
         </GridItem>
         <GridItem xs={12} sm={12} md={6}>
           <Card>
-            <CardHeader color="danger">
+            <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Blacklisted Users</h4>
             </CardHeader>
             <CardBody>
               <Table
-                tableHeaderColor="danger"
+                tableHeaderColor="primary"
                 tableHead={['Name', 'Email', 'Strike Count']}
                 tableData={blacklistedUsers.map(selectCol)}
               />
