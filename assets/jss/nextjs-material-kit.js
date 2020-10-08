@@ -90,7 +90,7 @@ const defaultFont = {
   lineHeight: "1.5em"
 };
 
-const primaryColor = "#448AFF";
+const primaryColor = "#2979FF";
 const warningColor = "#ff9800";
 const dangerColor = "#f44336";
 const successColor = "#4caf50";
@@ -172,7 +172,7 @@ const infoCardHeader = {
 };
 const primaryCardHeader = {
   color: "#fff",
-  background: "#448AFF",
+  background: "#2979FF",
   ...primaryBoxShadow
 };
 const roseCardHeader = {

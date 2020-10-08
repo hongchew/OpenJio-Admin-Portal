@@ -142,6 +142,7 @@ function AdminManagement(props) {
 
             <td className="opration">
               <Button
+                simple
                 variant="contained"
                 color="danger"
                 className={classes.button}
@@ -187,7 +188,7 @@ function AdminManagement(props) {
               <div style={{float: 'right'}}>
                 <Button
                   variant="contained"
-                  color="warning"
+                  color="dark"
                   size="sm"
                   className={classes.button}
                   startIcon={<PersonAddIcon />}
