@@ -81,6 +81,10 @@ function LoginPage(props) {
     }
   }
 
+  const handleReset = () => {
+    Router.push('resetpassword')
+  }
+
   // Toast notifications
   toast.configure();
   const notify = () => {
@@ -166,12 +170,10 @@ function LoginPage(props) {
                       color="primary"
                       size="lg"
                       onClick={handleLogin}>
-                      <a>Login</a>
+                      Login
                     </Button>
-                    <Button simple color="primary" size="lg">
-                      <Link href="resetpassword">
-                        <a>Reset Password</a>
-                      </Link>
+                    <Button simple color="primary" size="lg" onClick={handleReset}>
+                      Reset Password
                     </Button>
                   </CardFooter>
                 </form>

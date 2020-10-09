@@ -75,7 +75,7 @@ function CreateAdmin(props) {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [adminType, setAdminType] = useState('SUPER_ADMIN');
-  const [password, setPassword] = useState();
+  const [password, setPassword] = useState(); //state not utilised
 
   useEffect(() => {
     if (userInfo.adminId === '') {
@@ -112,6 +112,7 @@ function CreateAdmin(props) {
     console.log('Updated Admin Type is ' + adminType);
   };
 
+  //Code not utilised
   const updatePassword = (e) => {
     e.preventDefault();
     console.log('Input is updating');
@@ -132,18 +133,15 @@ function CreateAdmin(props) {
       } else if (!adminType) {
         // errorNotify('Admin Type field is empty');
         throw 'Admin Type field is empty';
-      } else if (!password) {
-        // errorNotify('Password is empty');
-        throw 'Password is empty';
       }
+
       console.log('Call create admin profile');
       const response = await axios.post(
         'http://localhost:3000/admins/register',
         {
           name: name,
           email: email,
-          adminType: adminType,
-          password: password,
+          adminType: adminType
         }
       );
       console.log(response.data);
@@ -151,7 +149,6 @@ function CreateAdmin(props) {
       Router.push('admin-management');
     } catch (e) {
       if (
-        e != 'Password is empty' ||
         e != 'Admin Type field is empty' ||
         e != 'Email field is blank' ||
         e != 'Name field is blank'
@@ -237,8 +234,8 @@ function CreateAdmin(props) {
                     autoComplete: 'off',
                   }}
                 /> */}
-
-                <CustomInput
+                {/* 
+                  <CustomInput
                   name="password"
                   value={password}
                   onChange={updatePassword}
@@ -255,6 +252,7 @@ function CreateAdmin(props) {
                     autoComplete: 'off',
                   }}
                 />
+                */}
                 <br />
                 <br />
 

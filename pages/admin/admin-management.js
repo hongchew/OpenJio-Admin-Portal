@@ -167,6 +167,11 @@ function AdminManagement(props) {
     });
   };
 
+  //Routing to create-admin page
+  const routeCreatePage = () => {
+    Router.push('create-admin')
+  }
+
   const classes = useStyles();
 
   return (
@@ -192,7 +197,7 @@ function AdminManagement(props) {
                   size="sm"
                   className={classes.button}
                   startIcon={<PersonAddIcon />}
-                  href="create-admin">
+                  onClick={routeCreatePage}>
                   Create
                 </Button>
               </div>
