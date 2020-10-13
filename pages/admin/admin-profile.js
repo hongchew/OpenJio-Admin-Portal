@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 // @material-ui/core components
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
 // layout for this page
 import Admin from 'layouts/Admin.js';
 
@@ -19,10 +19,13 @@ import CardBody from 'components/Card/CardBody.js';
 import CardFooter from 'components/Card/CardFooter.js';
 import Primary from 'components/Typography/Primary.js';
 import Router from 'next/router';
-
+import Typography from '@material-ui/core/Typography';
+import {createMuiTheme, responsiveFontSizes} from '@material-ui/core/styles';
+import Chip from '@material-ui/core/Chip';
+import Box from '@material-ui/core/Box';
 import Link from 'next/link';
-
-import CeoAvatar from 'assets/img/faces/tanwk.png';
+import Avatar, {bold} from 'assets/img/profile/admin.png';
+import Divider from '@material-ui/core/Divider';
 
 const mapDispatchToProps = {
   setInfo: setInfo,
@@ -31,6 +34,27 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
   userInfo: state.main,
 });
+
+let theme = createMuiTheme({
+  spacing: 5,
+  typography: {
+    h5: {
+      color: '#808080',
+      fontWeight: 500,
+      fontSize: 18,
+    },
+    subtitle1: {
+      fontSize: 12,
+    },
+    body1: {
+      fontWeight: 500,
+    },
+    button: {
+      fontStyle: 'italic',
+    },
+  },
+});
+theme = responsiveFontSizes(theme);
 
 const styles = {
   cardCategoryWhite: {
@@ -48,6 +72,9 @@ const styles = {
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: '3px',
     textDecoration: 'none',
+  },
+  cardProfile: {
+    margin: theme.spacing(6, 1, 6, 1),
   },
 };
 
@@ -71,57 +98,22 @@ function AdminProfile(props) {
 
   return (
     <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={8}>
-          <Card>
+
+      <GridContainer justify="center">
+        {/* Remove old UI */}
+        {/* <GridItem xs={12} sm={12} md={6}> */}
+          {/* Profile card */}
+          {/* <Card>
             <CardHeader color="primary">
               <h4
                 className={classes.cardTitleWhite}
                 style={{textAlign: 'center'}}>
                 Profile
               </h4>
-            </CardHeader>
-            <CardBody>
-              <br />
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
-                  <CardHeader color="success">
-                    <h6
-                      style={{textAlign: 'center'}}
-                      className={classes.cardTitleWhite}>
-                      Name
-                    </h6>
-                  </CardHeader>
-                  <h6 style={{textAlign: 'center'}}>{userInfo.name}</h6>
-                </GridItem>
-              </GridContainer>
-              <br />
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
-                  <CardHeader color="success">
-                    <h6
-                      style={{textAlign: 'center'}}
-                      className={classes.cardTitleWhite}>
-                      Email
-                    </h6>
-                  </CardHeader>
-                  <h6 style={{textAlign: 'center'}}>{userInfo.email}</h6>
-                </GridItem>
-              </GridContainer>
-              <br />
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
-                  <CardHeader color="success">
-                    <h6
-                      style={{textAlign: 'center'}}
-                      className={classes.cardTitleWhite}>
-                      Admin Type
-                    </h6>
-                  </CardHeader>
-                  <h6 style={{textAlign: 'center'}}>{userInfo.adminType}</h6>
-                </GridItem>
-              </GridContainer>
-              <br />
+            </CardHeader> */}
+
+              {/* Card body & password section */}
+            {/* <CardBody>
               <GridContainer>
                 <GridItem style={{margin: 'auto'}} xs={12} sm={12} md={5}>
                   <CardHeader color="success">
@@ -134,6 +126,68 @@ function AdminProfile(props) {
                   <h6 style={{textAlign: 'center'}}>***************</h6>
                 </GridItem>
               </GridContainer>
+            </CardBody> */}
+          {/* </Card> */}
+        {/* </GridItem> */}
+
+        {/* New UI */}
+        <GridItem xs={12} sm={12} md={6}>
+          <Card profile>
+            {/* Avatar Image */}
+            <CardAvatar profile>
+              <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                <img src={Avatar} alt="..." />
+              </a>
+            </CardAvatar>
+
+            <CardBody profile>
+              <ThemeProvider theme={theme}>
+                <div className={classes.cardProfile}>
+                  <Box b={2}>
+                    <Typography gutterBottom variant="h5" component="h8">
+                      Name:
+                    </Typography>
+                  </Box>
+
+                  <Box b={5}>
+                    <Typography gutterBottom variant="h6" component="h8">
+                      {userInfo.name}
+                    </Typography>
+                  </Box>
+                </div>
+
+                <Divider variant="middle" />
+
+                <div className={classes.cardProfile}>
+                  <Box b={5}>
+                    <Typography gutterBottom variant="h5" component="h8">
+                      Email:
+                    </Typography>
+                  </Box>
+
+                  <Box b={5}>
+                    <Typography gutterBottom variant="h6" component="h8">
+                      {userInfo.email}
+                    </Typography>
+                  </Box>
+                </div>
+
+                <Divider variant="middle" />
+
+                <div className={classes.cardProfile}>
+                <Box b={5}>
+                  <Typography gutterBottom variant="h5">
+                    Admin Type:
+                  </Typography>
+                </Box>
+                {userInfo.adminType === 'SUPER_ADMIN' ? (
+                  <Chip label="Super Admin" color="secondary" />
+                ) : (
+                  <Chip label="Admin" color="secondary" />
+                )}
+                </div>
+
+              </ThemeProvider>
             </CardBody>
 
             <CardFooter>
@@ -142,29 +196,13 @@ function AdminProfile(props) {
                   <a id="editProfileBut">Edit Profile</a>
                 </Link>
               </Button>
+
               <Button color="primary">
                 <Link href="admin-profile-password">
                   <a id="changePassBut">Change password</a>
                 </Link>
               </Button>
             </CardFooter>
-          </Card>
-        </GridItem>
-
-        <GridItem xs={12} sm={12} md={4}>
-          <Card profile>
-            <CardAvatar profile>
-              <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                <img src={CeoAvatar} alt="..." />
-              </a>
-            </CardAvatar>
-
-            <CardBody profile>
-              <strong className={classes.cardTitle}>{userInfo.name}</strong>
-              <Primary className={classes.cardTitle} onClick={updateProfile}>
-                <b>{userInfo.adminType}</b>
-              </Primary>
-            </CardBody>
           </Card>
         </GridItem>
       </GridContainer>

@@ -25,7 +25,7 @@ import CardBody from 'components/Card/CardBody.js';
 import CardFooter from 'components/Card/CardFooter.js';
 import Primary from 'components/Typography/Primary.js';
 
-import CeoAvatar from 'assets/img/faces/tanwk.png';
+import Avatar from 'assets/img/profile/admin.png';
 
 const styles = {
   cardCategoryWhite: {
@@ -331,7 +331,7 @@ function ChangePassword(props) {
           <Card profile>
             <CardAvatar profile>
               <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                <img src={CeoAvatar} alt="..." />
+                <img src={Avatar} alt="..." />
               </a>
             </CardAvatar>
 

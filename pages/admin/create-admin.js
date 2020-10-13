@@ -31,7 +31,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Router from 'next/router';
 
-import CeoAvatar from 'assets/img/faces/tanwk.png';
+import Avatar from 'assets/img/profile/admin.png';
 
 const mapDispatchToProps = {
   setInfo: setInfo,

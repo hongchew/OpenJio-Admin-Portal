@@ -22,7 +22,7 @@ import Router from 'next/router';
 
 import Link from 'next/link';
 
-import CeoAvatar from 'assets/img/faces/tanwk.png';
+import Avatar from 'assets/img/profile/admin.png';
 
 const mapDispatchToProps = {
   setInfo: setInfo,
@@ -83,6 +83,7 @@ function UserProfile(props) {
             </CardHeader>
             <CardBody>
               <br />
+
               <GridContainer>
                 <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
                   <CardHeader color="success">
@@ -95,7 +96,9 @@ function UserProfile(props) {
                   <h6 style={{textAlign: 'center'}}>{Router.query.name}</h6>
                 </GridItem>
               </GridContainer>
+
               <br />
+
               <GridContainer>
                 <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
                   <CardHeader color="success">
@@ -110,6 +113,7 @@ function UserProfile(props) {
                   </h6>
                 </GridItem>
               </GridContainer>
+
               <br />
               <GridContainer>
                 <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
@@ -123,7 +127,9 @@ function UserProfile(props) {
                   <h6 style={{textAlign: 'center'}}>{Router.query.email}</h6>
                 </GridItem>
               </GridContainer>
+
               <br />
+
               <GridContainer>
                 <GridItem style={{margin: 'auto'}} xs={12} sm={12} md={5}>
                   <CardHeader color="success">
@@ -138,6 +144,7 @@ function UserProfile(props) {
                   </h6>
                 </GridItem>
               </GridContainer>
+              
             </CardBody>
           </Card>
         </GridItem>
