@@ -141,8 +141,8 @@ function AdminManagement(props) {
             </td>
 
             <td className="opration">
+            {/* simple */}
               <Button
-                simple
                 variant="contained"
                 color="danger"
                 className={classes.button}

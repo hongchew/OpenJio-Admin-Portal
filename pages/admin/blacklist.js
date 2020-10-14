@@ -149,10 +149,10 @@ function BlacklistManagement(props) {
             <td>{user.strikeCount}</td>
             <td className="operation">
               {/* simple <-- took out to align with the header */}
+              {/* size="lg" */}
               <Button
                 value={user}
                 color="info"
-                size="lg"
                 startIcon={<VisibilityIcon />}
                 onClick={() =>
                   handleViewUser(
@@ -165,8 +165,8 @@ function BlacklistManagement(props) {
                 View
               </Button>
 
+              {/* size="lg" */}
               <Button
-                size="lg"
                 color="danger"
                 variant="contained"
                 className={classes.button}
@@ -216,7 +216,7 @@ function BlacklistManagement(props) {
   return (
     <div>
       {/* Admin management panel */}
-      <GridContainer>
+      <GridContainer justify="center">
         <GridItem xs={11} sm={11} md={11}>
           <Card>
             <CardHeader color="primary">
