@@ -135,7 +135,7 @@ function Covid19(props) {
               <td className="operation">
                 <Button
                   variant="contained"
-                  color="success"
+                  color="info"
                   className={classes.button}
                   onClick={() =>
                     handleViewUser(name, mobileNumber, email, strikeCount)
