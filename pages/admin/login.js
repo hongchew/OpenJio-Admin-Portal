@@ -10,9 +10,13 @@ import {setInfo} from '../../redux/action/main';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 import InputAdornment from '@material-ui/core/InputAdornment';
+
 // @material-ui/icons
 import Email from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+
 // core components
 import Header from 'components/logincomponents/Header/Header.js';
 import HeaderLinks from 'components/logincomponents/Header/HeaderLinks.js';
@@ -51,6 +55,8 @@ function LoginPage(props) {
     Router.prefetch('resetpassword');
   }, []);
 
+  const [visible, setVisible] = useState(false);
+
   //Updating state of email and password
   const updateEmail = (e) => {
     e.preventDefault();
@@ -62,6 +68,11 @@ function LoginPage(props) {
     e.preventDefault();
     const password = e.target.value;
     setPassword(password);
+  };
+
+  const updateVisibility = (e) => {
+    e.preventDefault();
+    setVisible(!visible);
   };
 
   //API call for login authentication
@@ -144,7 +155,32 @@ function LoginPage(props) {
                         ),
                       }}
                     />
+                    {visible ? (
                     <CustomInput
+                      name="password"
+                      value={password}
+                      onChange={updatePassword}
+                      labelText="Password"
+                      id="pass"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        type: 'text',
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <VisibilityIcon 
+                              className={classes.inputIconsColor}
+                              onClick={updateVisibility}>
+                            </VisibilityIcon>
+                            {/* <LockIcon className={classes.inputIconsColor} /> */}
+                          </InputAdornment>
+                        ),
+                        autoComplete: 'off',
+                      }}
+                    />
+                    ) : (
+                      <CustomInput
                       name="password"
                       value={password}
                       onChange={updatePassword}
@@ -157,12 +193,17 @@ function LoginPage(props) {
                         type: 'password',
                         endAdornment: (
                           <InputAdornment position="end">
-                            <LockIcon className={classes.inputIconsColor} />
+                            <VisibilityOffIcon 
+                              className={classes.inputIconsColor}
+                              onClick={updateVisibility}>
+                            </VisibilityOffIcon>
+                            {/* <LockIcon className={classes.inputIconsColor} /> */}
                           </InputAdornment>
                         ),
                         autoComplete: 'off',
                       }}
                     />
+                    )}
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
                     <Button

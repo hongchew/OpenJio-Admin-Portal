@@ -274,13 +274,15 @@ function Covid19User(props) {
                 </ThemeProvider>
               </CardBody>
 
-              <CardFooter className={classes.boxJustify}>
+              {/* Removed Download PDF Option for future SR instead */}
+              
+              {/* <CardFooter className={classes.boxJustify}>
                 <div justifyContent="center">
                   <Pdf targetRef={ref} filename="covid-19-user-case.pdf" x={-55} y={30} scale={1}>
                     {({toPdf}) => <Button color="info" onClick={toPdf}>Download PDF</Button>}
                   </Pdf>
                 </div>
-              </CardFooter>
+              </CardFooter> */}
             </Card>
           </GridItem>
         </GridContainer>
