@@ -13,6 +13,7 @@ import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import CardBody from 'components/Card/CardBody.js';
 import CardFooter from 'components/Card/CardFooter.js';
+import Button from 'components/CustomButtons/Button.js';
 import Router from 'next/router';
 import Typography from '@material-ui/core/Typography';
 import {createMuiTheme, responsiveFontSizes} from '@material-ui/core/styles';
@@ -65,9 +66,9 @@ const styles = {
   },
   cardProfile: {
     justifyContent: 'center',
-    margin: theme.spacing(5, 1, 5, 1),
+    margin: theme.spacing(3.5, 1, 3.5, 1),
   },
-  boxJustify: {
+  boxJustify: { 
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -77,11 +78,17 @@ const styles = {
     margin: theme.spacing(1),
   },
   cardStyle: {
-    width: '10rem',
+    width: '100%',
+    padding: 0,
+    paddingLeft: 100,
+    paddingRight: 100,
+    backgroundColor: '#F8F8F8',
   },
 };
 
 const useStyles = makeStyles(styles);
+
+const generatePDF = async () => {};
 
 function Covid19User(props) {
   const {userInfo} = props;
@@ -201,52 +208,70 @@ function Covid19User(props) {
 
                 <div className={classes.cardProfile}>
                   <Box className={classes.boxJustify}>
-                    <Typography gutterBottom variant="h5" component="h5">
+                    <Typography variant="h5" component="h5">
                       Addresses:
                     </Typography>
                   </Box>
+
                   <Box className={classes.boxJustify}>
                     {addresses &&
                       addresses.map((address) => (
-                        
                         <div key={address.addressId}>
-
-                          {/* Address line 1 */}
+                          {/* <Box className={classes.boxJustify} borderColor="#D3D3D3" border={2} borderRadius="10%"> */}
                           <Box className={classes.boxJustify}>
-                            <Typography
-                              gutterBottom
-                              variant="h6"
-                              component="h5">
-                              {address.line1}
-                            </Typography>
-                          </Box>
+                            <Card
+                              className={classes.cardStyle}
+                              variant="outlined">
+                              <CardBody profile>
+                                {/* Address line 1 */}
+                                <Box className={classes.boxJustify}>
+                                  <Typography
+                                    gutterBottom
+                                    variant="h6"
+                                    component="h5">
+                                    {address.line1}
+                                  </Typography>
+                                </Box>
 
-                          {/* Address line 2 */}
-                          <Box className={classes.boxJustify}>
-                            <Typography
-                              gutterBottom
-                              variant="h6"
-                              component="h5">
-                              {address.line2}
-                            </Typography>
-                          </Box>
+                                {/* Address line 2 */}
+                                <Box className={classes.boxJustify}>
+                                  <Typography
+                                    gutterBottom
+                                    variant="h6"
+                                    component="h5">
+                                    {address.line2}
+                                  </Typography>
+                                </Box>
 
-                          {/* Country + Postal Code */}
-                          <Box className={classes.boxJustify}>
-                            <Typography
-                              gutterBottom
-                              variant="h6"
-                              component="h5">
-                              {address.country} {address.postalCode}
-                            </Typography>
+                                {/* Country + Postal Code */}
+                                <Box className={classes.boxJustify}>
+                                  <Typography
+                                    gutterBottom
+                                    variant="h6"
+                                    component="h5">
+                                    {address.country} {address.postalCode}
+                                  </Typography>
+                                </Box>
+                              </CardBody>
+                            </Card>
                           </Box>
-
+                          {/* </Box> */}
                         </div>
                       ))}
                   </Box>
                 </div>
+                {/* <Divider variant="middle" /> */}
+
               </ThemeProvider>
             </CardBody>
+
+            <CardFooter className={classes.boxJustify}>
+                <div justifyContent="center">
+                  <Button color="info" onClick={generatePDF}>
+                    Download PDF
+                  </Button>
+                </div>
+            </CardFooter>
           </Card>
         </GridItem>
       </GridContainer>
