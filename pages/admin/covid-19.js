@@ -91,14 +91,17 @@ function Covid19(props) {
       });
   };
 
-  async function handleViewUser(name, mobileNumber, email, strikeCount) {
+  async function handleViewUser(userId, name, mobileNumber, email, createdAt, Addresses) {
+
     Router.push({
-      pathname: 'user-profile',
+      pathname: 'covid-19-user',
       query: {
+        userId: userId,
         name: name,
         email: email,
         mobileNumber: mobileNumber,
-        strikeCount: strikeCount,
+        createdAt: createdAt,
+        Addresses: Addresses,
       },
     });
   }
@@ -120,7 +123,7 @@ function Covid19(props) {
     return (
       covidUsers &&
       covidUsers.map(
-        ({userId, name, mobileNumber, strikeCount, email, updatedAt}) => {
+        ({userId, name, mobileNumber, email, updatedAt, createdAt, Addresses}) => {
           return (
             <tr key={userId}>
               <td>{name}</td>
@@ -138,7 +141,7 @@ function Covid19(props) {
                   color="info"
                   className={classes.button}
                   onClick={() =>
-                    handleViewUser(name, mobileNumber, email, strikeCount)
+                    handleViewUser(userId, name, mobileNumber, email, createdAt, Addresses)
                   }
                   startIcon={<VisibilityIcon />}>
                   View

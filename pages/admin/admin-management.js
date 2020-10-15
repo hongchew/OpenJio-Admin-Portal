@@ -193,7 +193,7 @@ function AdminManagement(props) {
               <div style={{float: 'right'}}>
                 <Button
                   variant="contained"
-                  color="dark"
+                  color="info"
                   size="sm"
                   className={classes.button}
                   startIcon={<PersonAddIcon />}
