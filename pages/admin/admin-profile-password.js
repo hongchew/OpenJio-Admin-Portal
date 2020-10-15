@@ -114,7 +114,9 @@ function ChangePassword(props) {
   const [newPassword, setNewPassword] = useState();
   const [newPassword2, setNewPassword2] = useState();
   const {userInfo} = props;
-  const [visible, setVisible] = useState(false);
+  const [visibleCurr, setCurrVisible] = useState(false);
+  const [visibleNew, setNewVisible] = useState(false);
+  const [visibleNew2, setNew2Visible] = useState(false);
 
   const updateCurrPassword = (e) => {
     e.preventDefault();
@@ -137,9 +139,19 @@ function ChangePassword(props) {
     console.log('Current password re-entered is ' + newPassword2);
   };
 
-  const updateVisibility = (e) => {
+  const updateCurrentPasswordVisibility = (e) => {
     e.preventDefault();
-    setVisible(!visible);
+    setCurrVisible(!visibleCurr);
+  };
+
+  const updateNewPasswordVisibility = (e) => {
+    e.preventDefault();
+    setNewVisible(!visibleNew);
+  };
+
+  const updateNewPassword2Visibility = (e) => {
+    e.preventDefault();
+    setNew2Visible(!visibleNew2);
   };
 
   //API call to change password
@@ -205,7 +217,7 @@ function ChangePassword(props) {
               <GridContainer justify="center">
                 {/* Current password */}
                 <GridItem xs={12} sm={12} md={6}>
-                  {visible ? (
+                  {visibleCurr ? (
                     <CustomInput
                       name="currentPassword"
                       value={currentPassword}
@@ -221,7 +233,7 @@ function ChangePassword(props) {
                           <InputAdornment position="end">
                             <VisibilityIcon
                               className={classes.inputIconsColor}
-                              onClick={updateVisibility}
+                              onClick={updateCurrentPasswordVisibility}
                             />
                           </InputAdornment>
                         ),
@@ -244,7 +256,7 @@ function ChangePassword(props) {
                           <InputAdornment position="end">
                             <VisibilityOffIcon
                               className={classes.inputIconsColor}
-                              onClick={updateVisibility}
+                              onClick={updateCurrentPasswordVisibility}
                             />
                           </InputAdornment>
                         ),
@@ -258,7 +270,7 @@ function ChangePassword(props) {
               {/* New password */}
               <GridContainer justify="center">
                 <GridItem xs={12} sm={12} md={6}>
-                  {visible ? (
+                  {visibleNew ? (
                     <CustomInput
                       name="newPassword"
                       value={newPassword}
@@ -276,7 +288,7 @@ function ChangePassword(props) {
                           <InputAdornment position="end">
                             <VisibilityIcon
                               className={classes.inputIconsColor}
-                              onClick={updateVisibility}
+                              onClick={updateNewPasswordVisibility}
                             />
                           </InputAdornment>
                         ),
@@ -299,7 +311,7 @@ function ChangePassword(props) {
                           <InputAdornment position="end">
                             <VisibilityOffIcon
                               className={classes.inputIconsColor}
-                              onClick={updateVisibility}
+                              onClick={updateNewPasswordVisibility}
                             />
                           </InputAdornment>
                         ),
@@ -313,7 +325,7 @@ function ChangePassword(props) {
               {/* Repeat new password */}
               <GridContainer justify="center">
                 <GridItem xs={12} sm={12} md={6}>
-                  {visible ? (
+                  {visibleNew2 ? (
                     <CustomInput
                       name="newPassword2"
                       value={newPassword2}
@@ -329,7 +341,7 @@ function ChangePassword(props) {
                           <InputAdornment position="end">
                             <VisibilityIcon
                               className={classes.inputIconsColor}
-                              onClick={updateVisibility}
+                              onClick={updateNewPassword2Visibility}
                             />
                           </InputAdornment>
                         ),
@@ -352,7 +364,7 @@ function ChangePassword(props) {
                           <InputAdornment position="end">
                             <VisibilityOffIcon
                               className={classes.inputIconsColor}
-                              onClick={updateVisibility}
+                              onClick={updateNewPassword2Visibility}
                             />
                           </InputAdornment>
                         ),
