@@ -92,18 +92,17 @@ function BlacklistManagement(props) {
   //Edit blacklisted user
   async function editBlacklistedUser(userId, name) {
     try {
-      console.log(users);
       const afterRemovalList = users.filter((user) => userId !== user.userId);
       const userToUpdate = users.filter((user) => userId === user.userId)[0];
-      console.log(
-        `User to update blacklist is: ${JSON.stringify(userToUpdate)}`
-      );
+      // console.log(
+      //   `User to update blacklist is: ${JSON.stringify(userToUpdate)}`
+      // );
       //clearing the blacklist and strike counts
       const updatedUser = updateUser(userToUpdate);
       axios.put('http://localhost:3000/users/update-user-details', updatedUser);
-      console.log('user successfully removed');
-      setUsers(afterRemovalList);
+      // console.log('user successfully removed');
       editSuccessfulAlert(name);
+      setUsers(afterRemovalList);
     } catch (error) {
       console.log(error);
     }
@@ -171,7 +170,7 @@ function BlacklistManagement(props) {
                 variant="contained"
                 className={classes.button}
                 startIcon={<DeleteIcon />}
-                onClick={() => editBlacklistedUser(user.userId, name)}>
+                onClick={() => editBlacklistedUser(user.userId, user.name)}>
                 Remove
               </Button>
               
