@@ -141,6 +141,7 @@ function AdminManagement(props) {
             </td>
 
             <td className="opration">
+            {/* simple */}
               <Button
                 variant="contained"
                 color="danger"
@@ -166,6 +167,11 @@ function AdminManagement(props) {
     });
   };
 
+  //Routing to create-admin page
+  const routeCreatePage = () => {
+    Router.push('create-admin')
+  }
+
   const classes = useStyles();
 
   return (
@@ -187,11 +193,11 @@ function AdminManagement(props) {
               <div style={{float: 'right'}}>
                 <Button
                   variant="contained"
-                  color="warning"
+                  color="info"
                   size="sm"
                   className={classes.button}
                   startIcon={<PersonAddIcon />}
-                  href="create-admin">
+                  onClick={routeCreatePage}>
                   Create
                 </Button>
               </div>

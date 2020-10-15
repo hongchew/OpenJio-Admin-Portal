@@ -6,6 +6,8 @@ import Router from 'next/router';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+
 // import Edit from "@material-ui/icons/Edit";
 import Close from '@material-ui/icons/Close';
 // Toast alert
@@ -114,7 +116,8 @@ function BlacklistManagement(props) {
   }
 
   const renderTableHeader = () => {
-    let headerElement = ['Name', 'Email', 'Mobile Number', 'Strike Count'];
+    // 'Mobile Number' <-- Remove to make the table more concise
+    let headerElement = ['Name', 'Email', 'Mobile Number', 'Strike Count', 'Actions'];
 
     return headerElement.map((key, index) => {
       return <th key={index}>{key.toUpperCase()}</th>;
@@ -145,11 +148,12 @@ function BlacklistManagement(props) {
             <td>{user.mobileNumber}</td>
             <td>{user.strikeCount}</td>
             <td className="operation">
+              {/* simple <-- took out to align with the header */}
+              {/* size="lg" */}
               <Button
                 value={user}
-                simple
-                color="primary"
-                size="lg"
+                color="info"
+                startIcon={<VisibilityIcon />}
                 onClick={() =>
                   handleViewUser(
                     user.name,
@@ -160,10 +164,21 @@ function BlacklistManagement(props) {
                 }>
                 View
               </Button>
-            </td>
-            <td className="operation">
+
+              {/* size="lg" */}
               <Button
-                simple
+                color="danger"
+                variant="contained"
+                className={classes.button}
+                startIcon={<DeleteIcon />}
+                onClick={() => editBlacklistedUser(user.userId, name)}>
+                Remove
+              </Button>
+              
+            </td>
+            {/* <td className="operation"> */}
+              {/* simple <-- took out to align with the header */}
+              {/* <Button
                 size="lg"
                 color="danger"
                 variant="contained"
@@ -172,7 +187,7 @@ function BlacklistManagement(props) {
                 onClick={() => editBlacklistedUser(user.userId, name)}>
                 Remove
               </Button>
-            </td>
+            </td> */}
           </tr>
         );
       })
@@ -201,7 +216,7 @@ function BlacklistManagement(props) {
   return (
     <div>
       {/* Admin management panel */}
-      <GridContainer>
+      <GridContainer justify="center">
         <GridItem xs={11} sm={11} md={11}>
           <Card>
             <CardHeader color="primary">

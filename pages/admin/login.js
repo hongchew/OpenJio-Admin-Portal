@@ -74,11 +74,15 @@ function LoginPage(props) {
       console.log(response.data);
       console.log(response);
       setInfo(response.data);
-      if (response.status===200) Router.push('dashboard')
+      if (response.status === 200) Router.push('dashboard');
     } catch (error) {
       notify();
       console.error(error);
     }
+  }
+
+  const handleReset = () => {
+    Router.push('resetpassword')
   }
 
   // Toast notifications
@@ -166,12 +170,10 @@ function LoginPage(props) {
                       color="primary"
                       size="lg"
                       onClick={handleLogin}>
-                      <a>Login</a>
+                      Login
                     </Button>
-                    <Button simple color="primary" size="lg">
-                      <Link href="resetpassword">
-                        <a>Reset Password</a>
-                      </Link>
+                    <Button simple color="primary" size="lg" onClick={handleReset}>
+                      Reset Password
                     </Button>
                   </CardFooter>
                 </form>

@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 // @material-ui/core components
-import {makeStyles} from '@material-ui/core/styles';
-// layout for this page
+import {makeStyles, ThemeProvider} from '@material-ui/core/styles';// layout for this page
 import Admin from 'layouts/Admin.js';
 
 //redux app state management
@@ -19,10 +18,12 @@ import CardBody from 'components/Card/CardBody.js';
 import CardFooter from 'components/Card/CardFooter.js';
 import Primary from 'components/Typography/Primary.js';
 import Router from 'next/router';
-
+import Typography from '@material-ui/core/Typography';
+import {createMuiTheme, responsiveFontSizes} from '@material-ui/core/styles';
+import Chip from '@material-ui/core/Chip';
+import Box from '@material-ui/core/Box';
+import Divider from '@material-ui/core/Divider';
 import Link from 'next/link';
-
-import CeoAvatar from 'assets/img/faces/tanwk.png';
 
 const mapDispatchToProps = {
   setInfo: setInfo,
@@ -31,6 +32,23 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
   userInfo: state.main,
 });
+
+let theme = createMuiTheme({
+  spacing: 5,
+  typography: {
+    h5: {
+      color: '#808080',
+      fontWeight: 500,
+      fontSize: 18,
+    },
+    subtitle1: {
+      fontSize: 16,
+      fontWeight: 500,
+      fontStyle: 'regular',
+    },
+  },
+});
+theme = responsiveFontSizes(theme);
 
 const styles = {
   cardCategoryWhite: {
@@ -49,6 +67,19 @@ const styles = {
     marginBottom: '3px',
     textDecoration: 'none',
   },
+  cardProfile: {
+    justifyContent: 'center',
+    margin: theme.spacing(5, 1, 5, 1),
+  },
+  boxJustify:{
+    display:'flex',
+    justifyContent:'center',
+    alignItems: 'center',
+  },
+  chipStyle:{
+    padding: theme.spacing(2),
+    margin: theme.spacing(1),
+  }
 };
 
 //API call to update
@@ -71,8 +102,8 @@ function UserProfile(props) {
 
   return (
     <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
+      <GridContainer justify="center">
+        <GridItem xs={12} sm={12} md={6}>
           <Card>
             <CardHeader color="info">
               <h4
@@ -81,8 +112,96 @@ function UserProfile(props) {
                 User Profile
               </h4>
             </CardHeader>
-            <CardBody>
+
+            <CardBody profile>
+              <ThemeProvider theme={theme}> 
+                <div className={classes.cardProfile}>
+                  <Box className={classes.boxJustify}>
+                    <Typography gutterBottom variant="h5" component="h8">
+                      Name:
+                    </Typography>
+                  </Box>
+
+                  <Box className={classes.boxJustify}>
+                    <Typography gutterBottom variant="h6" component="h8">
+                      {Router.query.name}
+                    </Typography>
+                  </Box>
+                </div>
+
+                <Divider variant="middle" />
+
+                <div className={classes.cardProfile}>
+                  <Box className={classes.boxJustify}>
+                    <Typography gutterBottom variant="h5" component="h8">
+                      Email:
+                    </Typography>
+                  </Box>
+
+                  <Box className={classes.boxJustify}>
+                    <Typography gutterBottom variant="h6" component="h8">
+                      {Router.query.email}
+                    </Typography>
+                  </Box>
+                </div>
+
+                <Divider variant="middle"/>
+
+                <div className={classes.cardProfile}>
+                  <Box className={classes.boxJustify}>
+                    <Typography gutterBottom variant="h5" component="h8">
+                      Mobile Number:
+                    </Typography>
+                  </Box>
+
+                  <Box className={classes.boxJustify}>
+                    <Typography gutterBottom variant="h6" component="h8">
+                      {Router.query.mobileNumber}
+                    </Typography>
+                  </Box>
+                </div>
+
+                <Divider variant="middle"/>
+
+                <div className={classes.cardProfile}>
+                <Box className={classes.boxJustify}>
+                  <Typography gutterBottom variant="h5">
+                    Number of Strikes:
+                  </Typography>
+                </Box>
+                <Box className={classes.boxJustify}>
+                {Router.query.strikeCount >= 3 ? (
+                  <Chip 
+                  className={classes.chipStyle}
+                  label={  
+                  <Box alignItems="center" justifyContent="center" display="flex">                
+                    <Typography variant="subtitle1">
+                      {Router.query.strikeCount}
+                    </Typography>
+                  </Box>  }
+                  // label={Router.query.strikeCount} 
+                  color="secondary" />
+                ) : (
+                  <Chip 
+                  className={classes.chipStyle}
+                  label={  
+                  <Box alignItems="center" justifyContent="center" display="flex">                
+                    <Typography variant="subtitle1">
+                      {Router.query.strikeCount}
+                    </Typography>
+                  </Box>  }
+                  // label={Router.query.strikeCount} 
+                  color="info" />
+                )}
+                </Box>
+                </div>
+
+              </ThemeProvider>
+            </CardBody>
+            
+            {/* <CardBody>
               <br />
+
               <GridContainer>
                 <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
                   <CardHeader color="success">
@@ -95,7 +214,9 @@ function UserProfile(props) {
                   <h6 style={{textAlign: 'center'}}>{Router.query.name}</h6>
                 </GridItem>
               </GridContainer>
+
               <br />
+
               <GridContainer>
                 <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
                   <CardHeader color="success">
@@ -110,6 +231,7 @@ function UserProfile(props) {
                   </h6>
                 </GridItem>
               </GridContainer>
+
               <br />
               <GridContainer>
                 <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
@@ -123,7 +245,9 @@ function UserProfile(props) {
                   <h6 style={{textAlign: 'center'}}>{Router.query.email}</h6>
                 </GridItem>
               </GridContainer>
+
               <br />
+
               <GridContainer>
                 <GridItem style={{margin: 'auto'}} xs={12} sm={12} md={5}>
                   <CardHeader color="success">
@@ -138,7 +262,9 @@ function UserProfile(props) {
                   </h6>
                 </GridItem>
               </GridContainer>
-            </CardBody>
+              
+            </CardBody> */}
+
           </Card>
         </GridItem>
       </GridContainer>
