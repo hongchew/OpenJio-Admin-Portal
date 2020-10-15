@@ -22,6 +22,9 @@ import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import axios from 'axios';
 
+// To generate PDF Document
+import Pdf from 'react-to-pdf';
+
 const mapDispatchToProps = {
   setInfo: setInfo,
 };
@@ -68,7 +71,7 @@ const styles = {
     justifyContent: 'center',
     margin: theme.spacing(3.5, 1, 3.5, 1),
   },
-  boxJustify: { 
+  boxJustify: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -88,7 +91,13 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const generatePDF = async () => {};
+// PDF Generator
+const ref = React.createRef();
+const options = {
+  orientation:'',
+  unit:'',
+  format:[]
+};
 
 function Covid19User(props) {
   const {userInfo} = props;
@@ -117,164 +126,165 @@ function Covid19User(props) {
 
   return (
     <div>
-      <GridContainer justify="center">
-        <GridItem xs={12} sm={12} md={6}>
-          <Card>
-            <CardHeader color="info">
-              <h4
-                className={classes.cardTitleWhite}
-                style={{textAlign: 'center'}}>
-                User Profile
-              </h4>
-            </CardHeader>
+      <div className="CovidUserProfile" ref={ref}>
+        <GridContainer justify="center">
+          <GridItem xs={12} sm={12} md={6}>
+            <Card>
+              <CardHeader color="info">
+                <h4
+                  className={classes.cardTitleWhite}
+                  style={{textAlign: 'center'}}>
+                  User Profile
+                </h4>
+              </CardHeader>
 
-            <CardBody profile>
-              <ThemeProvider theme={theme}>
-                <div className={classes.cardProfile}>
-                  <Box className={classes.boxJustify}>
-                    <Typography gutterBottom variant="h5" component="h5">
-                      Name:
-                    </Typography>
-                  </Box>
+              <CardBody profile>
+                <ThemeProvider theme={theme}>
+                  <div className={classes.cardProfile}>
+                    <Box className={classes.boxJustify}>
+                      <Typography gutterBottom variant="h5" component="h5">
+                        Name:
+                      </Typography>
+                    </Box>
 
-                  <Box className={classes.boxJustify}>
-                    <Typography gutterBottom variant="h6" component="h5">
-                      {Router.query.name}
-                    </Typography>
-                  </Box>
-                </div>
+                    <Box className={classes.boxJustify}>
+                      <Typography gutterBottom variant="h6" component="h5">
+                        {Router.query.name}
+                      </Typography>
+                    </Box>
+                  </div>
 
-                <Divider variant="middle" />
+                  <Divider variant="middle" />
 
-                <div className={classes.cardProfile}>
-                  <Box className={classes.boxJustify}>
-                    <Typography gutterBottom variant="h5" component="h5">
-                      Email:
-                    </Typography>
-                  </Box>
+                  <div className={classes.cardProfile}>
+                    <Box className={classes.boxJustify}>
+                      <Typography gutterBottom variant="h5" component="h5">
+                        Email:
+                      </Typography>
+                    </Box>
 
-                  <Box className={classes.boxJustify}>
-                    <Typography gutterBottom variant="h6" component="h5">
-                      {Router.query.email}
-                    </Typography>
-                  </Box>
-                </div>
+                    <Box className={classes.boxJustify}>
+                      <Typography gutterBottom variant="h6" component="h5">
+                        {Router.query.email}
+                      </Typography>
+                    </Box>
+                  </div>
 
-                <Divider variant="middle" />
+                  <Divider variant="middle" />
 
-                <div className={classes.cardProfile}>
-                  <Box className={classes.boxJustify}>
-                    <Typography gutterBottom variant="h5" component="h5">
-                      Mobile Number:
-                    </Typography>
-                  </Box>
+                  <div className={classes.cardProfile}>
+                    <Box className={classes.boxJustify}>
+                      <Typography gutterBottom variant="h5" component="h5">
+                        Mobile Number:
+                      </Typography>
+                    </Box>
 
-                  <Box className={classes.boxJustify}>
-                    <Typography gutterBottom variant="h6" component="h5">
-                      {Router.query.mobileNumber}
-                    </Typography>
-                  </Box>
-                </div>
+                    <Box className={classes.boxJustify}>
+                      <Typography gutterBottom variant="h6" component="h5">
+                        {Router.query.mobileNumber}
+                      </Typography>
+                    </Box>
+                  </div>
 
-                <Divider variant="middle" />
+                  <Divider variant="middle" />
 
-                <div className={classes.cardProfile}>
-                  <Box className={classes.boxJustify}>
-                    <Typography gutterBottom variant="h5">
-                      Joined on:
-                    </Typography>
-                  </Box>
-                  <Box className={classes.boxJustify}>
-                    <Chip
-                      className={classes.chipStyle}
-                      label={
-                        <Box
-                          alignItems="center"
-                          justifyContent="center"
-                          display="flex">
-                          <Typography variant="subtitle1">
-                            {new Date(
-                              Router.query.createdAt
-                            ).toLocaleDateString('en-GB')}
-                          </Typography>
-                        </Box>
-                      }
-                      color="secondary"
-                    />
-                  </Box>
-                </div>
-
-                <Divider variant="middle" />
-
-                <div className={classes.cardProfile}>
-                  <Box className={classes.boxJustify}>
-                    <Typography variant="h5" component="h5">
-                      Addresses:
-                    </Typography>
-                  </Box>
-
-                  <Box className={classes.boxJustify}>
-                    {addresses &&
-                      addresses.map((address) => (
-                        <div key={address.addressId}>
-                          {/* <Box className={classes.boxJustify} borderColor="#D3D3D3" border={2} borderRadius="10%"> */}
-                          <Box className={classes.boxJustify}>
-                            <Card
-                              className={classes.cardStyle}
-                              variant="outlined">
-                              <CardBody profile>
-                                {/* Address line 1 */}
-                                <Box className={classes.boxJustify}>
-                                  <Typography
-                                    gutterBottom
-                                    variant="h6"
-                                    component="h5">
-                                    {address.line1}
-                                  </Typography>
-                                </Box>
-
-                                {/* Address line 2 */}
-                                <Box className={classes.boxJustify}>
-                                  <Typography
-                                    gutterBottom
-                                    variant="h6"
-                                    component="h5">
-                                    {address.line2}
-                                  </Typography>
-                                </Box>
-
-                                {/* Country + Postal Code */}
-                                <Box className={classes.boxJustify}>
-                                  <Typography
-                                    gutterBottom
-                                    variant="h6"
-                                    component="h5">
-                                    {address.country} {address.postalCode}
-                                  </Typography>
-                                </Box>
-                              </CardBody>
-                            </Card>
+                  <div className={classes.cardProfile}>
+                    <Box className={classes.boxJustify}>
+                      <Typography gutterBottom variant="h5">
+                        Joined on:
+                      </Typography>
+                    </Box>
+                    <Box className={classes.boxJustify}>
+                      <Chip
+                        className={classes.chipStyle}
+                        label={
+                          <Box
+                            alignItems="center"
+                            justifyContent="center"
+                            display="flex">
+                            <Typography variant="subtitle1">
+                              {new Date(
+                                Router.query.createdAt
+                              ).toLocaleDateString('en-GB')}
+                            </Typography>
                           </Box>
-                          {/* </Box> */}
-                        </div>
-                      ))}
-                  </Box>
-                </div>
-                {/* <Divider variant="middle" /> */}
+                        }
+                        color="secondary"
+                      />
+                    </Box>
+                  </div>
 
-              </ThemeProvider>
-            </CardBody>
+                  <Divider variant="middle" />
 
-            <CardFooter className={classes.boxJustify}>
+                  <div className={classes.cardProfile}>
+                    <Box className={classes.boxJustify}>
+                      <Typography variant="h5" component="h5">
+                        Addresses:
+                      </Typography>
+                    </Box>
+
+                    <Box className={classes.boxJustify}>
+                      {addresses &&
+                        addresses.map((address) => (
+                          <div key={address.addressId}>
+                            {/* <Box className={classes.boxJustify} borderColor="#D3D3D3" border={2} borderRadius="10%"> */}
+                            <Box className={classes.boxJustify}>
+                              <Card
+                                className={classes.cardStyle}
+                                variant="outlined">
+                                <CardBody profile>
+                                  {/* Address line 1 */}
+                                  <Box className={classes.boxJustify}>
+                                    <Typography
+                                      gutterBottom
+                                      variant="h6"
+                                      component="h5">
+                                      {address.line1}
+                                    </Typography>
+                                  </Box>
+
+                                  {/* Address line 2 */}
+                                  <Box className={classes.boxJustify}>
+                                    <Typography
+                                      gutterBottom
+                                      variant="h6"
+                                      component="h5">
+                                      {address.line2}
+                                    </Typography>
+                                  </Box>
+
+                                  {/* Country + Postal Code */}
+                                  <Box className={classes.boxJustify}>
+                                    <Typography
+                                      gutterBottom
+                                      variant="h6"
+                                      component="h5">
+                                      {address.country} {address.postalCode}
+                                    </Typography>
+                                  </Box>
+                                </CardBody>
+                              </Card>
+                            </Box>
+                            {/* </Box> */}
+                          </div>
+                        ))}
+                    </Box>
+                  </div>
+                  {/* <Divider variant="middle" /> */}
+                </ThemeProvider>
+              </CardBody>
+
+              <CardFooter className={classes.boxJustify}>
                 <div justifyContent="center">
-                  <Button color="info" onClick={generatePDF}>
-                    Download PDF
-                  </Button>
+                  <Pdf targetRef={ref} filename="covid-19-user-case.pdf" x={-55} y={30} scale={1}>
+                    {({toPdf}) => <Button color="info" onClick={toPdf}>Download PDF</Button>}
+                  </Pdf>
                 </div>
-            </CardFooter>
-          </Card>
-        </GridItem>
-      </GridContainer>
+              </CardFooter>
+            </Card>
+          </GridItem>
+        </GridContainer>
+      </div>
     </div>
   );
 }
