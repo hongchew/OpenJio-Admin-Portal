@@ -56,8 +56,8 @@ function Dashboard(props) {
       );
       const body = response.data;
       setAdmins(body);
-      console.log('Admins are:')
-      console.log(body)
+      console.log('Admins are:');
+      console.log(body);
     } catch (error) {
       console.log(error);
     }
@@ -71,8 +71,8 @@ function Dashboard(props) {
       const blacklisted = body.filter(function (user) {
         return user.isBlackListed === true;
       });
-      console.log('Blacklisted users are:')
-      console.log(blacklisted)
+      console.log('Blacklisted users are:');
+      console.log(blacklisted);
       setBlacklistedUsers(blacklisted);
     } catch (error) {
       console.error(error);
@@ -93,7 +93,13 @@ function Dashboard(props) {
   };
 
   const selectColAdmin = (admin) => {
-    return [admin.name, admin.email, admin.adminType];
+    let adminType;
+    if (admin.adminType === 'SUPER_ADMIN') {
+      adminType = 'Super Admin';
+    } else {
+      adminType = 'Admin';
+    }
+    return [admin.name, admin.email, adminType];
   };
 
   return (
