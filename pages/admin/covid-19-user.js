@@ -23,7 +23,7 @@ import Divider from '@material-ui/core/Divider';
 import axios from 'axios';
 
 // To generate PDF Document
-import Pdf from 'react-to-pdf';
+// import Pdf from 'react-to-pdf';
 
 const mapDispatchToProps = {
   setInfo: setInfo,
@@ -92,12 +92,12 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 // PDF Generator
-const ref = React.createRef();
-const options = {
-  orientation:'',
-  unit:'',
-  format:[]
-};
+// const ref = React.createRef();
+// const options = {
+//   orientation:'',
+//   unit:'',
+//   format:[]
+// };
 
 function Covid19User(props) {
   const {userInfo} = props;
