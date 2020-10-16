@@ -126,7 +126,7 @@ function Covid19User(props) {
 
   return (
     <div>
-      <div className="CovidUserProfile" ref={ref}>
+      {/* <div className="CovidUserProfile" ref={ref}> */}
         <GridContainer justify="center">
           <GridItem xs={12} sm={12} md={6}>
             <Card>
@@ -286,7 +286,7 @@ function Covid19User(props) {
             </Card>
           </GridItem>
         </GridContainer>
-      </div>
+      {/* </div> */}
     </div>
   );
 }

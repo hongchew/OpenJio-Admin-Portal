@@ -91,13 +91,13 @@ const dashboardRoutes = [
 
     layout: '/admin',
   },*/
-  {
-    path: '/notifications',
-    name: 'Notifications',
-    icon: Notifications,
+  // {
+  //   path: '/notifications',
+  //   name: 'Notifications',
+  //   icon: Notifications,
 
-    layout: '/admin',
-  },
+  //   layout: '/admin',
+  // },
 ];
 
 export default dashboardRoutes;

@@ -91,7 +91,7 @@ function Covid19(props) {
       });
   };
 
-  async function handleViewUser(userId, name, mobileNumber, email, createdAt, Addresses) {
+  async function handleViewUser(userId, name, mobileNumber, email, createdAt) {
 
     Router.push({
       pathname: 'covid-19-user',
@@ -101,7 +101,6 @@ function Covid19(props) {
         email: email,
         mobileNumber: mobileNumber,
         createdAt: createdAt,
-        Addresses: Addresses,
       },
     });
   }
@@ -123,7 +122,7 @@ function Covid19(props) {
     return (
       covidUsers &&
       covidUsers.map(
-        ({userId, name, mobileNumber, email, updatedAt, createdAt, Addresses}) => {
+        ({userId, name, mobileNumber, email, updatedAt, createdAt}) => {
           return (
             <tr key={userId}>
               <td>{name}</td>
@@ -141,7 +140,7 @@ function Covid19(props) {
                   color="info"
                   className={classes.button}
                   onClick={() =>
-                    handleViewUser(userId, name, mobileNumber, email, createdAt, Addresses)
+                    handleViewUser(userId, name, mobileNumber, email, createdAt)
                   }
                   startIcon={<VisibilityIcon />}>
                   View
