@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import Router from 'next/router';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
-import DeleteIcon from '@material-ui/icons/Delete';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
 // import Edit from "@material-ui/icons/Edit";
@@ -169,9 +169,9 @@ function BlacklistManagement(props) {
                 color="danger"
                 variant="contained"
                 className={classes.button}
-                startIcon={<DeleteIcon />}
+                startIcon={<LockOpenIcon />}
                 onClick={() => editBlacklistedUser(user.userId, user.name)}>
-                Remove
+                Unban
               </Button>
               
             </td>
