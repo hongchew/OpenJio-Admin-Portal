@@ -58,6 +58,9 @@ const styles = {
     marginBottom: '3px',
     textDecoration: 'none',
   },
+  selectEmpty: {
+    minWidth: 150,
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -258,19 +261,23 @@ function CreateAdmin(props) {
 
                 <FormControl
                   style={{textAlign: 'middle'}}
-                  className={classes.formControl}>
-                  <div style={{margin: 'auto'}}>
-                    <InputLabel id="demo-simple-select-label">
+                  className={classes.formControl}
+                  required
+                  >
+                  <div>
+                    <InputLabel id="demo-simple-select-required-label" >
                       Admin Type
                     </InputLabel>
                     <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
+                      labelId="demo-simple-select-required-label"
+                      id="demo-simple-select-required"
                       value={adminType}
-                      onChange={updateAdminType}>
+                      onChange={updateAdminType}
+                      className={classes.selectEmpty}>
                       <MenuItem value="SUPER_ADMIN">Super Admin</MenuItem>
                       <MenuItem value="ADMIN">Admin</MenuItem>
                     </Select>
+                    {/* <FormHelperText>Required</FormHelperText> */}
                   </div>
                 </FormControl>
                 {/* <label for="adminType">Admin Type</label>
