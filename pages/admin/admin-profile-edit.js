@@ -150,6 +150,9 @@ function AdminProfileEdit(props) {
       } else if (!email) {
         errorNotify('Email field is empty');
         throw 'Email field is blank';
+      } else if (!validateEmail(email)) {
+        errorNotify('Email format is invalid');
+        throw 'Email format is invalid'
       }
       console.log('Call update profile API');
       const response = await axios.put(
