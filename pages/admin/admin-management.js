@@ -212,22 +212,6 @@ function AdminManagement(props) {
 
                 <tbody>{renderTableBody()}</tbody>
               </table>
-
-              {/* Template table not intuitive */}
-              {/* <Table
-                tableHeaderColor="primary"
-                tableHead={["Name", "Email", "Admin Type", "Actions"]}
-                // Just to prevent error
-                tableData={[
-                  renderTableBody()
-                ]}
-
-                Placeholder data
-                tableData={[
-                  ["Prof. Tan Wee Kek", "tanwk@comp.nus.edu.sg", "Super Admin", buttons],
-                  ["Ying Hui", "yinghuiseah@u.nus.edu", "Super Admin", buttons],
-                ]}
-              /> */}
               
             </CardBody>
           </Card>

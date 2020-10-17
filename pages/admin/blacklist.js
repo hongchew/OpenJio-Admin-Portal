@@ -175,18 +175,6 @@ function BlacklistManagement(props) {
               </Button>
               
             </td>
-            {/* <td className="operation"> */}
-              {/* simple <-- took out to align with the header */}
-              {/* <Button
-                size="lg"
-                color="danger"
-                variant="contained"
-                className={classes.button}
-                startIcon={<DeleteIcon />}
-                onClick={() => editBlacklistedUser(user.userId, name)}>
-                Remove
-              </Button>
-            </td> */}
           </tr>
         );
       })

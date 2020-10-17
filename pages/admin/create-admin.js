@@ -220,42 +220,7 @@ function CreateAdmin(props) {
                     ),
                   }}
                 />
-                {/* <CustomInput
-                  name="adminType"
-                  value={adminType}
-                  onChange={updateAdminType}
-                  labelText="Admin Type"
-                  id="adminType"
-                  formControlProps={{
-                    fullWidth: true,
-                  }}
-                  inputProps={{
-                    type: 'adminType',
-                    endAdornment: (
-                      <InputAdornment position="end"></InputAdornment>
-                    ),
-                    autoComplete: 'off',
-                  }}
-                /> */}
-                {/* 
-                  <CustomInput
-                  name="password"
-                  value={password}
-                  onChange={updatePassword}
-                  labelText="Password"
-                  id="pass"
-                  formControlProps={{
-                    fullWidth: true,
-                  }}
-                  inputProps={{
-                    type: 'password',
-                    endAdornment: (
-                      <InputAdornment position="end"></InputAdornment>
-                    ),
-                    autoComplete: 'off',
-                  }}
-                />
-                */}
+              
                 <br />
                 <br />
 
@@ -280,18 +245,6 @@ function CreateAdmin(props) {
                     {/* <FormHelperText>Required</FormHelperText> */}
                   </div>
                 </FormControl>
-                {/* <label for="adminType">Admin Type</label>
-                <div class="search_categories">
-                  <select
-                    style={{alignItems: 'center'}}
-                    id="adminType"
-                    value={adminType}
-                    name="adminType"
-                    onChange={updateAdminType}>
-                    <option value="SUPER_ADMIN">Super Admin</option>
-                    <option value="ADMIN">Admin</option>
-                  </select>
-                </div> */}
               </CardBody>
               <CardFooter className={classes.cardFooter}>
                 <Button

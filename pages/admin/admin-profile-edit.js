@@ -152,7 +152,7 @@ function AdminProfileEdit(props) {
         throw 'Email field is blank';
       } else if (!validateEmail(email)) {
         errorNotify('Email format is invalid');
-        throw 'Email format is invalid'
+        throw 'Email format is invalid';
       }
       console.log('Call update profile API');
       const response = await axios.put(
@@ -224,7 +224,7 @@ function AdminProfileEdit(props) {
                         value={name}
                         onChange={updateName}
                         error={name === '' ? true : false}
-                        helperText={name === '' ? "Name is required": ""}
+                        helperText={name === '' ? 'Name is required' : ''}
                         variant="outlined"></TextField>
                     </div>
 
@@ -248,60 +248,6 @@ function AdminProfileEdit(props) {
                 </GridItem>
               </GridContainer>
             </CardBody>
-
-            {/* Old UI */}
-            {/* <CardBody>
-              <GridContainer>
-                <GridItem style={{margin: 'auto'}} xs={12} sm={12} md={6}>
-                  <br />
-                  <CardHeader color="primary">
-                    <h6
-                      style={{textAlign: 'center'}}
-                      className={classes.cardTitleWhite}>
-                      Name
-                    </h6>
-                  </CardHeader>
-                  <CustomInput
-                    name="name"
-                    value={name}
-                    onChange={updateName}
-                    id="name"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    inputProps={{
-                      type: 'text',
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-
-              <br />
-
-              <GridContainer>
-                <GridItem style={{margin: 'auto'}} xs={12} sm={12} md={6}>
-                  <CardHeader color="primary">
-                    <h6
-                      style={{textAlign: 'center'}}
-                      className={classes.cardTitleWhite}>
-                      Email
-                    </h6>
-                  </CardHeader>
-                  <CustomInput
-                    name="email"
-                    value={email}
-                    onChange={updateEmail}
-                    id="email"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    inputProps={{
-                      type: 'text',
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-            </CardBody> */}
 
             {/* Confirm button */}
             <CardFooter style={{margin: 'auto'}}>
@@ -374,31 +320,6 @@ function AdminProfileEdit(props) {
             </CardBody>
           </Card>
         </GridItem>
-
-        {/* Old Section */}
-        {/* <GridItem xs={12} sm={12} md={4}>
-          <Card profile>
-            <CardAvatar profile>
-              <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                <img src={Avatar} alt="..." />
-              </a>
-            </CardAvatar>
-
-            <CardBody profile>
-              <strong className={classes.cardTitle}>{userInfo.name}</strong>
-              <Primary className={classes.cardTitle}>
-                <b>{userInfo.adminType}</b>
-              </Primary>
-              <br></br>
-
-              <strong>Description:</strong>
-              <p className={classes.description}>
-                I hope that everyone will play their part to fight the COVID-19
-                pandemic.
-              </p>
-            </CardBody>
-          </Card>
-        </GridItem> */}
       </GridContainer>
     </div>
   );

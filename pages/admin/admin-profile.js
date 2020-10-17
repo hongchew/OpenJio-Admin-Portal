@@ -100,35 +100,6 @@ function AdminProfile(props) {
     <div>
 
       <GridContainer justify="center">
-        {/* Remove old UI */}
-        {/* <GridItem xs={12} sm={12} md={6}> */}
-          {/* Profile card */}
-          {/* <Card>
-            <CardHeader color="primary">
-              <h4
-                className={classes.cardTitleWhite}
-                style={{textAlign: 'center'}}>
-                Profile
-              </h4>
-            </CardHeader> */}
-
-              {/* Card body & password section */}
-            {/* <CardBody>
-              <GridContainer>
-                <GridItem style={{margin: 'auto'}} xs={12} sm={12} md={5}>
-                  <CardHeader color="success">
-                    <h6
-                      style={{textAlign: 'center'}}
-                      className={classes.cardTitleWhite}>
-                      Password
-                    </h6>
-                  </CardHeader>
-                  <h6 style={{textAlign: 'center'}}>***************</h6>
-                </GridItem>
-              </GridContainer>
-            </CardBody> */}
-          {/* </Card> */}
-        {/* </GridItem> */}
 
         {/* New UI */}
         <GridItem xs={12} sm={12} md={6}>

@@ -179,7 +179,6 @@ function UserProfile(props) {
                       {Router.query.strikeCount}
                     </Typography>
                   </Box>  }
-                  // label={Router.query.strikeCount} 
                   color="secondary" />
                 ) : (
                   <Chip 
@@ -190,7 +189,6 @@ function UserProfile(props) {
                       {Router.query.strikeCount}
                     </Typography>
                   </Box>  }
-                  // label={Router.query.strikeCount} 
                   color="info" />
                 )}
                 </Box>
@@ -198,72 +196,6 @@ function UserProfile(props) {
 
               </ThemeProvider>
             </CardBody>
-            
-            {/* <CardBody>
-              <br />
-
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
-                  <CardHeader color="success">
-                    <h4
-                      style={{textAlign: 'center'}}
-                      className={classes.cardTitleWhite}>
-                      Name
-                    </h4>
-                  </CardHeader>
-                  <h6 style={{textAlign: 'center'}}>{Router.query.name}</h6>
-                </GridItem>
-              </GridContainer>
-
-              <br />
-
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
-                  <CardHeader color="success">
-                    <h4
-                      style={{textAlign: 'center'}}
-                      className={classes.cardTitleWhite}>
-                      Mobile Number
-                    </h4>
-                  </CardHeader>
-                  <h6 style={{textAlign: 'center'}}>
-                    {Router.query.mobileNumber}
-                  </h6>
-                </GridItem>
-              </GridContainer>
-
-              <br />
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={5} style={{margin: 'auto'}}>
-                  <CardHeader color="success">
-                    <h4
-                      style={{textAlign: 'center'}}
-                      className={classes.cardTitleWhite}>
-                      Email
-                    </h4>
-                  </CardHeader>
-                  <h6 style={{textAlign: 'center'}}>{Router.query.email}</h6>
-                </GridItem>
-              </GridContainer>
-
-              <br />
-
-              <GridContainer>
-                <GridItem style={{margin: 'auto'}} xs={12} sm={12} md={5}>
-                  <CardHeader color="success">
-                    <h4
-                      style={{textAlign: 'center'}}
-                      className={classes.cardTitleWhite}>
-                      Strike Count
-                    </h4>
-                  </CardHeader>
-                  <h6 style={{textAlign: 'center'}}>
-                    {Router.query.strikeCount}
-                  </h6>
-                </GridItem>
-              </GridContainer>
-              
-            </CardBody> */}
 
           </Card>
         </GridItem>
