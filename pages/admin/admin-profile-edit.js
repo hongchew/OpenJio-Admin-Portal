@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 // @material-ui/core components
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 // layout for this page
 import Admin from 'layouts/Admin.js';
@@ -21,8 +21,15 @@ import CardBody from 'components/Card/CardBody.js';
 import CardFooter from 'components/Card/CardFooter.js';
 import Primary from 'components/Typography/Primary.js';
 import Router from 'next/router';
-
-import CeoAvatar from 'assets/img/faces/tanwk.png';
+import Typography from '@material-ui/core/Typography';
+import {createMuiTheme, responsiveFontSizes} from '@material-ui/core/styles';
+import Chip from '@material-ui/core/Chip';
+import Box from '@material-ui/core/Box';
+import Link from 'next/link';
+import Avatar, {bold} from 'assets/img/profile/admin.png';
+import Divider from '@material-ui/core/Divider';
+import TextField from '@material-ui/core/TextField';
+import {Grid} from '@material-ui/core';
 
 const mapDispatchToProps = {
   setInfo: setInfo,
@@ -31,6 +38,27 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
   userInfo: state.main,
 });
+
+let theme = createMuiTheme({
+  spacing: 5,
+  typography: {
+    h5: {
+      color: '#808080',
+      fontWeight: 500,
+      fontSize: 18,
+    },
+    subtitle1: {
+      fontSize: 12,
+    },
+    body1: {
+      fontWeight: 500,
+    },
+    button: {
+      fontStyle: 'italic',
+    },
+  },
+});
+theme = responsiveFontSizes(theme);
 
 const styles = {
   cardCategoryWhite: {
@@ -49,6 +77,21 @@ const styles = {
     marginBottom: '3px',
     textDecoration: 'none',
   },
+  cardProfile: {
+    margin: theme.spacing(6, 1, 6, 1),
+  },
+  inputStyle: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(0),
+      marginBottom: '1em',
+      marginTop: '1em',
+      width: '100%',
+    },
+  },
+  formHeader: {
+    marginTop: '3.5em',
+    marginBottom: '-1em',
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -61,9 +104,19 @@ function AdminProfileEdit(props) {
       return;
     }
   }, []);
+
   const {userInfo, setInfo} = props;
   const [name, setName] = useState(props.userInfo.name);
   const [email, setEmail] = useState(props.userInfo.email);
+
+  // For form validation
+  const [emailErrorCheck, setEmailErrorCheck] = useState(false);
+  const [emailErrorText, setEmailErrorText] = useState();
+
+  const validateEmail = (email) => {
+    let regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regex.test(email);
+  };
 
   const updateName = (e) => {
     e.preventDefault();
@@ -78,7 +131,14 @@ function AdminProfileEdit(props) {
     console.log('Input is updating');
     const email = e.target.value;
     setEmail(email);
-    console.log('Updated email is ' + email);
+    // Check if email is in the right format
+    if (validateEmail(email)) {
+      setEmailErrorCheck(false);
+      setEmailErrorText('');
+    } else {
+      setEmailErrorCheck(true);
+      setEmailErrorText('Invalid email format!');
+    }
   };
 
   async function handleUpdateProfile() {
@@ -90,6 +150,9 @@ function AdminProfileEdit(props) {
       } else if (!email) {
         errorNotify('Email field is empty');
         throw 'Email field is blank';
+      } else if (!validateEmail(email)) {
+        errorNotify('Email format is invalid');
+        throw 'Email format is invalid';
       }
       console.log('Call update profile API');
       const response = await axios.put(
@@ -101,6 +164,7 @@ function AdminProfileEdit(props) {
         }
       );
       console.log('change success!');
+      console.log(response.data);
       setInfo(response.data);
       successNotify();
       Router.push('admin-profile');
@@ -110,12 +174,14 @@ function AdminProfileEdit(props) {
   }
 
   toast.configure();
+
   const errorNotify = (err) => {
     toast.error(err, {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 3000,
     });
   };
+
   const successNotify = () => {
     toast.success('User profile updated successfully!', {
       position: toast.POSITION.TOP_CENTER,
@@ -125,96 +191,132 @@ function AdminProfileEdit(props) {
 
   return (
     <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={8}>
+      <GridContainer justify="center">
+        <GridItem xs={12} sm={12} md={6}>
           <Card>
+            {/* Card header */}
             <CardHeader color="info">
               <h4
                 style={{textAlign: 'center'}}
                 className={classes.cardTitleWhite}>
-                Profile
+                Edit Profile Details
               </h4>
             </CardHeader>
-            <CardBody>
-              <GridContainer>
-                <GridItem style={{margin: 'auto'}} xs={12} sm={12} md={6}>
-                  <br />
-                  <CardHeader color="primary">
-                    <h6
-                      style={{textAlign: 'center'}}
-                      className={classes.cardTitleWhite}>
-                      Name
-                    </h6>
-                  </CardHeader>
-                  <CustomInput
-                    name="name"
-                    value={name}
-                    onChange={updateName}
-                    id="name"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    inputProps={{
-                      type: 'text',
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-              <br />
 
-              <GridContainer>
-                <GridItem style={{margin: 'auto'}} xs={12} sm={12} md={6}>
-                  <CardHeader color="primary">
-                    <h6
-                      style={{textAlign: 'center'}}
-                      className={classes.cardTitleWhite}>
-                      Email
-                    </h6>
-                  </CardHeader>
-                  <CustomInput
-                    name="email"
-                    value={email}
-                    onChange={updateEmail}
-                    id="email"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    inputProps={{
-                      type: 'text',
-                    }}
-                  />
+            {/* New UI Testing */}
+            <CardBody>
+              <GridContainer justify="center">
+                {/* style={{margin: 'auto'}} */}
+                <GridItem xs={12} sm={12} md={8}>
+                  <form
+                    className={classes.inputStyle}
+                    noValidate
+                    autoComplete="off">
+                    {/* Name */}
+                    <div className={classes.formHeader}>
+                      <Typography gutterBottom variant="h5" component="h8">
+                        Name:
+                      </Typography>
+                      <TextField
+                        required
+                        id="outlined-name-required"
+                        // label="Name"
+                        value={name}
+                        onChange={updateName}
+                        error={name === '' ? true : false}
+                        helperText={name === '' ? 'Name is required' : ''}
+                        variant="outlined"></TextField>
+                    </div>
+
+                    {/* Email */}
+                    <div className={classes.formHeader}>
+                      <Typography gutterBottom variant="h5" component="h8">
+                        Email:
+                      </Typography>
+                      <TextField
+                        required
+                        id="outlined-email-required"
+                        // label="Email"
+                        type="email"
+                        value={email}
+                        onChange={updateEmail}
+                        error={Boolean(emailErrorCheck)}
+                        helperText={emailErrorText}
+                        variant="outlined"></TextField>
+                    </div>
+                  </form>
                 </GridItem>
               </GridContainer>
             </CardBody>
 
+            {/* Confirm button */}
             <CardFooter style={{margin: 'auto'}}>
-              <Button color="info" onClick={handleUpdateProfile}>
-                Confirm
-              </Button>
+              <div className={classes.cardProfile}>
+                <Button color="info" onClick={handleUpdateProfile}>
+                  Confirm
+                </Button>
+              </div>
             </CardFooter>
           </Card>
         </GridItem>
 
+        {/* Profile Info at the right side */}
         <GridItem xs={12} sm={12} md={4}>
           <Card profile>
+            {/* Avatar Image */}
             <CardAvatar profile>
               <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                <img src={CeoAvatar} alt="..." />
+                <img src={Avatar} alt="..." />
               </a>
             </CardAvatar>
 
             <CardBody profile>
-              <strong className={classes.cardTitle}>{userInfo.name}</strong>
-              <Primary className={classes.cardTitle}>
-                <b>{userInfo.adminType}</b>
-              </Primary>
-              <br></br>
+              <ThemeProvider theme={theme}>
+                <div className={classes.cardProfile}>
+                  <Box b={2}>
+                    <Typography gutterBottom variant="h5" component="h8">
+                      Name:
+                    </Typography>
+                  </Box>
 
-              <strong>Description:</strong>
-              <p className={classes.description}>
-                I hope that everyone will play their part to fight the COVID-19
-                pandemic.
-              </p>
+                  <Box b={5}>
+                    <Typography gutterBottom variant="h6" component="h8">
+                      {userInfo.name}
+                    </Typography>
+                  </Box>
+                </div>
+
+                <Divider variant="middle" />
+
+                <div className={classes.cardProfile}>
+                  <Box b={5}>
+                    <Typography gutterBottom variant="h5" component="h8">
+                      Email:
+                    </Typography>
+                  </Box>
+
+                  <Box b={5}>
+                    <Typography gutterBottom variant="h6" component="h8">
+                      {userInfo.email}
+                    </Typography>
+                  </Box>
+                </div>
+
+                <Divider variant="middle" />
+
+                <div className={classes.cardProfile}>
+                  <Box b={5}>
+                    <Typography gutterBottom variant="h5">
+                      Admin Type:
+                    </Typography>
+                  </Box>
+                  {userInfo.adminType === 'SUPER_ADMIN' ? (
+                    <Chip label="Super Admin" color="secondary" />
+                  ) : (
+                    <Chip label="Admin" color="secondary" />
+                  )}
+                </div>
+              </ThemeProvider>
             </CardBody>
           </Card>
         </GridItem>

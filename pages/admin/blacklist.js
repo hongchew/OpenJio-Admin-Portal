@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import Link from 'next/router'
+import Link from 'next/router';
 import axios from 'axios';
+import {connect} from 'react-redux';
+import Router from 'next/router';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
-import DeleteIcon from '@material-ui/icons/Delete';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+
 // import Edit from "@material-ui/icons/Edit";
 import Close from '@material-ui/icons/Close';
 // Toast alert
@@ -53,13 +57,20 @@ const styles = {
 };
 
 const useStyles = makeStyles(styles);
-// End of styles section
 
-function BlacklistManagement() {
-  // Connection to backend API
+const mapStateToProps = (state) => ({
+  userInfo: state.main,
+});
+
+function BlacklistManagement(props) {
   const [users, setUsers] = useState([]);
+  const {userInfo} = props;
 
   useEffect(() => {
+    if (userInfo.adminId === '') {
+      Router.push('login');
+      return;
+    }
     retrieveUsers();
   }, []);
 
@@ -79,25 +90,22 @@ function BlacklistManagement() {
   };
 
   //Edit blacklisted user
-  async function editBlacklistedUser (userId, name) {
-      try {
-        console.log(users)
-        const afterRemovalList = users.filter((user) => userId !== user.userId)
-        console.log(`Users left in the blacklist are: ${JSON.stringify(afterRemovalList)}`)
-        const userToUpdate = users.filter((user) => userId === user.userId)[0]
-        console.log(`User to update blacklist is: ${JSON.stringify(userToUpdate)}`)
-        //clearing the blacklist and strike counts
-        const updatedUser = updateUser(userToUpdate)
-        console.log(`User value updated to: ${JSON.stringify(updatedUser)}`)
-        console.log('Calling edit user API')
-        axios.put('http://localhost:3000/users/update-user-details', updatedUser)
-        console.log('user successfully removed')
-        setUsers(afterRemovalList)
-        editSuccessfulAlert(name)
-
-      } catch(error) {
-          console.log(error)
-      }
+  async function editBlacklistedUser(userId, name) {
+    try {
+      const afterRemovalList = users.filter((user) => userId !== user.userId);
+      const userToUpdate = users.filter((user) => userId === user.userId)[0];
+      // console.log(
+      //   `User to update blacklist is: ${JSON.stringify(userToUpdate)}`
+      // );
+      //clearing the blacklist and strike counts
+      const updatedUser = updateUser(userToUpdate);
+      axios.put('http://localhost:3000/users/update-user-details', updatedUser);
+      // console.log('user successfully removed');
+      editSuccessfulAlert(name);
+      setUsers(afterRemovalList);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function updateUser(userToUpdate) {
@@ -107,12 +115,25 @@ function BlacklistManagement() {
   }
 
   const renderTableHeader = () => {
-    let headerElement = ['Name', 'Email', 'Mobile Number', 'Strike Count'];
+    // 'Mobile Number' <-- Remove to make the table more concise
+    let headerElement = ['Name', 'Email', 'Mobile Number', 'Strike Count', 'Actions'];
 
     return headerElement.map((key, index) => {
       return <th key={index}>{key.toUpperCase()}</th>;
     });
   };
+
+  async function handleViewUser(name, mobileNumber, email, strikeCount) {
+    Router.push({
+      pathname: 'user-profile',
+      query: {
+        name: name,
+        email: email,
+        mobileNumber: mobileNumber,
+        strikeCount: strikeCount,
+      },
+    });
+  }
 
   // Render table body
   const renderTableBody = () => {
@@ -126,27 +147,33 @@ function BlacklistManagement() {
             <td>{user.mobileNumber}</td>
             <td>{user.strikeCount}</td>
             <td className="operation">
+              {/* simple <-- took out to align with the header */}
+              {/* size="lg" */}
               <Button
-                value={user} 
-                simple 
-                color="primary" 
-                size="lg"
-                href="blacklist-user"
-                onClick="">
-                  View
+                value={user}
+                color="info"
+                startIcon={<VisibilityIcon />}
+                onClick={() =>
+                  handleViewUser(
+                    user.name,
+                    user.mobileNumber,
+                    user.email,
+                    user.strikeCount
+                  )
+                }>
+                View
               </Button>
-            </td>
-            <td className="operation">
+
+              {/* size="lg" */}
               <Button
-                simple
-                size="lg"
                 color="danger"
                 variant="contained"
                 className={classes.button}
-                startIcon={<DeleteIcon />}
-                onClick={() => editBlacklistedUser(user.userId, name)}>
-                Remove
+                startIcon={<LockOpenIcon />}
+                onClick={() => editBlacklistedUser(user.userId, user.name)}>
+                Unban
               </Button>
+              
             </td>
           </tr>
         );
@@ -176,7 +203,7 @@ function BlacklistManagement() {
   return (
     <div>
       {/* Admin management panel */}
-      <GridContainer>
+      <GridContainer justify="center">
         <GridItem xs={11} sm={11} md={11}>
           <Card>
             <CardHeader color="primary">
@@ -206,5 +233,4 @@ function BlacklistManagement() {
 }
 
 BlacklistManagement.layout = Admin;
-
-export default BlacklistManagement;
+export default connect(mapStateToProps)(BlacklistManagement);

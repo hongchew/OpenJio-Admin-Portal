@@ -90,14 +90,14 @@ const dashboardRoutes = [
     icon: LocationOn,
 
     layout: '/admin',
-  },
-  {
-    path: '/notifications',
-    name: 'Notifications',
-    icon: Notifications,
-
-    layout: '/admin',
   },*/
+  // {
+  //   path: '/notifications',
+  //   name: 'Notifications',
+  //   icon: Notifications,
+
+  //   layout: '/admin',
+  // },
 ];
 
 export default dashboardRoutes;

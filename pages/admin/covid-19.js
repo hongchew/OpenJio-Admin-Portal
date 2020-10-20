@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import Link from 'next/link';
+import {connect} from 'react-redux';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Chip from '@material-ui/core/Chip';
+import Router from 'next/router';
 import axios from 'axios';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -59,13 +61,21 @@ const styles = {
 };
 
 const useStyles = makeStyles(styles);
-// End of styles section
 
-function Covid19() {
+const mapStateToProps = (state) => ({
+  userInfo: state.main,
+});
+
+function Covid19(props) {
   // Connection to backend API
   const [covidUsers, setCovidUsers] = useState([]);
+  const {userInfo} = props;
 
   useEffect(() => {
+    if (userInfo.adminId === '') {
+      Router.push('login');
+      return;
+    }
     retrieveCovidUsers();
   }, []);
 
@@ -80,6 +90,20 @@ function Covid19() {
         console.log(e);
       });
   };
+
+  async function handleViewUser(userId, name, mobileNumber, email, createdAt) {
+
+    Router.push({
+      pathname: 'covid-19-user',
+      query: {
+        userId: userId,
+        name: name,
+        email: email,
+        mobileNumber: mobileNumber,
+        createdAt: createdAt,
+      },
+    });
+  }
 
   // End of connection to backend API
 
@@ -97,29 +121,35 @@ function Covid19() {
   const renderTableBody = () => {
     return (
       covidUsers &&
-      covidUsers.map(({userId, name, email, updatedAt}) => {
-        return (
-          <tr key={userId}>
-            <td>{name}</td>
-            <td>{email}</td>
-            <td>
-              <Chip
-                label={new Date(updatedAt).toLocaleDateString('en-GB')}
-                color="primary"
-              />
-            </td>
+      covidUsers.map(
+        ({userId, name, mobileNumber, email, updatedAt, createdAt}) => {
+          return (
+            <tr key={userId}>
+              <td>{name}</td>
+              <td>{email}</td>
+              <td>
+                <Chip
+                  label={new Date(updatedAt).toLocaleDateString('en-GB')}
+                  color="primary"
+                />
+              </td>
 
-            <td className="operation">
-              <Button
-                variant="contained"
-                color="success"
-                className={classes.button}
-                startIcon={<VisibilityIcon />}>View
-              </Button>
-            </td>
-          </tr>
-        );
-      })
+              <td className="operation">
+                <Button
+                  variant="contained"
+                  color="info"
+                  className={classes.button}
+                  onClick={() =>
+                    handleViewUser(userId, name, mobileNumber, email, createdAt)
+                  }
+                  startIcon={<VisibilityIcon />}>
+                  View
+                </Button>
+              </td>
+            </tr>
+          );
+        }
+      )
     );
   };
   // End of rendering table
@@ -166,4 +196,4 @@ function Covid19() {
 
 Covid19.layout = Admin;
 
-export default Covid19;
+export default connect(mapStateToProps)(Covid19);

@@ -31,7 +31,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Router from 'next/router';
 
-import CeoAvatar from 'assets/img/faces/tanwk.png';
+import Avatar from 'assets/img/profile/admin.png';
 
 const mapDispatchToProps = {
   setInfo: setInfo,
@@ -58,6 +58,9 @@ const styles = {
     marginBottom: '3px',
     textDecoration: 'none',
   },
+  selectEmpty: {
+    minWidth: 150,
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -75,7 +78,18 @@ function CreateAdmin(props) {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [adminType, setAdminType] = useState('SUPER_ADMIN');
-  const [password, setPassword] = useState();
+  const [password, setPassword] = useState(); //state not utilised
+
+  useEffect(() => {
+    if (userInfo.adminId === '') {
+      Router.push('login');
+      return;
+    }
+    //Deny normal admins access to this page
+    if(userInfo.adminType === 'ADMIN') {
+      Router.push('dashboard')
+    }
+  }, []);
 
   const updateName = (e) => {
     e.preventDefault();
@@ -101,6 +115,7 @@ function CreateAdmin(props) {
     console.log('Updated Admin Type is ' + adminType);
   };
 
+  //Code not utilised
   const updatePassword = (e) => {
     e.preventDefault();
     console.log('Input is updating');
@@ -121,18 +136,15 @@ function CreateAdmin(props) {
       } else if (!adminType) {
         // errorNotify('Admin Type field is empty');
         throw 'Admin Type field is empty';
-      } else if (!password) {
-        // errorNotify('Password is empty');
-        throw 'Password is empty';
       }
+
       console.log('Call create admin profile');
       const response = await axios.post(
         'http://localhost:3000/admins/register',
         {
           name: name,
           email: email,
-          adminType: adminType,
-          password: password,
+          adminType: adminType
         }
       );
       console.log(response.data);
@@ -140,7 +152,6 @@ function CreateAdmin(props) {
       Router.push('admin-management');
     } catch (e) {
       if (
-        e != 'Password is empty' ||
         e != 'Admin Type field is empty' ||
         e != 'Email field is blank' ||
         e != 'Name field is blank'
@@ -209,73 +220,31 @@ function CreateAdmin(props) {
                     ),
                   }}
                 />
-                {/* <CustomInput
-                  name="adminType"
-                  value={adminType}
-                  onChange={updateAdminType}
-                  labelText="Admin Type"
-                  id="adminType"
-                  formControlProps={{
-                    fullWidth: true,
-                  }}
-                  inputProps={{
-                    type: 'adminType',
-                    endAdornment: (
-                      <InputAdornment position="end"></InputAdornment>
-                    ),
-                    autoComplete: 'off',
-                  }}
-                /> */}
-
-                <CustomInput
-                  name="password"
-                  value={password}
-                  onChange={updatePassword}
-                  labelText="Password"
-                  id="pass"
-                  formControlProps={{
-                    fullWidth: true,
-                  }}
-                  inputProps={{
-                    type: 'password',
-                    endAdornment: (
-                      <InputAdornment position="end"></InputAdornment>
-                    ),
-                    autoComplete: 'off',
-                  }}
-                />
+              
                 <br />
                 <br />
 
                 <FormControl
                   style={{textAlign: 'middle'}}
-                  className={classes.formControl}>
-                  <div style={{margin: 'auto'}}>
-                    <InputLabel id="demo-simple-select-label">
+                  className={classes.formControl}
+                  required
+                  >
+                  <div>
+                    <InputLabel id="demo-simple-select-required-label" >
                       Admin Type
                     </InputLabel>
                     <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
+                      labelId="demo-simple-select-required-label"
+                      id="demo-simple-select-required"
                       value={adminType}
-                      onChange={updateAdminType}>
+                      onChange={updateAdminType}
+                      className={classes.selectEmpty}>
                       <MenuItem value="SUPER_ADMIN">Super Admin</MenuItem>
                       <MenuItem value="ADMIN">Admin</MenuItem>
                     </Select>
+                    {/* <FormHelperText>Required</FormHelperText> */}
                   </div>
                 </FormControl>
-                {/* <label for="adminType">Admin Type</label>
-                <div class="search_categories">
-                  <select
-                    style={{alignItems: 'center'}}
-                    id="adminType"
-                    value={adminType}
-                    name="adminType"
-                    onChange={updateAdminType}>
-                    <option value="SUPER_ADMIN">Super Admin</option>
-                    <option value="ADMIN">Admin</option>
-                  </select>
-                </div> */}
               </CardBody>
               <CardFooter className={classes.cardFooter}>
                 <Button

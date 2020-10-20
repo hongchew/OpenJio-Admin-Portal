@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react';
+import Router from 'next/router';
 // import {Link, useHistory} from 'react-router-dom';
 import axios from 'axios';
+//redux app state management
+import {connect} from 'react-redux';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -59,15 +62,24 @@ const styles = {
 const useStyles = makeStyles(styles);
 // End of styles section
 
-function AdminManagement() {
+const mapStateToProps = (state) => ({
+  userInfo: state.main,
+});
+
+function AdminManagement(props) {
   // Connection to backend API
   const [admins, setAdmins] = useState([]);
+  const {userInfo} = props
 
   useEffect(() => {
-    // if (userInfo.adminId === '') {
-    //   Router.push('login');
-    //   return;
-    // }
+    if (userInfo.adminId === '') {
+      Router.push('login');
+      return;
+    }
+    //Deny normal admins access to this page
+    if(userInfo.adminType === 'ADMIN') {
+      Router.push('dashboard')
+    }
     retrieveAdmins();
   }, []);
 
@@ -129,6 +141,7 @@ function AdminManagement() {
             </td>
 
             <td className="opration">
+            {/* simple */}
               <Button
                 variant="contained"
                 color="danger"
@@ -154,6 +167,11 @@ function AdminManagement() {
     });
   };
 
+  //Routing to create-admin page
+  const routeCreatePage = () => {
+    Router.push('create-admin')
+  }
+
   const classes = useStyles();
 
   return (
@@ -175,11 +193,11 @@ function AdminManagement() {
               <div style={{float: 'right'}}>
                 <Button
                   variant="contained"
-                  color="warning"
+                  color="info"
                   size="sm"
                   className={classes.button}
                   startIcon={<PersonAddIcon />}
-                  href="create-admin">
+                  onClick={routeCreatePage}>
                   Create
                 </Button>
               </div>
@@ -194,22 +212,6 @@ function AdminManagement() {
 
                 <tbody>{renderTableBody()}</tbody>
               </table>
-
-              {/* Template table not intuitive */}
-              {/* <Table
-                tableHeaderColor="primary"
-                tableHead={["Name", "Email", "Admin Type", "Actions"]}
-                // Just to prevent error
-                tableData={[
-                  renderTableBody()
-                ]}
-
-                Placeholder data
-                tableData={[
-                  ["Prof. Tan Wee Kek", "tanwk@comp.nus.edu.sg", "Super Admin", buttons],
-                  ["Ying Hui", "yinghuiseah@u.nus.edu", "Super Admin", buttons],
-                ]}
-              /> */}
               
             </CardBody>
           </Card>
@@ -221,4 +223,4 @@ function AdminManagement() {
 
 AdminManagement.layout = Admin;
 
-export default AdminManagement;
+export default connect(mapStateToProps)(AdminManagement);

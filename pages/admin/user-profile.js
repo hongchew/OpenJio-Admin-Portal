@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 // @material-ui/core components
-import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
-// layout for this page
+import {makeStyles, ThemeProvider} from '@material-ui/core/styles';// layout for this page
 import Admin from 'layouts/Admin.js';
 
 //redux app state management
@@ -23,9 +22,8 @@ import Typography from '@material-ui/core/Typography';
 import {createMuiTheme, responsiveFontSizes} from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import Box from '@material-ui/core/Box';
-import Link from 'next/link';
-import Avatar, {bold} from 'assets/img/profile/admin.png';
 import Divider from '@material-ui/core/Divider';
+import Link from 'next/link';
 
 const mapDispatchToProps = {
   setInfo: setInfo,
@@ -44,13 +42,9 @@ let theme = createMuiTheme({
       fontSize: 18,
     },
     subtitle1: {
-      fontSize: 12,
-    },
-    body1: {
+      fontSize: 16,
       fontWeight: 500,
-    },
-    button: {
-      fontStyle: 'italic',
+      fontStyle: 'regular',
     },
   },
 });
@@ -74,18 +68,28 @@ const styles = {
     textDecoration: 'none',
   },
   cardProfile: {
-    margin: theme.spacing(6, 1, 6, 1),
+    justifyContent: 'center',
+    margin: theme.spacing(5, 1, 5, 1),
   },
+  boxJustify:{
+    display:'flex',
+    justifyContent:'center',
+    alignItems: 'center',
+  },
+  chipStyle:{
+    padding: theme.spacing(2),
+    margin: theme.spacing(1),
+  }
 };
 
 //API call to update
 async function updateProfile() {
-  Router.push('/admin-profile-edit');
+  Router.push('admin-profile-edit-form');
 }
 
 const useStyles = makeStyles(styles);
 
-function AdminProfile(props) {
+function UserProfile(props) {
   const {userInfo} = props;
   const classes = useStyles();
 
@@ -98,31 +102,29 @@ function AdminProfile(props) {
 
   return (
     <div>
-
       <GridContainer justify="center">
-
-        {/* New UI */}
         <GridItem xs={12} sm={12} md={6}>
-          <Card profile>
-            {/* Avatar Image */}
-            <CardAvatar profile>
-              <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                <img src={Avatar} alt="..." />
-              </a>
-            </CardAvatar>
+          <Card>
+            <CardHeader color="info">
+              <h4
+                className={classes.cardTitleWhite}
+                style={{textAlign: 'center'}}>
+                User Profile
+              </h4>
+            </CardHeader>
 
             <CardBody profile>
-              <ThemeProvider theme={theme}>
+              <ThemeProvider theme={theme}> 
                 <div className={classes.cardProfile}>
-                  <Box b={2}>
+                  <Box className={classes.boxJustify}>
                     <Typography gutterBottom variant="h5" component="h8">
                       Name:
                     </Typography>
                   </Box>
 
-                  <Box b={5}>
+                  <Box className={classes.boxJustify}>
                     <Typography gutterBottom variant="h6" component="h8">
-                      {userInfo.name}
+                      {Router.query.name}
                     </Typography>
                   </Box>
                 </div>
@@ -130,50 +132,71 @@ function AdminProfile(props) {
                 <Divider variant="middle" />
 
                 <div className={classes.cardProfile}>
-                  <Box b={5}>
+                  <Box className={classes.boxJustify}>
                     <Typography gutterBottom variant="h5" component="h8">
                       Email:
                     </Typography>
                   </Box>
 
-                  <Box b={5}>
+                  <Box className={classes.boxJustify}>
                     <Typography gutterBottom variant="h6" component="h8">
-                      {userInfo.email}
+                      {Router.query.email}
                     </Typography>
                   </Box>
                 </div>
 
-                <Divider variant="middle" />
+                <Divider variant="middle"/>
 
                 <div className={classes.cardProfile}>
-                <Box b={5}>
+                  <Box className={classes.boxJustify}>
+                    <Typography gutterBottom variant="h5" component="h8">
+                      Mobile Number:
+                    </Typography>
+                  </Box>
+
+                  <Box className={classes.boxJustify}>
+                    <Typography gutterBottom variant="h6" component="h8">
+                      {Router.query.mobileNumber}
+                    </Typography>
+                  </Box>
+                </div>
+
+                <Divider variant="middle"/>
+
+                <div className={classes.cardProfile}>
+                <Box className={classes.boxJustify}>
                   <Typography gutterBottom variant="h5">
-                    Admin Type:
+                    Number of Strikes:
                   </Typography>
                 </Box>
-                {userInfo.adminType === 'SUPER_ADMIN' ? (
-                  <Chip label="Super Admin" color="secondary" />
+                <Box className={classes.boxJustify}>
+                {Router.query.strikeCount >= 3 ? (
+                  <Chip 
+                  className={classes.chipStyle}
+                  label={  
+                  <Box alignItems="center" justifyContent="center" display="flex">                
+                    <Typography variant="subtitle1">
+                      {Router.query.strikeCount}
+                    </Typography>
+                  </Box>  }
+                  color="secondary" />
                 ) : (
-                  <Chip label="Admin" color="secondary" />
+                  <Chip 
+                  className={classes.chipStyle}
+                  label={  
+                  <Box alignItems="center" justifyContent="center" display="flex">                
+                    <Typography variant="subtitle1">
+                      {Router.query.strikeCount}
+                    </Typography>
+                  </Box>  }
+                  color="info" />
                 )}
+                </Box>
                 </div>
 
               </ThemeProvider>
             </CardBody>
 
-            <CardFooter>
-              <Button color="primary">
-                <Link href="admin-profile-edit">
-                  <a id="editProfileBut">Edit Profile</a>
-                </Link>
-              </Button>
-
-              <Button color="primary">
-                <Link href="admin-profile-password">
-                  <a id="changePassBut">Change password</a>
-                </Link>
-              </Button>
-            </CardFooter>
           </Card>
         </GridItem>
       </GridContainer>
@@ -181,6 +204,6 @@ function AdminProfile(props) {
   );
 }
 
-AdminProfile.layout = Admin;
+UserProfile.layout = Admin;
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
