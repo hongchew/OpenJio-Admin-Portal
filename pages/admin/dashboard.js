@@ -23,7 +23,7 @@ import CardBody from 'components/Card/CardBody.js';
 
 import axios from 'axios';
 
-import {supportTickets, complaints} from 'variables/general.js';
+import {complaints} from 'variables/general.js';
 
 import styles from 'assets/jss/nextjs-material-dashboard/views/dashboardStyle.js';
 
@@ -38,6 +38,7 @@ function Dashboard(props) {
   const {userInfo} = props;
   const [blacklistedUsers, setBlacklistedUsers] = useState([]);
   const [admins, setAdmins] = useState([]);
+  const [supportTickets, setSupportTickets] = useState([]);
 
   useEffect(() => {
     if (userInfo.adminId === '') {
@@ -47,6 +48,7 @@ function Dashboard(props) {
     welcome();
     retrieveBlacklistedUsers();
     retrieveAdmins();
+    retrieveSupportTickets();
   }, []);
 
   const retrieveAdmins = async () => {
@@ -57,6 +59,20 @@ function Dashboard(props) {
       const body = response.data;
       setAdmins(body);
       console.log('Admins are:');
+      console.log(body);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const retrieveSupportTickets = async () => {
+    try {
+      const response = await axios.get(
+        'http://localhost:3000/supportTickets/active-tickets'
+      );
+      const body = response.data;
+      setSupportTickets(body);
+      console.log('Support Tickets are:');
       console.log(body);
     } catch (error) {
       console.log(error);
@@ -100,6 +116,12 @@ function Dashboard(props) {
       adminType = 'Admin';
     }
     return [admin.name, admin.email, adminType];
+  };
+
+  const selectTitle = (supportTicket) => {
+    let title;
+    title = supportTicket.title;
+    return title;
   };
 
   return (
@@ -146,9 +168,11 @@ function Dashboard(props) {
                 tabIcon: CustomerSupport,
                 tabContent: (
                   <Tasks
-                    checkedIndexes={[0, 3]}
-                    tasksIndexes={[0, 1, 2, 3, 4]}
-                    tasks={supportTickets}
+                    checkedIndexes={[]}
+                    tasksIndexes={Array.from(
+                      Array(supportTickets.length).keys()
+                    )}
+                    tasks={supportTickets.map(selectTitle)}
                   />
                 ),
               },
