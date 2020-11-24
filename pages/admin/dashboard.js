@@ -2,10 +2,12 @@ import React, {useState, useEffect} from 'react';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Router from 'next/router';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 //redux app state management
 import {connect} from 'react-redux';
 // @material-ui/core
 import {makeStyles} from '@material-ui/core/styles';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 // @material-ui/icons
 import CustomerSupport from '@material-ui/icons/LiveHelp';
 import ComplaintIcon from '@material-ui/icons/Report';
@@ -20,6 +22,7 @@ import CustomTabs from 'components/CustomTabs/CustomTabs.js';
 import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import CardBody from 'components/Card/CardBody.js';
+import Button from 'components/CustomButtons/Button.js';
 
 import axios from 'axios';
 
@@ -39,6 +42,8 @@ function Dashboard(props) {
   const [blacklistedUsers, setBlacklistedUsers] = useState([]);
   const [admins, setAdmins] = useState([]);
   const [supportTickets, setSupportTickets] = useState([]);
+  const [complaints, setComplaints] = useState([]);
+  // const [supportTicketUsers, setSupportTicketUsers] = useState([]);
 
   useEffect(() => {
     if (userInfo.adminId === '') {
@@ -49,6 +54,7 @@ function Dashboard(props) {
     retrieveBlacklistedUsers();
     retrieveAdmins();
     retrieveSupportTickets();
+    retrieveComplaints();
   }, []);
 
   const retrieveAdmins = async () => {
@@ -71,8 +77,41 @@ function Dashboard(props) {
         'http://localhost:3000/supportTickets/active-tickets'
       );
       const body = response.data;
+
+      console.log('Get users of support ticket');
+      body.map(getUsers);
+      console.log(body);
+      // setSupportTicketUsers(supportTicketUsers);
       setSupportTickets(body);
+
       console.log('Support Tickets are:');
+      console.log(body);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getUsers = async (supportTicket) => {
+    try {
+      const response = await axios.get(
+        'http://localhost:3000/users/' + supportTicket.userId
+      );
+      supportTicket.user = response.data.name;
+      console.log("user's name");
+      console.log(supportTicket);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const retrieveComplaints = async () => {
+    try {
+      const response = await axios.get(
+        'http://localhost:3000/complaints/all-pending-complaints'
+      );
+      const body = response.data;
+      setComplaints(body);
+      console.log('Complaints are:');
       console.log(body);
     } catch (error) {
       console.log(error);
@@ -124,6 +163,124 @@ function Dashboard(props) {
     return title;
   };
 
+  const selectDescription = (complaint) => {
+    let description;
+    description = complaint.description;
+    return description;
+  };
+  function upperCaseFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  function lowerCaseAllWordsExceptFirstLetters(string) {
+    return string.replace(/\S*/g, function (word) {
+      return word.charAt(0) + word.slice(1).toLowerCase();
+    });
+  }
+
+  const renderSTHeader = () => {
+    // 'Mobile Number' <-- Remove to make the table more concise
+    let headerElement = [
+      'Title',
+      'Description',
+      'Support Type',
+      'Status',
+      'User',
+    ];
+    return headerElement.map((key, index) => {
+      return <th key={index}>{key.toUpperCase()}</th>;
+    });
+  };
+  // Render table body
+  const renderSTBody = () => {
+    return (
+      supportTickets &&
+      supportTickets.map((supportTicket) => {
+        console.log('User');
+        console.log(supportTicket.user);
+        return (
+          <tr key={supportTicket.supportTicketId}>
+            <td>{supportTicket.title}</td>
+            <td>{supportTicket.description}</td>
+            <td>
+              {upperCaseFirstLetter(
+                lowerCaseAllWordsExceptFirstLetters(supportTicket.supportType)
+              )}
+            </td>
+            <td>
+              {upperCaseFirstLetter(
+                lowerCaseAllWordsExceptFirstLetters(supportTicket.supportStatus)
+              )}
+            </td>
+            <td>{supportTicket.user}</td>
+            <td className="operation">
+              {/* simple <-- took out to align with the header */}
+              {/* size="lg" */}
+              <Button
+                value={supportTicket}
+                color="info"
+                startIcon={<VisibilityIcon />}
+                // onClick={() =>}
+              >
+                View
+              </Button>
+            </td>
+          </tr>
+        );
+      })
+    );
+  };
+
+  const renderCHeader = () => {
+    let headerElement = ['Description', 'Complaint Status', 'Request Id'];
+    return headerElement.map((key, index) => {
+      return <th key={index}>{key.toUpperCase()}</th>;
+    });
+  };
+  // Render table body
+  const renderCBody = () => {
+    return (
+      complaints &&
+      complaints.map((complaint) => {
+        return (
+          <tr key={complaint.complaintId}>
+            <td>{complaint.description}</td>
+            <td>
+              {upperCaseFirstLetter(
+                lowerCaseAllWordsExceptFirstLetters(complaint.complaintStatus)
+              )}
+            </td>
+            <td>{complaint.requestId}</td>
+
+            <td className="operation">
+              {/* simple <-- took out to align with the header */}
+              {/* size="lg" */}
+              <Button
+                value={complaint}
+                color="info"
+                startIcon={<VisibilityIcon />}
+                // onClick={() =>}
+              >
+                View
+              </Button>
+
+              {/* size="lg" */}
+              <Button
+                color="danger"
+                variant="contained"
+                className={classes.button}
+                startIcon={<LockOpenIcon />}
+                // onClick={() => }
+              >
+                Resolve
+              </Button>
+            </td>
+          </tr>
+        );
+      })
+    );
+  };
+
   return (
     <div>
       <GridContainer>
@@ -167,24 +324,41 @@ function Dashboard(props) {
                 tabName: 'Support Tickets',
                 tabIcon: CustomerSupport,
                 tabContent: (
-                  <Tasks
-                    checkedIndexes={[]}
-                    tasksIndexes={Array.from(
-                      Array(supportTickets.length).keys()
-                    )}
-                    tasks={supportTickets.map(selectTitle)}
-                  />
+                  <Card>
+                    <CardBody>
+                      <table id="supportTickets" style={{width: '70vw'}}>
+                        <thead align="left">
+                          <tr>{renderSTHeader()}</tr>
+                        </thead>
+
+                        <tbody>{renderSTBody()}</tbody>
+                      </table>
+                    </CardBody>
+                  </Card>
+                  // <Tasks
+                  //   checkedIndexes={[]}
+                  //   tasksIndexes={Array.from(
+                  //     Array(supportTickets.length).keys()
+                  //   )}
+                  //   tasks={supportTickets.map(selectTitle)}
+                  // />
                 ),
               },
               {
                 tabName: 'Complaints',
                 tabIcon: ComplaintIcon,
                 tabContent: (
-                  <Tasks
-                    checkedIndexes={[0]}
-                    tasksIndexes={[0, 1, 2]}
-                    tasks={complaints}
-                  />
+                  <Card>
+                    <CardBody>
+                      <table id="complaints" style={{width: '70vw'}}>
+                        <thead align="left">
+                          <tr>{renderCHeader()}</tr>
+                        </thead>
+
+                        <tbody>{renderCBody()}</tbody>
+                      </table>
+                    </CardBody>
+                  </Card>
                 ),
               },
             ]}
