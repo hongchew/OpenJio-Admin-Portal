@@ -76,6 +76,10 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
+  boxJustifyWithoutFlex:{
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   chipStyle: {
     padding: theme.spacing(2),
     margin: theme.spacing(1),
@@ -223,7 +227,7 @@ function Covid19User(props) {
                       </Typography>
                     </Box>
 
-                    <Box className={classes.boxJustify}>
+                    <Box className={classes.boxJustifyWithoutFlex}>
                       {addresses &&
                         addresses.map((address) => (
                           <div key={address.addressId}>
@@ -233,6 +237,7 @@ function Covid19User(props) {
                                 className={classes.cardStyle}
                                 variant="outlined">
                                 <CardBody profile>
+
                                   {/* Address line 1 */}
                                   <Box className={classes.boxJustify}>
                                     <Typography
