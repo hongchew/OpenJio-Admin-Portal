@@ -179,6 +179,38 @@ function ComplaintDetails(props) {
   };
   const handleReject = async () => {};
 
+  const renderTextBox = () => {
+    console.log('inside method');
+    console.log('admin response');
+    console.log(adminResponse);
+    console.log(adminResponse.length === null);
+    // if (adminResponse === null || adminResponse.length === '') {
+    return (
+      <div>
+        <TextField
+          required
+          style={{
+            width: '80%',
+            marginTop: '20px',
+            marginBottom: '20px',
+          }}
+          label="Comments"
+          value={textBox}
+          onChange={updateTextBox}
+          error={textBox === '' ? true : false}
+          helperText={textBox === '' ? 'Text is required' : ''}
+          variant="outlined"></TextField>
+        <Button
+          style={{marginBottom: '20px'}}
+          color="primary"
+          onClick={() => handleRespond()}>
+          <a id="changePassBut"> Respond</a>
+        </Button>
+      </div>
+    );
+    // }
+  };
+
   return (
     <div>
       <GridContainer justify="center">
@@ -191,7 +223,6 @@ function ComplaintDetails(props) {
                 <img src={Avatar} alt="..." />
               </a>
             </CardAvatar>
-
             <CardBody profile>
               <ThemeProvider theme={theme}>
                 <div className={classes.cardProfile}>
@@ -251,7 +282,7 @@ function ComplaintDetails(props) {
                         </Typography>
                       ) : (
                         <Typography gutterBottom variant="h6" component="h8">
-                          adminResponse
+                          {adminResponse}
                         </Typography>
                       )}
                     </Typography>
@@ -260,25 +291,10 @@ function ComplaintDetails(props) {
               </ThemeProvider>
             </CardBody>
             <Divider variant="middle" />
-            <div>
-              <TextField
-                required
-                style={{width: '80%', marginTop: '20px', marginBottom: '20px'}}
-                label="Comments"
-                value={textBox}
-                onChange={updateTextBox}
-                error={textBox === '' ? true : false}
-                helperText={textBox === '' ? 'Text is required' : ''}
-                variant="outlined"></TextField>
-              <Button
-                style={{marginBottom: '20px'}}
-                color="primary"
-                onClick={() => handleRespond()}>
-                <a id="changePassBut"> Respond</a>
-              </Button>
-            </div>
-            <Divider variant="middle" />
 
+            {renderTextBox()}
+
+            <Divider variant="middle" />
             <CardFooter>
               <Button color="primary" onClick={() => handleStrike()}>
                 <a id="changePassBut"> Strike and resolve</a>
