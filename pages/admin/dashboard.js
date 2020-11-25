@@ -83,9 +83,6 @@ function Dashboard(props) {
       console.log(body);
       // setSupportTicketUsers(supportTicketUsers);
       setSupportTickets(body);
-
-      console.log('Support Tickets are:');
-      console.log(body);
     } catch (error) {
       console.log(error);
     }
@@ -96,7 +93,7 @@ function Dashboard(props) {
       const response = await axios.get(
         'http://localhost:3000/users/' + supportTicket.userId
       );
-      supportTicket.user = response.data.name;
+      supportTicket.stUser = response.data.name;
       console.log("user's name");
       console.log(supportTicket);
     } catch (error) {
@@ -110,9 +107,22 @@ function Dashboard(props) {
         'http://localhost:3000/complaints/all-pending-complaints'
       );
       const body = response.data;
+      body.map(getRequestDetail);
       setComplaints(body);
       console.log('Complaints are:');
       console.log(body);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getRequestDetail = async (complaint) => {
+    try {
+      const response = await axios.get(
+        'http://localhost:3000/requests/by-requestId/' + complaint.requestId
+      );
+      complaint.requestTitle = response.data.title;
+      console.log('request title');
+      console.log(response.data.title);
     } catch (error) {
       console.log(error);
     }
@@ -196,8 +206,9 @@ function Dashboard(props) {
     return (
       supportTickets &&
       supportTickets.map((supportTicket) => {
-        console.log('User');
-        console.log(supportTicket.user);
+        console.log('before return');
+        //check why this is not working....
+        console.log(supportTicket.stUser);
         return (
           <tr key={supportTicket.supportTicketId}>
             <td>{supportTicket.title}</td>
@@ -212,7 +223,7 @@ function Dashboard(props) {
                 lowerCaseAllWordsExceptFirstLetters(supportTicket.supportStatus)
               )}
             </td>
-            <td>{supportTicket.user}</td>
+            <td>{supportTicket.userId}</td>
             <td className="operation">
               {/* simple <-- took out to align with the header */}
               {/* size="lg" */}
@@ -224,11 +235,37 @@ function Dashboard(props) {
               >
                 View
               </Button>
+              <Button
+                color="danger"
+                variant="contained"
+                className={classes.button}
+                startIcon={<LockOpenIcon />}
+                // onClick={() => }
+              >
+                Close
+              </Button>
             </td>
           </tr>
         );
       })
     );
+  };
+
+  const routeComplaintDetails = (complaint) => {
+    console.log('before routing');
+    console.log(complaint);
+    Router.push({
+      pathname: 'complaint-details',
+      query: {
+        complaintId: complaint.complaintId,
+        description: complaint.description,
+        adminResponse: complaint.adminResponse,
+        complaintStatus: complaint.complaintStatus,
+        createdAt: complaint.createdAt,
+        updatedAt: complaint.updatedAt,
+        requestId: complaint.requestId,
+      },
+    });
   };
 
   const renderCHeader = () => {
@@ -242,6 +279,9 @@ function Dashboard(props) {
     return (
       complaints &&
       complaints.map((complaint) => {
+        console.log('before complaint');
+        console.log(complaint);
+        console.log(complaint.requestTitle);
         return (
           <tr key={complaint.complaintId}>
             <td>{complaint.description}</td>
@@ -253,14 +293,11 @@ function Dashboard(props) {
             <td>{complaint.requestId}</td>
 
             <td className="operation">
-              {/* simple <-- took out to align with the header */}
-              {/* size="lg" */}
               <Button
                 value={complaint}
                 color="info"
                 startIcon={<VisibilityIcon />}
-                // onClick={() =>}
-              >
+                onClick={() => routeComplaintDetails(complaint)}>
                 View
               </Button>
 
