@@ -93,7 +93,7 @@ function Dashboard(props) {
       const response = await axios.get(
         'http://localhost:3000/users/' + supportTicket.userId
       );
-      supportTicket.stUser = response.data.name;
+      supportTicket['stUser'] = response.data.name;
       console.log("user's name");
       console.log(supportTicket);
     } catch (error) {
@@ -264,6 +264,7 @@ function Dashboard(props) {
         createdAt: complaint.createdAt,
         updatedAt: complaint.updatedAt,
         requestId: complaint.requestId,
+        complaintUserId: complaint.complaintUserId,
       },
     });
   };
@@ -299,17 +300,6 @@ function Dashboard(props) {
                 startIcon={<VisibilityIcon />}
                 onClick={() => routeComplaintDetails(complaint)}>
                 View
-              </Button>
-
-              {/* size="lg" */}
-              <Button
-                color="danger"
-                variant="contained"
-                className={classes.button}
-                startIcon={<LockOpenIcon />}
-                // onClick={() => }
-              >
-                Resolve
               </Button>
             </td>
           </tr>
