@@ -164,6 +164,7 @@ function ComplaintDetails(props) {
         setComplaintStatus(complaint.complaintStatus);
         // setCreatedAt(complaint.createdAt);
         // setAdminResponse(complaint.adminResponse);
+        toastSuccess('Complaint resolved and user striked');
       } catch (e) {
         console.log(e);
       }
@@ -172,6 +173,13 @@ function ComplaintDetails(props) {
 
   const textBoxEmpty = (text) => {
     toast.error(text, {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+    });
+  };
+
+  const toastSuccess = (text) => {
+    toast.success(text, {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 3000,
     });
@@ -212,6 +220,7 @@ function ComplaintDetails(props) {
         setComplaintStatus(complaint.complaintStatus);
         // setCreatedAt(complaint.createdAt);
         // setAdminResponse(complaint.adminResponse);
+        toastSuccess('Complaint resolved');
       } catch (error) {
         console.log(error);
       }
@@ -235,6 +244,7 @@ function ComplaintDetails(props) {
         setComplaintStatus(complaint.complaintStatus);
         // setCreatedAt(complaint.createdAt);
         // setAdminResponse(complaint.adminResponse);
+        toastSuccess('Complaint rejected');
       } catch (error) {
         console.log(error);
       }

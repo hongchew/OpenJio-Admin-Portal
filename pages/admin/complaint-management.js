@@ -124,7 +124,6 @@ function ComplaintManagement(props) {
         description: description,
         adminResponse: adminResponse,
         complaintStatus: complaintStatus,
-        complaintStatus: complaintStatus,
         createdAt: createdAt,
         requestId: requestId,
         complainerUserId: complainerUserId,
@@ -179,6 +178,16 @@ function ComplaintManagement(props) {
     {
       name: 'complainerUserId',
       label: 'Complaint Submitted by',
+      options: {
+        filter: true,
+        sort: false,
+        display: 'excluded', // Hidden
+      },
+    },
+    // Example: Tom, Paul
+    {
+      name: 'requestId',
+      label: 'Request Id',
       options: {
         filter: true,
         sort: false,
