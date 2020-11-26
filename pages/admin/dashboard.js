@@ -192,9 +192,10 @@ function Dashboard(props) {
     // 'Mobile Number' <-- Remove to make the table more concise
     let headerElement = [
       'Title',
-      'Description',
+      // 'Description',
       'Support Type',
       'Status',
+      'Date submitted',
       // 'User',
     ];
     return headerElement.map((key, index) => {
@@ -205,14 +206,14 @@ function Dashboard(props) {
   const renderSTBody = () => {
     return (
       supportTickets &&
-      supportTickets.map((supportTicket) => {
+      supportTickets.slice(0, 5).map((supportTicket) => {
         console.log('before return');
         //check why this is not working....
         console.log(supportTicket.stUser);
         return (
           <tr key={supportTicket.supportTicketId}>
             <td>{supportTicket.title}</td>
-            <td>{supportTicket.description}</td>
+            {/* <td>{supportTicket.description}</td> */}
             <td>
               {upperCaseFirstLetter(
                 lowerCaseAllWordsExceptFirstLetters(supportTicket.supportType)
@@ -223,18 +224,23 @@ function Dashboard(props) {
                 lowerCaseAllWordsExceptFirstLetters(supportTicket.supportStatus)
               )}
             </td>
+            <td>
+              {' '}
+              {new Date(supportTicket.createdAt).toLocaleDateString('en-GB')}
+            </td>
+
             {/* <td>{supportTicket.userId}</td> */}
             <td className="operation">
               {/* simple <-- took out to align with the header */}
               {/* size="lg" */}
-              <Button
+              {/* <Button
                 value={supportTicket}
                 color="info"
                 startIcon={<VisibilityIcon />}
                 // onClick={() =>}
               >
                 View
-              </Button>
+              </Button> */}
             </td>
           </tr>
         );
@@ -261,7 +267,12 @@ function Dashboard(props) {
   };
 
   const renderCHeader = () => {
-    let headerElement = ['Description', 'Complaint Status', 'Date Reported'];
+    let headerElement = [
+      'Description',
+      'Complaint Status',
+      'Date Reported',
+      'User',
+    ];
     return headerElement.map((key, index) => {
       return <th key={index}>{key.toUpperCase()}</th>;
     });
@@ -270,7 +281,7 @@ function Dashboard(props) {
   const renderCBody = () => {
     return (
       complaints &&
-      complaints.map((complaint) => {
+      complaints.slice(0, 5).map((complaint) => {
         console.log('before complaint');
         console.log(complaint);
         console.log(complaint.requestTitle);
@@ -283,15 +294,16 @@ function Dashboard(props) {
               )}
             </td>
             <td>{new Date(complaint.createdAt).toLocaleDateString('en-GB')}</td>
+            <td>{complaint.complainer.name}</td>
 
             <td className="operation">
-              <Button
+              {/* <Button
                 value={complaint}
                 color="info"
                 startIcon={<VisibilityIcon />}
                 onClick={() => routeComplaintDetails(complaint)}>
                 View
-              </Button>
+              </Button> */}
             </td>
           </tr>
         );

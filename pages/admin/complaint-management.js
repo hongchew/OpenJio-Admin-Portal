@@ -102,8 +102,24 @@ function ComplaintManagement(props) {
       const body = response.data;
 
       setComplaints(body);
+      complaints.map(getUser);
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const getUser = async (complaint) => {
+    try {
+      const response = await axios.get(
+        'http://localhost:3000/users/' + complaint.complainerUserId
+      );
+      complaint['userName'] = response.data.name;
+
+      console.log("user's name");
+      console.log(response.data.name);
+      console.log(complaint);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -157,12 +173,11 @@ function ComplaintManagement(props) {
     },
     // Example: PROFILE, SYSTEM, PAYMENT, JIO, REQUEST, HEALTH
     {
-      name: 'adminResponse',
-      label: 'Admin Response',
+      name: 'complainer.name',
+      label: 'User',
       options: {
         filter: true,
         sort: false,
-        display: 'excluded', // Hidden
       },
     },
     // Example: PENDING, RESOLVED
