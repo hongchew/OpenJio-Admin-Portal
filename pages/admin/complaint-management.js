@@ -67,7 +67,7 @@ const mapStateToProps = (state) => ({
   userInfo: state.main,
 });
 
-function SupportManagement(props) {
+function ComplaintManagement(props) {
   // MUI Data Table
   const [responsive, setResponsive] = useState('standard'); // options: vertical, standard, simple
   const [tableBodyHeight, setTableBodyHeight] = useState('500px');
@@ -80,7 +80,7 @@ function SupportManagement(props) {
   // End of MUI Data Table custom attributes
 
   // Connection to backend API
-  const [supportTickets, setSupportTickets] = useState([]);
+  const [complaints, setComplaints] = useState([]);
 
   // Current login admin info
   const {userInfo} = props;
@@ -90,30 +90,45 @@ function SupportManagement(props) {
       Router.push('login');
       return;
     }
-    retrieveSupportTickets();
+    retrieveComplaints();
   }, []);
 
-  //Retrieve all support tickets when page first renders using useEffect
-  const retrieveSupportTickets = async () => {
+  //Retrieve all complaints when page first renders using useEffect
+  const retrieveComplaints = async () => {
     try {
       const response = await axios.get(
-        'http://localhost:3000/supportTickets/all-tickets-with-user'
+        'http://localhost:3000/complaints/all-complaints'
       );
       const body = response.data;
 
-      setSupportTickets(body);
+      setComplaints(body);
     } catch (error) {
       console.error(error);
     }
   };
 
-  // View specific support ticket
-  async function handleViewSupportTicket(supportTicketId, userName) {
+  //   View specific complaint
+  async function handleComplaint(
+    complaintId,
+    description,
+    complaintStatus,
+    createdAt,
+    adminResponse,
+    complainerUserId,
+    requestId
+  ) {
     Router.push({
-      pathname: `support-ticket`,
+      pathname: 'complaint-details',
       query: {
-        supportTicketId: supportTicketId,
-        userName: userName,
+        complaintId: complaintId,
+        description: description,
+        adminResponse: adminResponse,
+        complaintStatus: complaintStatus,
+        complaintStatus: complaintStatus,
+        createdAt: createdAt,
+        requestId: requestId,
+        complainerUserId: complainerUserId,
+        requestId: requestId,
       },
     });
   }
@@ -124,8 +139,8 @@ function SupportManagement(props) {
   const columns = [
     // Example: 1f80761d-a8cc-481d-9d77-e6c23056ad06 (Hidden from table)
     {
-      name: 'supportTicketId',
-      label: 'Support Ticket ID',
+      name: 'complaintId',
+      label: 'Complaint ID',
       options: {
         filter: false,
         sort: true,
@@ -134,8 +149,8 @@ function SupportManagement(props) {
     },
     // Example: Error with the navigation
     {
-      name: 'title',
-      label: 'Title',
+      name: 'description',
+      label: 'Description',
       options: {
         filter: false,
         sort: true,
@@ -143,16 +158,17 @@ function SupportManagement(props) {
     },
     // Example: PROFILE, SYSTEM, PAYMENT, JIO, REQUEST, HEALTH
     {
-      name: 'supportType',
-      label: 'Support Type',
+      name: 'adminResponse',
+      label: 'Admin Response',
       options: {
         filter: true,
         sort: false,
+        display: 'excluded', // Hidden
       },
     },
     // Example: PENDING, RESOLVED
     {
-      name: 'supportStatus',
+      name: 'complaintStatus',
       label: 'Status',
       options: {
         filter: true,
@@ -161,8 +177,8 @@ function SupportManagement(props) {
     },
     // Example: Tom, Paul
     {
-      name: 'User.name',
-      label: 'User',
+      name: 'complainerUserId',
+      label: 'Complaint Submitted by',
       options: {
         filter: true,
         sort: false,
@@ -201,20 +217,22 @@ function SupportManagement(props) {
               color="info"
               className={classes.button}
               onClick={() => {
-                let supportTicketId = data[dataIndex].supportTicketId;
-                // let title = data[dataIndex].title;
-                let userName = data[dataIndex].User.name;
-
-                // Window alert for testing
-                // window.alert(
-                //   `Clicked data index: ${dataIndex} +
-                //   row index: ${rowIndex} +
-                //   supportTicketId: ${supportTicketId} +
-                //   username: ${userName}
-                //   `
-                // );
-
-                handleViewSupportTicket(supportTicketId, userName);
+                let complaintId = data[dataIndex].complaintId;
+                let description = data[dataIndex].description;
+                let complaintStatus = data[dataIndex].complaintStatus;
+                let createdAt = data[dataIndex].createdAt;
+                let adminResponse = data[dataIndex].adminResponse;
+                let complainerUserId = data[dataIndex].complainerUserId;
+                let requesterId = data[dataIndex].requesterId;
+                handleComplaint(
+                  complaintId,
+                  description,
+                  complaintStatus,
+                  createdAt,
+                  adminResponse,
+                  complainerUserId,
+                  requesterId
+                );
               }}
               startIcon={<VisibilityIcon />}>
               View
@@ -252,13 +270,13 @@ function SupportManagement(props) {
   };
 
   // Set retrieve all support tickets as the data (API)
-  const data = supportTickets;
+  const data = complaints;
 
   const classes = useStyles();
 
   return (
     <div>
-      {/* Support Ticket Management Panel */}
+      {/* Complaint Management Panel */}
       <GridContainer justify="center">
         <GridItem xs={11} sm={11} md={11}>
           <Card>
@@ -270,7 +288,7 @@ function SupportManagement(props) {
                   float: 'left',
                   alignItems: 'center',
                 }}>
-                Support Ticket Management Panel
+                Complaint Management Panel
               </h4>
               {/* <p className={classes.cardCategoryWhite}>
                 Can include subtitle here 
@@ -293,6 +311,6 @@ function SupportManagement(props) {
   );
 }
 
-SupportManagement.layout = Admin;
+ComplaintManagement.layout = Admin;
 
-export default connect(mapStateToProps)(SupportManagement);
+export default connect(mapStateToProps)(ComplaintManagement);

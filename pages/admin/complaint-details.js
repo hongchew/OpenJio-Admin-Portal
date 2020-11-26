@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 // @material-ui/core components
 import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
+import {toast} from 'react-toastify';
 // layout for this page
 import Admin from 'layouts/Admin.js';
 
@@ -98,12 +99,19 @@ function ComplaintDetails(props) {
   const [adminResponse, setAdminResponse] = useState(
     Router.query.adminResponse
   );
+  const [complaintUserId, setComplaintUserId] = useState(
+    Router.query.complaintUserId
+  );
 
   const [textBox, setTextBox] = useState();
 
   useEffect(() => {
     if (userInfo.adminId === '') {
       Router.push('login');
+      return;
+    }
+    if (complaintId === null) {
+      Router.push('complaint-management');
       return;
     }
     console.log('Complaint details');
@@ -115,12 +123,12 @@ function ComplaintDetails(props) {
     console.log('Input is updating');
     const textBox = e.target.value;
     setTextBox(textBox);
-    console.log('Updated textBox is ' + name);
+    console.log('Updated textBox is ' + textBox);
   };
 
   const displayStatus = () => {
-    console.log('Complaint Status');
-    console.log(complaintStatus);
+    // console.log('Complaint Status');
+    // console.log(complaintStatus);
     if (complaintStatus === 'PENDING') {
       return <Chip label="Pending" color="primary" />;
     } else if (complaintStatus === 'RESOLVED') {
@@ -130,85 +138,160 @@ function ComplaintDetails(props) {
     }
   };
 
-  const handleStrike = async () => {};
-  const textBoxEmpty = () => {
-    toast.success(`Text required`, {
+  const handleStrike = async () => {
+    console.log('handle strike method');
+    console.log(textBox === '');
+    console.log(textBox === null);
+    console.log(textBox);
+    if (textBox === '' || textBox === null || textBox === undefined) {
+      textBoxEmpty('Comments required');
+    } else if (complaintStatus != 'PENDING') {
+      textBoxEmpty('Complaint is already resolved or rejected');
+    } else {
+      try {
+        handleRespond();
+        await axios.put('http://localhost:3000/complaints/strike-user', {
+          complaintId: complaintId,
+          complaintUserId: complaintUserId,
+        });
+        //mark as resolved
+        const response = await axios.put(
+          'http://localhost:3000/complaints/resolve/' + complaintId
+        );
+        const complaint = response.data;
+        // setComplaintId(complaint.complaintId);
+        // setDescription(complaint.description);
+        setComplaintStatus(complaint.complaintStatus);
+        // setCreatedAt(complaint.createdAt);
+        // setAdminResponse(complaint.adminResponse);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+
+  const textBoxEmpty = (text) => {
+    toast.error(text, {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 3000,
     });
   };
 
   const handleRespond = async () => {
-    try {
-      if (textBox === '' || textBox === null) {
-        textBoxEmpty;
-      } else {
-        const response = await axios.put(
-          'http://localhost:3000/complaints/update-complaint/',
-          {
-            complaintId: complaintId,
-            adminResponse: textBox,
-          }
-        );
-        const complaint = response.data;
-        setComplaintId(complaint.complaintId);
-        setDescription(complaint.description);
-        setComplaintStatus(complaint.complaintStatus);
-        setCreatedAt(complaint.createdAt);
-        setAdminResponse(complaint.adminResponse);
+    const response = await axios.put(
+      'http://localhost:3000/complaints/update-complaint/',
+      {
+        complaintId: complaintId,
+        adminResponse: textBox,
       }
-    } catch (error) {
-      console.log(error);
-    }
+    );
+    const complaint = response.data;
+    setComplaintId(complaint.complaintId);
+    setDescription(complaint.description);
+    setComplaintStatus(complaint.complaintStatus);
+    setCreatedAt(complaint.createdAt);
+    setAdminResponse(complaint.adminResponse);
   };
 
   const handleResolve = async () => {
-    try {
-      const response = await axios.put(
-        'http://localhost:3000/complaints/resolve/' + complaintId
-      );
-      const complaint = response.data;
-      setComplaintId(complaint.complaintId);
-      setDescription(complaint.description);
-      setComplaintStatus(complaint.complaintStatus);
-      setCreatedAt(complaint.createdAt);
-      setAdminResponse(complaint.adminResponse);
-    } catch (error) {
-      console.log(error);
+    if (textBox === '' || textBox === null || textBox === undefined) {
+      textBoxEmpty('Comments required');
+    } else if (complaintStatus != 'PENDING') {
+      textBoxEmpty('Complaint is already resolved or rejected');
+    } else {
+      try {
+        handleRespond();
+        const response = await axios.put(
+          'http://localhost:3000/complaints/resolve/' + complaintId
+        );
+        const complaint = response.data;
+        console.log('returned complaint after resolve');
+        console.log(complaint.complaintStatus);
+        // setComplaintId(complaint.complaintId);
+        // setDescription(complaint.description);
+        setComplaintStatus(complaint.complaintStatus);
+        // setCreatedAt(complaint.createdAt);
+        // setAdminResponse(complaint.adminResponse);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
-  const handleReject = async () => {};
+
+  const handleReject = async () => {
+    if (textBox === '' || textBox === null || textBox === undefined) {
+      textBoxEmpty('Comments required');
+    } else if (complaintStatus != 'PENDING') {
+      textBoxEmpty('Complaint is already resolved or rejected');
+    } else {
+      try {
+        handleRespond();
+        const response = await axios.put(
+          'http://localhost:3000/complaints/reject/' + complaintId
+        );
+        const complaint = response.data;
+        // setComplaintId(complaint.complaintId);
+        // setDescription(complaint.description);
+        setComplaintStatus(complaint.complaintStatus);
+        // setCreatedAt(complaint.createdAt);
+        // setAdminResponse(complaint.adminResponse);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const renderButtons = () => {
+    if (complaintStatus === 'PENDING') {
+      return (
+        <div>
+          <Divider variant="middle" />
+          <CardFooter>
+            <Button color="primary" onClick={() => handleStrike()}>
+              <a id="changePassBut"> Resolve and Strike</a>
+            </Button>
+
+            <Button color="primary" onClick={() => handleResolve()}>
+              <a id="changePassBut">Resolve without Strike</a>
+            </Button>
+
+            <Button color="primary" onClick={() => handleReject()}>
+              <a id="changePassBut">Reject</a>
+            </Button>
+          </CardFooter>
+        </div>
+      );
+    }
+  };
 
   const renderTextBox = () => {
-    console.log('inside method');
-    console.log('admin response');
-    console.log(adminResponse);
-    console.log(adminResponse.length === null);
-    // if (adminResponse === null || adminResponse.length === '') {
-    return (
-      <div>
-        <TextField
-          required
-          style={{
-            width: '80%',
-            marginTop: '20px',
-            marginBottom: '20px',
-          }}
-          label="Comments"
-          value={textBox}
-          onChange={updateTextBox}
-          error={textBox === '' ? true : false}
-          helperText={textBox === '' ? 'Text is required' : ''}
-          variant="outlined"></TextField>
-        <Button
-          style={{marginBottom: '20px'}}
-          color="primary"
-          onClick={() => handleRespond()}>
-          <a id="changePassBut"> Respond</a>
-        </Button>
-      </div>
-    );
-    // }
+    // console.log('inside method');
+    // console.log('admin response');
+    // console.log(adminResponse);
+    // console.log(adminResponse === '');
+    if (
+      adminResponse === null ||
+      adminResponse === '' ||
+      adminResponse === undefined
+    ) {
+      return (
+        <div>
+          <TextField
+            required
+            style={{
+              width: '80%',
+              marginTop: '20px',
+              marginBottom: '20px',
+            }}
+            label="Comments"
+            value={textBox}
+            onChange={updateTextBox}
+            error={textBox === '' ? true : false}
+            helperText={textBox === '' ? 'Text is required' : ''}
+            variant="outlined"></TextField>
+        </div>
+      );
+    }
   };
 
   return (
@@ -294,20 +377,7 @@ function ComplaintDetails(props) {
 
             {renderTextBox()}
 
-            <Divider variant="middle" />
-            <CardFooter>
-              <Button color="primary" onClick={() => handleStrike()}>
-                <a id="changePassBut"> Strike and resolve</a>
-              </Button>
-
-              <Button color="primary" onClick={() => handleResolve()}>
-                <a id="changePassBut">Resolve without strike</a>
-              </Button>
-
-              <Button color="primary" onClick={() => handleReject()}>
-                <a id="changePassBut">Reject</a>
-              </Button>
-            </CardFooter>
+            {renderButtons()}
           </Card>
         </GridItem>
       </GridContainer>
