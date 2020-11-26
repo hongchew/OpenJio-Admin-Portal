@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import Link from 'next/link';
 import {connect} from 'react-redux';
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
@@ -22,6 +21,7 @@ import Button from 'components/CustomButtons/Button.js';
 
 // Data Table Components
 import MUIDataTable from 'mui-datatables';
+
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -93,7 +93,7 @@ function SupportManagement(props) {
     retrieveSupportTickets();
   }, []);
 
-  //Retrieve all support tickets when page first renders using useEffect
+  // Retrieve all support tickets when page first renders using useEffect
   const retrieveSupportTickets = async () => {
     try {
       const response = await axios.get(
@@ -180,7 +180,7 @@ function SupportManagement(props) {
             <Chip
               label={new Date(value).toLocaleDateString('en-GB')}
               value={new Date(value).toLocaleDateString('en-GB')}
-              change={(event) => updateValue(event)}
+              // change={(event) => updateValue(event)}
               color="primary"
             />
           );
