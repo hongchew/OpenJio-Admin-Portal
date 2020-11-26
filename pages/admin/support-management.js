@@ -108,11 +108,12 @@ function SupportManagement(props) {
   };
 
   // View specific support ticket
-  async function handleViewSupportTicket(supportTicketId) {
+  async function handleViewSupportTicket(supportTicketId, userName) {
     Router.push({
       pathname: `support-ticket`,
       query: {
         supportTicketId: supportTicketId,
+        userName: userName,
       },
     });
   }
@@ -203,16 +204,18 @@ function SupportManagement(props) {
 
                 let supportTicketId = data[dataIndex].supportTicketId;
                 // let title = data[dataIndex].title;
-
-                handleViewSupportTicket(supportTicketId);
+                let userName = data[dataIndex].User.name
 
                 // Window alert for testing
                 // window.alert(
                 //   `Clicked data index: ${dataIndex} + 
                 //   row index: ${rowIndex} +
-                //   supportTicketId: ${supportTicketId}
+                //   supportTicketId: ${supportTicketId} +
+                //   username: ${userName}
                 //   `
                 // );
+
+                handleViewSupportTicket(supportTicketId, userName);
 
               }}
               startIcon={<VisibilityIcon />}>

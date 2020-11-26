@@ -22,9 +22,6 @@ import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import axios from 'axios';
 
-// To generate PDF Document
-// import Pdf from 'react-to-pdf';
-
 const mapDispatchToProps = {
   setInfo: setInfo,
 };
@@ -39,12 +36,29 @@ let theme = createMuiTheme({
     h5: {
       color: '#808080',
       fontWeight: 500,
-      fontSize: 18,
+      fontSize: 17,
     },
+    h6: {
+      fontWeight: 500,
+      fontSize: 17,
+    },
+    // For comment's name
     subtitle1: {
-      fontSize: 16,
+      fontSize: 18,
+      fontWeight: 500,
+      fontStyle: 'bold',
+    },
+    // For comment's data
+    subtitle2: {
+      color: '#808080',
+      fontSize: 14,
       fontWeight: 500,
       fontStyle: 'regular',
+    },
+    // For comment's description
+    body1: {
+      fontSize: 14,
+      fontWeight: 300,
     },
   },
 });
@@ -76,9 +90,29 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  boxJustifyWithoutFlex:{
+  boxJustifyComment: {
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: theme.spacing(-5),
+  },
+  boxJustifyWithoutFlex: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxJustifyLeft: {
+    display: 'flex',
+    justifyContent: 'flex-start', // Horizontal alignment: 'flex-start, center, flex-end'
+    alignItems: 'center', // Vertical alignment
+    bgcolor: '', // Set background color of box
+    marginBottom: theme.spacing(2),
+  },
+  boxJustifyLeftLast: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    bgcolor: '',
+    marginBottom: theme.spacing(4),
   },
   chipStyle: {
     padding: theme.spacing(2),
@@ -87,16 +121,21 @@ const styles = {
   cardStyle: {
     width: '100%',
     padding: 0,
-    paddingLeft: 100,
-    paddingRight: 100,
-    backgroundColor: '#F8F8F8',
+    "&:last-child": {
+      paddingBottom: 0,
+      paddingTop: 0,
+    },
+    paddingLeft: 20,
+    paddingRight: 20,
+    backgroundColor: '#F4F4F4',
+    borderColor: '#F4F4F4', // Border color
+    border: '0px solid', // Border size
   },
 };
 
 const useStyles = makeStyles(styles);
 
 function SupportTicket(props) {
-
   const {userInfo} = props;
 
   const [supportTicket, setSupportTicket] = useState([]);
@@ -114,7 +153,7 @@ function SupportTicket(props) {
   const retrieveSupportTicket = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/supportTickets/ticket-info/${Router.query.supportTicketId}`
+        `http://localhost:3000/supportTickets/ticket-info-with-admin/${Router.query.supportTicketId}`
       );
       const body = response.data;
       setSupportTicket(body);
@@ -123,26 +162,203 @@ function SupportTicket(props) {
     }
   };
 
+  const formatDateAndTime = (date) => {
+    // Returns DD/MM/YYYY, HH:MM:SS
+    let dateAndTime = new Date(date).toLocaleString('en-GB');
+    // Remove seconds from behind (last 3 characters)
+    dateAndTime = dateAndTime.slice(0, -3)
+    return dateAndTime;
+  }
+
+  // const retrieveAdminById = async (adminId) => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:3000/admins/retrieve/${adminId}`
+  //     );
+  //     const body = response.data;
+  //     return body;
+  //   } catch (error){
+  //     console.error(error);
+  //   }
+  // };
+
   return (
     <div>
-        <GridContainer justify="center">
-          <GridItem xs={12} sm={12} md={6}>
-            <Card>
-              <CardHeader color="info">
-                <h4
-                  className={classes.cardTitleWhite}
-                  style={{textAlign: 'center'}}>
-                  Support Ticket
-                </h4>
-              </CardHeader>
+      <GridContainer justify="center">
+        <GridItem xs={12} sm={12} md={8}>
+          <Card>
+            <CardHeader color="info">
+              <h4
+                className={classes.cardTitleWhite}
+                style={{textAlign: 'center'}}>
+                Support Ticket
+              </h4>
+            </CardHeader>
 
-              <CardBody>
-                {supportTicket.title}
-              </CardBody>
-              
-            </Card>
-          </GridItem>
-        </GridContainer>
+            <CardBody>
+              <ThemeProvider theme={theme}>
+                <div className={classes.cardProfile}>
+                  {/* Support Ticket Title */}
+                  <Box className={classes.boxJustifyLeft}>
+                    <Typography variant="h5" component="h5">
+                      Title: &nbsp;
+                    </Typography>
+                    <Typography variant="h6" component="h5">
+                      {supportTicket.title}
+                    </Typography>
+                  </Box>
+
+                  {/* Support Ticket Status */}
+                  <Box className={classes.boxJustifyLeft}>
+                    <Typography variant="h5" component="h5">
+                      Support Status: &nbsp;
+                    </Typography>
+                    <Chip
+                      className={classes.chipStyle}
+                      label={
+                        <Box className={classes.boxJustify}>
+                          <Typography variant="h6">
+                            {supportTicket.supportStatus}
+                          </Typography>
+                        </Box>
+                      }
+                      color="primary"
+                    />
+                  </Box>
+
+                  {/* Ticket number */}
+                  <Box className={classes.boxJustifyLeft}>
+                    <Typography variant="h5" component="h5">
+                      Ticket Number: &nbsp;
+                    </Typography>
+                    <Typography variant="h6" component="h5">
+                      {supportTicket.supportTicketId}
+                    </Typography>
+                  </Box>
+
+                  {/* Support Ticket Type */}
+                  <Box className={classes.boxJustifyLeftLast}>
+                    <Typography variant="h5" component="h5">
+                      Support Type: &nbsp;
+                    </Typography>
+                    <Chip
+                      className={classes.chipStyle}
+                      label={
+                        <Box className={classes.boxJustify}>
+                          <Typography variant="h6">
+                            {supportTicket.supportType}
+                          </Typography>
+                        </Box>
+                      }
+                      color="info"
+                    />
+                  </Box>
+
+                  <Divider variant="middle" />
+
+                  {/* First comment = the support ticket's description */}
+                  <Box className={classes.boxJustifyComment}>
+                    <Card className={classes.cardStyle} variant="outlined">
+                      <CardBody profile>
+                        {/* Username */}
+                        <Box className={classes.boxJustifyLeftLast}>
+                          <Typography variant="subtitle1" component="h5">
+                            {Router.query.userName}
+                          </Typography>
+                        </Box>
+
+                        {/* Divider + margin bottom */}
+                        {/* <Divider variant="" />
+                        <Box className={classes.boxJustifyLeftLast}></Box> */}
+                        {/* End of Divider */}
+
+                        {/* Description*/}
+                        <Box className={classes.boxJustifyLeftLast}>
+                          {/* <p style={{fontSize:"20px"}}>{supportTicket.description}</p> */}
+                          <Typography variant="body1">
+                            {supportTicket.description}
+                          </Typography>
+                        </Box>
+
+                        {/* Divider + margin bottom */}
+                        <Divider variant="" />
+                        <Box className={classes.boxJustifyLeft}></Box>
+                        {/* End of Divider */}
+
+                        {/* createdAt */}
+                        <Box className={classes.boxJustifyLeft}>
+                          <Typography gutterBottom variant="subtitle2" component="h5">
+                            Posted on: {formatDateAndTime(supportTicket.createdAt)}
+                          </Typography>
+                        </Box>
+                      </CardBody>
+                    </Card>
+                  </Box>
+                  {/* End of first comment */}
+
+                  {/* Testing: If the support comments are retrieving properly */}
+                  {/* {console.log("What is this: " + supportTicket.SupportComments[0].createdAt)} */}
+
+                  {/* Support Comments / Responses */}
+                  <Box className={classes.boxJustifyWithoutFlex}>
+                    {supportTicket.SupportComments &&
+                      supportTicket.SupportComments.map((comment) => (
+                        <div key={comment.supportCommentId}>
+                          {/* <Box className={classes.boxJustify} borderColor="#D3D3D3" border={2} borderRadius="10%"> */}
+                          <Box className={classes.boxJustifyComment}>
+                            <Card
+                              className={classes.cardStyle}
+                              variant="outlined">
+                              <CardBody profile>
+                                {/* Username / Admin name */}
+                                <Box className={classes.boxJustifyLeftLast}>
+                                  <Typography variant="h6" component="h5">
+                                    {comment.isPostedByAdmin
+                                      ? comment.Admin.name
+                                      : Router.query.userName}
+                                    {/* {console.log('What is the value of: ' + comment.Admin.name)} */}
+                                  </Typography>
+                                </Box>
+
+                                {/* Divider + margin bottom */}
+                                {/* <Divider variant="" />
+                                <Box className={classes.boxJustifyLeftLast}></Box> */}
+                                {/* End of Divider */}
+
+                                {/* Description*/}
+                                <Box className={classes.boxJustifyLeftLast}>
+                                  <Typography variant="body1"> 
+                                      {comment.description}
+                                  </Typography>
+                                </Box>
+
+                                {/* Divider + margin bottom */}
+                                <Divider variant="" />
+                                <Box className={classes.boxJustifyLeft}></Box>
+                                {/* End of Divider */}
+
+                                {/* createdAt */}
+                                <Box className={classes.boxJustifyLeft}>
+                                  <Typography
+                                    gutterBottom
+                                    variant="subtitle2"
+                                    component="h5">
+                                    Posted on: {formatDateAndTime(comment.createdAt)}
+                                  </Typography>
+                                </Box>
+                              </CardBody>
+                            </Card>
+                          </Box>
+                          {/* </Box> */}
+                        </div>
+                      ))}
+                  </Box>
+                </div>
+              </ThemeProvider>
+            </CardBody>
+          </Card>
+        </GridItem>
+      </GridContainer>
     </div>
   );
 }

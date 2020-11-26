@@ -89,7 +89,7 @@ const styles = {
     padding: 0,
     paddingLeft: 100,
     paddingRight: 100,
-    backgroundColor: '#F8F8F8',
+    backgroundColor: '#F4F4F4',
   },
 };
 
