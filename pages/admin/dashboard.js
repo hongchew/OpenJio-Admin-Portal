@@ -195,7 +195,7 @@ function Dashboard(props) {
       'Description',
       'Support Type',
       'Status',
-      'User',
+      // 'User',
     ];
     return headerElement.map((key, index) => {
       return <th key={index}>{key.toUpperCase()}</th>;
@@ -223,7 +223,7 @@ function Dashboard(props) {
                 lowerCaseAllWordsExceptFirstLetters(supportTicket.supportStatus)
               )}
             </td>
-            <td>{supportTicket.userId}</td>
+            {/* <td>{supportTicket.userId}</td> */}
             <td className="operation">
               {/* simple <-- took out to align with the header */}
               {/* size="lg" */}
@@ -234,15 +234,6 @@ function Dashboard(props) {
                 // onClick={() =>}
               >
                 View
-              </Button>
-              <Button
-                color="danger"
-                variant="contained"
-                className={classes.button}
-                startIcon={<LockOpenIcon />}
-                // onClick={() => }
-              >
-                Close
               </Button>
             </td>
           </tr>
@@ -270,7 +261,7 @@ function Dashboard(props) {
   };
 
   const renderCHeader = () => {
-    let headerElement = ['Description', 'Complaint Status', 'Request Id'];
+    let headerElement = ['Description', 'Complaint Status', 'Date Reported'];
     return headerElement.map((key, index) => {
       return <th key={index}>{key.toUpperCase()}</th>;
     });
@@ -291,7 +282,7 @@ function Dashboard(props) {
                 lowerCaseAllWordsExceptFirstLetters(complaint.complaintStatus)
               )}
             </td>
-            <td>{complaint.requestId}</td>
+            <td>{new Date(complaint.createdAt).toLocaleDateString('en-GB')}</td>
 
             <td className="operation">
               <Button
