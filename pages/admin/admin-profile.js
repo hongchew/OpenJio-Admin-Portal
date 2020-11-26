@@ -43,6 +43,10 @@ let theme = createMuiTheme({
       fontWeight: 500,
       fontSize: 18,
     },
+    h6: {
+      fontWeight: 500,
+      fontSize: 18,
+    },
     subtitle1: {
       fontSize: 12,
     },
@@ -115,13 +119,13 @@ function AdminProfile(props) {
               <ThemeProvider theme={theme}>
                 <div className={classes.cardProfile}>
                   <Box b={2}>
-                    <Typography gutterBottom variant="h5" component="h8">
+                    <Typography gutterBottom variant="h5" component="h5">
                       Name:
                     </Typography>
                   </Box>
 
                   <Box b={5}>
-                    <Typography gutterBottom variant="h6" component="h8">
+                    <Typography gutterBottom variant="h6" component="h5">
                       {userInfo.name}
                     </Typography>
                   </Box>
@@ -131,13 +135,13 @@ function AdminProfile(props) {
 
                 <div className={classes.cardProfile}>
                   <Box b={5}>
-                    <Typography gutterBottom variant="h5" component="h8">
+                    <Typography gutterBottom variant="h5" component="h5">
                       Email:
                     </Typography>
                   </Box>
 
                   <Box b={5}>
-                    <Typography gutterBottom variant="h6" component="h8">
+                    <Typography gutterBottom variant="h6" component="h5">
                       {userInfo.email}
                     </Typography>
                   </Box>
