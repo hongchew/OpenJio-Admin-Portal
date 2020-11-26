@@ -25,6 +25,8 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import Notifications from '@material-ui/icons/Notifications';
 import MoodBadIcon from '@material-ui/icons/MoodBad';
 import HealthcareIcon from '@material-ui/icons/LocalHospital';
+import CustomerSupport from '@material-ui/icons/LiveHelp';
+import ComplaintIcon from '@material-ui/icons/Report';
 
 const dashboardRoutes = [
   {
@@ -59,6 +61,20 @@ const dashboardRoutes = [
     path: '/covid-19',
     name: 'Covid-19 Management',
     icon: HealthcareIcon,
+
+    layout: '/admin',
+  },
+  {
+    path: '/support-management',
+    name: 'Support Management',
+    icon: CustomerSupport,
+
+    layout: '/admin',
+  },
+  {
+    path: '/complaint-management',
+    name: 'Complaint Management',
+    icon: ComplaintIcon,
 
     layout: '/admin',
   },
