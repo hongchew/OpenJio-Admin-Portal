@@ -39,10 +39,14 @@ let theme = createMuiTheme({
     h5: {
       color: '#808080',
       fontWeight: 500,
-      fontSize: 18,
+      fontSize: 16,
+    },
+    h6: {
+      fontWeight: 500,
+      fontSize: 16,
     },
     subtitle1: {
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: 500,
       fontStyle: 'regular',
     },
@@ -76,9 +80,35 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  boxJustifyWithoutFlex:{
+  boxJustifyWithoutFlex: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  boxJustifyWithoutFlex: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxJustifyLeft: {
+    display: 'flex',
+    justifyContent: 'flex-start', // Horizontal alignment: 'flex-start, center, flex-end'
+    alignItems: 'center', // Vertical alignment
+    bgcolor: '', // Set background color of box
+    marginBottom: theme.spacing(2),
+  },
+  boxJustifyLeftLast: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    bgcolor: '',
+    marginBottom: theme.spacing(4),
+  },
+  boxTextLeft: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginBottom: theme.spacing(4),
+    // backgroundColor: 'rgba(0,0,0,0.3)',
   },
   chipStyle: {
     padding: theme.spacing(2),
@@ -87,9 +117,12 @@ const styles = {
   cardStyle: {
     width: '100%',
     padding: 0,
-    paddingLeft: 100,
-    paddingRight: 100,
+    // paddingLeft: 100,
+    // paddingRight: 100,
     backgroundColor: '#F4F4F4',
+  },
+  cardBottom: {
+    marginBottom: theme.spacing(4),
   },
 };
 
@@ -106,6 +139,8 @@ const useStyles = makeStyles(styles);
 function Covid19User(props) {
   const {userInfo} = props;
   const [addresses, setAddresses] = useState([]);
+  const [requests, setRequests] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
   const classes = useStyles();
 
   useEffect(() => {
@@ -114,6 +149,8 @@ function Covid19User(props) {
       return;
     }
     retrieveAddressesOfUser();
+    retrieveRequestsByUser();
+    retrieveAnnouncementsByUser();
   }, []);
 
   const retrieveAddressesOfUser = async () => {
@@ -128,147 +165,302 @@ function Covid19User(props) {
     }
   };
 
+  const retrieveRequestsByUser = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/requests/with-announcement/${Router.query.userId}`
+      );
+      const body = response.data;
+      setRequests(body);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const retrieveAnnouncementsByUser = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/announcements/all-announcements/${Router.query.userId}`
+      );
+      const body = response.data;
+      setAnnouncements(body);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const formatDateAndTime = (date) => {
+    // Returns DD/MM/YYYY, HH:MM:SS
+    let dateAndTime = new Date(date).toLocaleString('en-GB');
+    // Remove seconds from behind (last 3 characters)
+    dateAndTime = dateAndTime.slice(0, -3);
+    return dateAndTime;
+  };
+
   return (
     <div>
       {/* <div className="CovidUserProfile" ref={ref}> */}
-        <GridContainer justify="center">
-          <GridItem xs={12} sm={12} md={6}>
-            <Card>
-              <CardHeader color="info">
+      <GridContainer justify="center">
+        <GridItem xs={12} sm={12} md={5}>
+          <Card>
+            <CardHeader color="info">
+              <h4
+                className={classes.cardTitleWhite}
+                style={{textAlign: 'center'}}>
+                User Profile
+              </h4>
+            </CardHeader>
+
+            <CardBody profile>
+              <ThemeProvider theme={theme}>
+                <div className={classes.cardProfile}>
+                  {/* Start of revamp */}
+                  <Box className={classes.boxJustify}>
+                    <Typography gutterBottom variant="h5" component="h5">
+                      Name:
+                    </Typography>
+                  </Box>
+
+                  <Box className={classes.boxJustify}>
+                    <Typography gutterBottom variant="h6" component="h5">
+                      {Router.query.name}
+                    </Typography>
+                  </Box>
+                </div>
+
+                <Divider variant="middle" />
+
+                <div className={classes.cardProfile}>
+                  <Box className={classes.boxJustify}>
+                    <Typography gutterBottom variant="h5" component="h5">
+                      Email:
+                    </Typography>
+                  </Box>
+
+                  <Box className={classes.boxJustify}>
+                    <Typography gutterBottom variant="h6" component="h5">
+                      {Router.query.email}
+                    </Typography>
+                  </Box>
+                </div>
+
+                <Divider variant="middle" />
+
+                <div className={classes.cardProfile}>
+                  <Box className={classes.boxJustify}>
+                    <Typography gutterBottom variant="h5" component="h5">
+                      Mobile Number:
+                    </Typography>
+                  </Box>
+
+                  <Box className={classes.boxJustify}>
+                    <Typography gutterBottom variant="h6" component="h5">
+                      {Router.query.mobileNumber}
+                    </Typography>
+                  </Box>
+                </div>
+
+                <Divider variant="middle" />
+
+                <div className={classes.cardProfile}>
+                  <Box className={classes.boxJustify}>
+                    <Typography gutterBottom variant="h5">
+                      Joined on:
+                    </Typography>
+                  </Box>
+                  <Box className={classes.boxJustify}>
+                    <Chip
+                      className={classes.chipStyle}
+                      label={
+                        <Box
+                          alignItems="center"
+                          justifyContent="center"
+                          display="flex">
+                          <Typography variant="subtitle1">
+                            {new Date(
+                              Router.query.createdAt
+                            ).toLocaleDateString('en-GB')}
+                          </Typography>
+                        </Box>
+                      }
+                      color="secondary"
+                    />
+                  </Box>
+                </div>
+
+                <Divider variant="middle" />
+
+                {/* End of old UI */}
+                <div className={classes.cardProfile}>
+                  <Box className={classes.boxJustify}>
+                    <Typography variant="h5" component="h5">
+                      Addresses:
+                    </Typography>
+                  </Box>
+
+                  <Box className={classes.boxJustifyWithoutFlex}>
+                    {addresses &&
+                      addresses.map((address) => (
+                        <div key={address.addressId}>
+                          {/* <Box className={classes.boxJustify} borderColor="#D3D3D3" border={2} borderRadius="10%"> */}
+                          <Box className={classes.boxJustify}>
+                            <Card
+                              className={classes.cardStyle}
+                              variant="outlined">
+                              <CardBody profile>
+                                {/* Address line 1 */}
+                                <Box className={classes.boxJustify}>
+                                  <Typography
+                                    gutterBottom
+                                    variant="h6"
+                                    component="h5">
+                                    {address.line1}
+                                  </Typography>
+                                </Box>
+
+                                {/* Address line 2 */}
+                                <Box className={classes.boxJustify}>
+                                  <Typography
+                                    gutterBottom
+                                    variant="h6"
+                                    component="h5">
+                                    {address.line2}
+                                  </Typography>
+                                </Box>
+
+                                {/* Country + Postal Code */}
+                                <Box className={classes.boxJustify}>
+                                  <Typography
+                                    gutterBottom
+                                    variant="h6"
+                                    component="h5">
+                                    {address.country} {address.postalCode}
+                                  </Typography>
+                                </Box>
+                              </CardBody>
+                            </Card>
+                          </Box>
+                          {/* </Box> */}
+                        </div>
+                      ))}
+                  </Box>
+                </div>
+
+                {/* End of revamp */}
+              </ThemeProvider>
+            </CardBody>
+          </Card>
+        </GridItem>
+
+        <GridItem xs={12} sm={12} md={6}>
+          {/* Announcement section */}
+          <Box className={classes.cardBottom}>
+            <Card className={classes.cardBottom}>
+              <CardHeader color="primary">
                 <h4
                   className={classes.cardTitleWhite}
                   style={{textAlign: 'center'}}>
-                  User Profile
+                  Announcements
                 </h4>
               </CardHeader>
 
               <CardBody profile>
                 <ThemeProvider theme={theme}>
                   <div className={classes.cardProfile}>
-                    <Box className={classes.boxJustify}>
-                      <Typography gutterBottom variant="h5" component="h5">
-                        Name:
-                      </Typography>
-                    </Box>
-
-                    <Box className={classes.boxJustify}>
-                      <Typography gutterBottom variant="h6" component="h5">
-                        {Router.query.name}
-                      </Typography>
-                    </Box>
-                  </div>
-
-                  <Divider variant="middle" />
-
-                  <div className={classes.cardProfile}>
-                    <Box className={classes.boxJustify}>
-                      <Typography gutterBottom variant="h5" component="h5">
-                        Email:
-                      </Typography>
-                    </Box>
-
-                    <Box className={classes.boxJustify}>
-                      <Typography gutterBottom variant="h6" component="h5">
-                        {Router.query.email}
-                      </Typography>
-                    </Box>
-                  </div>
-
-                  <Divider variant="middle" />
-
-                  <div className={classes.cardProfile}>
-                    <Box className={classes.boxJustify}>
-                      <Typography gutterBottom variant="h5" component="h5">
-                        Mobile Number:
-                      </Typography>
-                    </Box>
-
-                    <Box className={classes.boxJustify}>
-                      <Typography gutterBottom variant="h6" component="h5">
-                        {Router.query.mobileNumber}
-                      </Typography>
-                    </Box>
-                  </div>
-
-                  <Divider variant="middle" />
-
-                  <div className={classes.cardProfile}>
-                    <Box className={classes.boxJustify}>
-                      <Typography gutterBottom variant="h5">
-                        Joined on:
-                      </Typography>
-                    </Box>
-                    <Box className={classes.boxJustify}>
-                      <Chip
-                        className={classes.chipStyle}
-                        label={
-                          <Box
-                            alignItems="center"
-                            justifyContent="center"
-                            display="flex">
-                            <Typography variant="subtitle1">
-                              {new Date(
-                                Router.query.createdAt
-                              ).toLocaleDateString('en-GB')}
-                            </Typography>
-                          </Box>
-                        }
-                        color="secondary"
-                      />
-                    </Box>
-                  </div>
-
-                  <Divider variant="middle" />
-
-                  <div className={classes.cardProfile}>
-                    <Box className={classes.boxJustify}>
-                      <Typography variant="h5" component="h5">
-                        Addresses:
-                      </Typography>
-                    </Box>
-
                     <Box className={classes.boxJustifyWithoutFlex}>
-                      {addresses &&
-                        addresses.map((address) => (
-                          <div key={address.addressId}>
+                      {announcements &&
+                        announcements.map((announcement) => (
+                          <div key={announcement.announcementId}>
                             {/* <Box className={classes.boxJustify} borderColor="#D3D3D3" border={2} borderRadius="10%"> */}
-                            <Box className={classes.boxJustify}>
+                            <Box className={classes.boxJustifyComment}>
                               <Card
                                 className={classes.cardStyle}
                                 variant="outlined">
                                 <CardBody profile>
+                                  {/* Announcement Destination*/}
+                                  {/* <Box className={classes.boxJustifyLeftLast}>
+                                    <Typography variant="h6" component="h5">
+                                      Destination: {announcement.destination}
+                                    </Typography>
+                                  </Box> */}
 
-                                  {/* Address line 1 */}
-                                  <Box className={classes.boxJustify}>
-                                    <Typography
-                                      gutterBottom
-                                      variant="h6"
-                                      component="h5">
-                                      {address.line1}
+                                  {/* Announcement Destination */}
+                                  <Box className={classes.boxJustifyLeft}>
+                                    <Typography variant="h5" component="h5">
+                                      Destination: &nbsp;
+                                    </Typography>
+                                    <Typography variant="h6" component="h5">
+                                      {announcement.destination}
                                     </Typography>
                                   </Box>
 
-                                  {/* Address line 2 */}
-                                  <Box className={classes.boxJustify}>
-                                    <Typography
-                                      gutterBottom
-                                      variant="h6"
-                                      component="h5">
-                                      {address.line2}
+                                  {/* Divider + margin bottom */}
+                                  {/* <Divider/>
+                                <Box className={classes.boxJustifyLeftLast}></Box> */}
+                                  {/* End of Divider */}
+
+                                  {/* Description*/}
+                                  {/* <Box className={classes.boxJustifyLeftLast}>
+                                    <Typography variant="body1">
+                                      Description: {announcement.description}
+                                    </Typography>
+                                  </Box> */}
+
+                                  {/* Description */}
+                                  <Box className={classes.boxJustifyLeft}>
+                                    <Typography variant="h5" component="h5">
+                                      Description: &nbsp;
+                                    </Typography>
+                                    <Typography variant="h6" component="h5">
+                                      {announcement.description}
                                     </Typography>
                                   </Box>
 
-                                  {/* Country + Postal Code */}
-                                  <Box className={classes.boxJustify}>
+                                  {/* Announcement Status */}
+                                  {/* <Box className={classes.boxJustifyLeftLast}>
+                                    <Typography variant="body1">
+                                      Status: {announcement.announcementStatus}
+                                    </Typography>
+                                  </Box> */}
+
+                                  {/* Announcement Status */}
+                                  <Box className={classes.boxJustifyLeftLast}>
+                                    <Typography variant="h5" component="h5">
+                                      Status: &nbsp;
+                                    </Typography>
+                                    <Chip
+                                      className={classes.chipStyle}
+                                      label={
+                                        <Box className={classes.boxJustify}>
+                                          <Typography variant="subtitle1">
+                                            {announcement.announcementStatus}
+                                          </Typography>
+                                        </Box>
+                                      }
+                                      color="primary"
+                                    />
+                                  </Box>
+
+                                  {/* Divider + margin bottom */}
+                                  <Divider />
+                                  <Box className={classes.boxJustifyLeft}></Box>
+                                  {/* End of Divider */}
+
+                                  {/* createdAt */}
+                                  <Box className={classes.boxJustifyLeft}>
                                     <Typography
                                       gutterBottom
-                                      variant="h6"
+                                      variant="subtitle2"
                                       component="h5">
-                                      {address.country} {address.postalCode}
+                                      Posted on:{' '}
+                                      {formatDateAndTime(
+                                        announcement.createdAt
+                                      )}
                                     </Typography>
                                   </Box>
                                 </CardBody>
                               </Card>
+                              {/* <Divider variant="middle" /> */}
                             </Box>
                             {/* </Box> */}
                           </div>
@@ -278,19 +470,154 @@ function Covid19User(props) {
                   {/* <Divider variant="middle" /> */}
                 </ThemeProvider>
               </CardBody>
+            </Card>
+          </Box>
 
-              {/* Removed Download PDF Option for future SR instead */}
-              
-              {/* <CardFooter className={classes.boxJustify}>
+          {/* Jio Section */}
+          <Card>
+            <CardHeader color="primary">
+              <h4
+                className={classes.cardTitleWhite}
+                style={{textAlign: 'center'}}>
+                Requests
+              </h4>
+            </CardHeader>
+
+            <CardBody profile>
+              <ThemeProvider theme={theme}>
+                <div className={classes.cardProfile}>
+                  <Box className={classes.boxJustifyWithoutFlex}>
+                    {requests &&
+                      requests.map((request) => (
+                        <div key={request.requestId}>
+                          {/* <Box className={classes.boxJustify} borderColor="#D3D3D3" border={2} borderRadius="10%"> */}
+                          <Box className={classes.boxJustifyComment}>
+                            <Card
+                              className={classes.cardStyle}
+                              variant="outlined">
+                              <CardBody profile>
+                                {/* Request's Announcement's Destination*/}
+                                {/* <Box className={classes.boxJustifyLeftLast}>
+                                  <Typography variant="h6" component="h5">
+                                    Destination:{' '}
+                                    {request.Announcement.destination}
+                                  </Typography>
+                                </Box> */}
+
+                                {/* Request's Announcement's Destination*/}
+                                <Box className={classes.boxJustifyLeft}>
+                                  <Typography variant="h5" component="h5">
+                                    Destination: &nbsp;
+                                  </Typography>
+                                  <Typography variant="h6" component="h5">
+                                    {request.Announcement.destination}
+                                  </Typography>
+                                </Box>
+
+                                {/* Divider + margin bottom */}
+                                {/* <Divider/>
+                                <Box className={classes.boxJustifyLeftLast}></Box> */}
+                                {/* End of Divider */}
+
+                                {/* Request Title */}
+                                {/* <Box className={classes.boxJustifyLeftLast}>
+                                  <Typography variant="body1">
+                                    Title: {request.title}
+                                  </Typography>
+                                </Box> */}
+
+                                {/* Request Title */}
+                                <Box className={classes.boxJustifyLeft}>
+                                  <Typography variant="h5" component="h5">
+                                    Title: &nbsp;
+                                  </Typography>
+                                  <Typography variant="h6" component="h5">
+                                    {request.title}
+                                  </Typography>
+                                </Box>
+
+                                {/* Request Description*/}
+                                {/* <Box className={classes.boxJustifyLeftLast}>
+                                  <Typography variant="body1">
+                                    Description: {request.description}
+                                  </Typography>
+                                </Box> */}
+
+                                {/* Request Description*/}
+                                <Box className={classes.boxJustifyLeft}>
+                                  <Typography variant="h5" component="h5">
+                                    Description: &nbsp;
+                                  </Typography>
+                                  <Typography variant="h6" component="h5">
+                                    {request.description}
+                                  </Typography>
+                                </Box>
+
+                                {/* Request Status */}
+                                {/* <Box className={classes.boxJustifyLeftLast}>
+                                  <Typography variant="body1">
+                                    Status: {request.requestStatus}
+                                  </Typography>
+                                </Box> */}
+
+                                {/* Request Status */}
+                                <Box className={classes.boxJustifyLeftLast}>
+                                  <Typography variant="h5" component="h5">
+                                    Status: &nbsp;
+                                  </Typography>
+                                  <Chip
+                                    className={classes.chipStyle}
+                                    label={
+                                      <Box className={classes.boxJustify}>
+                                        <Typography variant="subtitle1">
+                                          {request.requestStatus}
+                                        </Typography>
+                                      </Box>
+                                    }
+                                    color="primary"
+                                  />
+                                </Box>
+
+                                {/* Divider + margin bottom */}
+                                <Divider />
+                                <Box className={classes.boxJustifyLeft}></Box>
+                                {/* End of Divider */}
+
+                                {/* createdAt */}
+                                <Box className={classes.boxJustifyLeft}>
+                                  <Typography
+                                    gutterBottom
+                                    variant="subtitle2"
+                                    component="h5">
+                                    Posted on:{' '}
+                                    {formatDateAndTime(request.createdAt)}
+                                  </Typography>
+                                </Box>
+                              </CardBody>
+                            </Card>
+                            {/* <Divider variant="middle" /> */}
+                          </Box>
+                          {/* </Box> */}
+                        </div>
+                      ))}
+                  </Box>
+                </div>
+                {/* <Divider variant="middle" /> */}
+              </ThemeProvider>
+            </CardBody>
+
+            {/* Removed Download PDF Option for future SR instead */}
+
+            {/* <CardFooter className={classes.boxJustify}>
                 <div justifyContent="center">
                   <Pdf targetRef={ref} filename="covid-19-user-case.pdf" x={-55} y={30} scale={1}>
                     {({toPdf}) => <Button color="info" onClick={toPdf}>Download PDF</Button>}
                   </Pdf>
                 </div>
               </CardFooter> */}
-            </Card>
-          </GridItem>
-        </GridContainer>
+          </Card>
+        </GridItem>
+      </GridContainer>
       {/* </div> */}
     </div>
   );

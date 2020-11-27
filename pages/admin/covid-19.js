@@ -110,7 +110,7 @@ function Covid19(props) {
   // Rendering custom  table
   // Render table header
   const renderTableHeader = () => {
-    let headerElement = ['Name', 'Email', 'Reported on', 'Actions'];
+    let headerElement = ['Name', 'Email', 'Mobile Number', 'Actions'];
 
     return headerElement.map((key, index) => {
       return <th key={index}>{key.toUpperCase()}</th>;
@@ -122,16 +122,17 @@ function Covid19(props) {
     return (
       covidUsers &&
       covidUsers.map(
-        ({userId, name, mobileNumber, email, updatedAt, createdAt}) => {
+        ({userId, name, mobileNumber, email, createdAt}) => {
           return (
             <tr key={userId}>
               <td>{name}</td>
               <td>{email}</td>
               <td>
-                <Chip
+                {mobileNumber}
+                {/* <Chip
                   label={new Date(updatedAt).toLocaleDateString('en-GB')}
                   color="primary"
-                />
+                /> */}
               </td>
 
               <td className="operation">
