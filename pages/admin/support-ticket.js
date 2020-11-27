@@ -199,6 +199,17 @@ const styles = {
     paddingRight: 20,
     backgroundColor: '#9AFF9E',
   },
+  cardStyleBlue: {
+    width: '100%',
+    padding: 0,
+    '&:last-child': {
+      paddingBottom: 0,
+      paddingTop: 0,
+    },
+    paddingLeft: 20,
+    paddingRight: 20,
+    backgroundColor: '#D8FEFF',
+  },
   cardActionStyle: {
     margin: theme.spacing(2, 4, 4, 4), // top, right, bottom, left
     // marginBottom: theme.spacing(4),
@@ -459,7 +470,8 @@ function SupportTicket(props) {
                           {/* <Box className={classes.boxJustify} borderColor="#D3D3D3" border={2} borderRadius="10%"> */}
                           <Box className={classes.boxJustifyComment}>
                             <Card
-                              className={classes.cardStyle}
+                              className={comment.isPostedByAdmin ?
+                                classes.cardStyleBlue : classes.cardStyle}
                               variant="outlined">
                               <CardBody profile>
                                 {/* Username / Admin name */}
@@ -523,9 +535,10 @@ function SupportTicket(props) {
                         </CardBody>
                       </Card>
                     </Box>
-                  ) : ('')}
+                  ) : (
+                    ''
+                  )}
                   {/* End of render if */}
-                  
                 </div>
               </ThemeProvider>
             </CardBody>
@@ -577,11 +590,15 @@ function SupportTicket(props) {
 
             <CardActions className={classes.cardActionStyle}>
               <Button color="primary" onClick={submitReply}>
-                Submit
+                Submit Reply
               </Button>
-              <Button color="primary" onClick={resolveTicket}>
-                Resolve Ticket
-              </Button>
+              {supportTicket.supportStatus === 'RESOLVED' ? (
+                ''
+              ) : (
+                <Button color="primary" onClick={resolveTicket}>
+                  Resolve Ticket
+                </Button>
+              )}
             </CardActions>
           </Card>
         </GridItem>

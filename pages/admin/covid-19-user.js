@@ -21,9 +21,19 @@ import Chip from '@material-ui/core/Chip';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import axios from 'axios';
+// Example image
 
 // To generate PDF Document
-// import Pdf from 'react-to-pdf';
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  Image,
+} from '@react-pdf/renderer';
+import ReactPDF from '@react-pdf/renderer';
+import {PDFDownloadLink} from '@react-pdf/renderer';
 
 const mapDispatchToProps = {
   setInfo: setInfo,
@@ -126,15 +136,50 @@ const styles = {
   },
 };
 
-const useStyles = makeStyles(styles);
+// PDF Styles
+const pdfStyles = StyleSheet.create({
+  page: {
+    flexDirection: 'row',
+    backgroundColor: '#E4E4E4',
+  },
+  section: {
+    margin: 10,
+    padding: 10,
+    flexGrow: 1,
+  },
+  itemContainer: {
+    backgroundColor: '#f6f6f5',
+    display: 'flex',
+    flexDirection: 'row',
+    padding: 5,
+  },
+  itemDetails: {
+    display: 'flex',
+    marginLeft: 5,
+  },
+  itemTitle: {
+    fontSize: 15,
+    marginBottom: 10,
+  },
+  itemOverview: {
+    fontSize: 10,
+  },
 
-// PDF Generator
-// const ref = React.createRef();
-// const options = {
-//   orientation:'',
-//   unit:'',
-//   format:[]
-// };
+  image: {
+    height: 200,
+    width: 150,
+  },
+  subtitle: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    width: 150,
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+});
+
+const useStyles = makeStyles(styles);
 
 function Covid19User(props) {
   const {userInfo} = props;
@@ -152,6 +197,92 @@ function Covid19User(props) {
     retrieveRequestsByUser();
     retrieveAnnouncementsByUser();
   }, []);
+
+  // Create PDF Document Component (Objects: addresses, requests, announcements. Router)
+  const PdfDocument = () => (
+      <Document>
+        <Page size="A4" style={pdfStyles.page}>
+          <View style={styles.itemContainer}>
+            <View style={pdfStyles.section}>
+              <Text>Name of User: {Router.query.name}</Text>
+            </View>
+            <View style={pdfStyles.section}>
+              <Text>Email: {Router.query.email}</Text>
+            </View>
+            <View style={pdfStyles.section}>
+              <Text>Mobile Number: {Router.query.mobileNumber}</Text>
+            </View>
+            <View style={pdfStyles.section}>
+              <Text>Joined On: {Router.query.createdAt}</Text>
+            </View>
+            <View style={pdfStyles.section}>
+              <Text>Addresses:</Text>
+            </View>
+            {addresses &&
+              addresses.map((address) => {
+                <div key={address.addressId}>
+                  <View style={pdfStyles.section}>
+                    <Text>{address.line1}</Text>
+                  </View>
+                  <View style={pdfStyles.section}>
+                    <Text>{address.line2}</Text>
+                  </View>
+                  <View style={pdfStyles.section}>
+                    <Text>{address.country} {address.postalCode}</Text>
+                  </View>
+                </div>;
+              })}
+          </View>
+          <View style={styles.itemContainer}>
+            <View style={pdfStyles.section}>
+              <Text>Announcements:</Text>
+            </View>
+            {announcements &&
+              announcements.map((announcement) => {
+                <div key={announcement.announcementId}>
+                  <View style={pdfStyles.section}>
+                    <Text>Destination: {announcement.destination}</Text>
+                  </View>
+                  <View style={pdfStyles.section}>
+                    <Text>Description: {announcement.description}</Text>
+                  </View>
+                  <View style={pdfStyles.section}>
+                    <Text>Status: {announcement.announcementStatus}</Text>
+                  </View>
+                  <View style={pdfStyles.section}>
+                    <Text>Posted On: {announcement.createdAt}</Text>
+                  </View>
+                </div>;
+              })}
+          </View>
+          <View style={styles.itemContainer}>
+            <View style={pdfStyles.section}>
+              <Text>Requests:</Text>
+            </View>
+            {requests &&
+              requests.map((request) => {
+                <div key={request.requestId}>
+                  <View style={pdfStyles.section}>
+                    <Text>Destination: {request.Announcement.destination}</Text>
+                  </View>
+                  <View style={pdfStyles.section}>
+                    <Text>Title: {request.title}</Text>
+                  </View>
+                  <View style={pdfStyles.section}>
+                    <Text>Description: {request.description}</Text>
+                  </View>
+                  <View style={pdfStyles.section}>
+                    <Text>Status: {request.requestStatus}</Text>
+                  </View>
+                  <View style={pdfStyles.section}>
+                    <Text>Posted On: {request.createdAt}</Text>
+                  </View>
+                </div>;
+              })}
+          </View>
+        </Page>
+      </Document>
+  );
 
   const retrieveAddressesOfUser = async () => {
     try {
@@ -608,13 +739,32 @@ function Covid19User(props) {
 
             {/* Removed Download PDF Option for future SR instead */}
 
-            {/* <CardFooter className={classes.boxJustify}>
-                <div justifyContent="center">
-                  <Pdf targetRef={ref} filename="covid-19-user-case.pdf" x={-55} y={30} scale={1}>
-                    {({toPdf}) => <Button color="info" onClick={toPdf}>Download PDF</Button>}
-                  </Pdf>
-                </div>
-              </CardFooter> */}
+            <CardFooter className={classes.boxJustify}>
+              <div justifyContent="center">
+                {/* <Button color="primary"> */}
+                  <PDFDownloadLink
+                    document={<PdfDocument />}
+                    fileName="covid-19-report.pdf"
+                    // style={{
+                    //   textDecoration: 'none',
+                    //   padding: '10px',
+                    //   color: '#4a4a4a',
+                    //   backgroundColor: '#f2f2f2',
+                    //   border: '1px solid #4a4a4a',
+                    // }}
+                    >
+                    {({blob, url, loading, error}) =>
+                      loading ? 'Loading document...' : 'Download Pdf'
+                    }
+                  </PDFDownloadLink>
+                {/* </Button> */}
+
+                {/* <Button color="primary" onClick={DownloadPdf()}>
+                  Download PDF
+                </Button> */}
+              
+              </div>
+            </CardFooter>
           </Card>
         </GridItem>
       </GridContainer>
