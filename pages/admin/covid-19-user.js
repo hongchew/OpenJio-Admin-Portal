@@ -370,7 +370,7 @@ function Covid19User(props) {
                       addresses.map((address) => (
                         <div key={address.addressId}>
                           {/* <Box className={classes.boxJustify} borderColor="#D3D3D3" border={2} borderRadius="10%"> */}
-                          <Box className={classes.boxJustify}>
+                          <Box className={classes.boxJustifyComment}>
                             <Card
                               className={classes.cardStyle}
                               variant="outlined">
