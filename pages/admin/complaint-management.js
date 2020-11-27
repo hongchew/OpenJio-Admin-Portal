@@ -189,16 +189,7 @@ function ComplaintManagement(props) {
         sort: false,
       },
     },
-    // Example: Tom, Paul
-    {
-      name: 'complainerUserId',
-      label: 'Complaint Submitted by',
-      options: {
-        filter: true,
-        sort: false,
-        display: 'excluded', // Hidden
-      },
-    },
+    
     // Example: Tom, Paul
     {
       name: 'requestId',
