@@ -255,7 +255,6 @@ function ComplaintDetails(props) {
     if (complaintStatus === 'PENDING') {
       return (
         <div>
-          <Divider variant="middle" />
           <CardFooter>
             <Button color="primary" onClick={() => handleStrike()}>
               <a id="changePassBut"> Resolve and Strike</a>
