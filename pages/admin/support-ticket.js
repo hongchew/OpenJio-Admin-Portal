@@ -545,6 +545,9 @@ function SupportTicket(props) {
 
             {/* className={classes.cardProfile} */}
             <CardFooter>
+            {supportTicket.supportStatus === 'RESOLVED' ? (
+                ''
+              ) : (
               <Box className={classes.boxReplyLeft}>
                 <form
                   id="reply-form"
@@ -570,28 +573,16 @@ function SupportTicket(props) {
                   </div>
                 </form>
               </Box>
+              )}
             </CardFooter>
 
-            {/* Close ticket button */}
-            {/* <CardActions>
-              <div className={classes.cardProfile}>
-                <Box className={classes.boxButtonLeft}>
-                <Button color="info" onClick={submitReply}>
-                  Submit
-                </Button>
-                </Box>
-                <Box className={classes.boxButtonRight}>
-                <Button color="info" onClick={window.alert(`Closing`)}>
-                  Resolve Ticket
-                </Button>
-                </Box>
-              </div>
-            </CardActions> */}
-
             <CardActions className={classes.cardActionStyle}>
+            {supportTicket.supportStatus === 'RESOLVED' ? (
+                ''
+              ) : (
               <Button color="primary" onClick={submitReply}>
                 Submit Reply
-              </Button>
+              </Button>)}
               {supportTicket.supportStatus === 'RESOLVED' ? (
                 ''
               ) : (

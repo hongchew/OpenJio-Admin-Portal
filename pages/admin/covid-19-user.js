@@ -430,6 +430,7 @@ function Covid19User(props) {
                   Announcements
                 </h4>
               </CardHeader>
+              
               <CardBody profile>
                 <ThemeProvider theme={theme}>
                   <div className={classes.cardProfile}>
