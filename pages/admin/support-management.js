@@ -73,7 +73,7 @@ const mapStateToProps = (state) => ({
 function SupportManagement(props) {
   // MUI Data Table
   const [responsive, setResponsive] = useState('standard'); // options: vertical, standard, simple
-  const [tableBodyHeight, setTableBodyHeight] = useState('500px');
+  const [tableBodyHeight, setTableBodyHeight] = useState('auto');
   const [tableBodyMaxHeight, setTableBodyMaxHeight] = useState('');
   const [searchBtn, setSearchBtn] = useState(true);
   const [downloadBtn, setDownloadBtn] = useState(true);
