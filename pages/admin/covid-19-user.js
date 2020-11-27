@@ -32,11 +32,11 @@ import {
   StyleSheet,
   Image,
   PDFDownloadLink,
-  BlobProvider
+  BlobProvider,
 } from '@react-pdf/renderer';
 
 // To generate CSV
-import { CSVLink } from "react-csv";
+import {CSVLink, CSVDownload} from 'react-csv';
 
 const mapDispatchToProps = {
   setInfo: setInfo,
@@ -92,6 +92,12 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  boxButtonLast: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: theme.spacing(2),
   },
   boxJustifyWithoutFlex: {
     justifyContent: 'center',
@@ -201,93 +207,18 @@ function Covid19User(props) {
     retrieveAnnouncementsByUser();
   }, []);
 
-  // Create PDF Document Component (Objects: addresses, requests, announcements. Router)
-  const PdfDocument = () => (
-    <Document>
-      <Page size="A4" style={pdfStyles.page}>
-        <View style={styles.itemContainer}>
-          <View style={pdfStyles.section}>
-            <Text>Name of User: {Router.query.name}</Text>
-          </View>
-          <View style={pdfStyles.section}>
-            <Text>Email: {Router.query.email}</Text>
-          </View>
-          <View style={pdfStyles.section}>
-            <Text>Mobile Number: {Router.query.mobileNumber}</Text>
-          </View>
-          <View style={pdfStyles.section}>
-            <Text>Joined On: {Router.query.createdAt}</Text>
-          </View>
-          <View style={pdfStyles.section}>
-            <Text>Addresses:</Text>
-          </View>
-          {addresses &&
-            addresses.map((address) => {
-              <div key={address.addressId}>
-                <View style={pdfStyles.section}>
-                  <Text>{address.line1}</Text>
-                </View>
-                <View style={pdfStyles.section}>
-                  <Text>{address.line2}</Text>
-                </View>
-                <View style={pdfStyles.section}>
-                  <Text>
-                    {address.country} {address.postalCode}
-                  </Text>
-                </View>
-              </div>;
-            })}
-        </View>
-        <View style={styles.itemContainer}>
-          <View style={pdfStyles.section}>
-            <Text>Announcements:</Text>
-          </View>
-          {announcements &&
-            announcements.map((announcement) => {
-              <div key={announcement.announcementId}>
-                <View style={pdfStyles.section}>
-                  <Text>Destination: {announcement.destination}</Text>
-                </View>
-                <View style={pdfStyles.section}>
-                  <Text>Description: {announcement.description}</Text>
-                </View>
-                <View style={pdfStyles.section}>
-                  <Text>Status: {announcement.announcementStatus}</Text>
-                </View>
-                <View style={pdfStyles.section}>
-                  <Text>Posted On: {announcement.createdAt}</Text>
-                </View>
-              </div>;
-            })}
-        </View>
-        <View style={styles.itemContainer}>
-          <View style={pdfStyles.section}>
-            <Text>Requests:</Text>
-          </View>
-          {requests &&
-            requests.map((request) => {
-              <div key={request.requestId}>
-                <View style={pdfStyles.section}>
-                  <Text>Destination: {request.Announcement.destination}</Text>
-                </View>
-                <View style={pdfStyles.section}>
-                  <Text>Title: {request.title}</Text>
-                </View>
-                <View style={pdfStyles.section}>
-                  <Text>Description: {request.description}</Text>
-                </View>
-                <View style={pdfStyles.section}>
-                  <Text>Status: {request.requestStatus}</Text>
-                </View>
-                <View style={pdfStyles.section}>
-                  <Text>Posted On: {request.createdAt}</Text>
-                </View>
-              </div>;
-            })}
-        </View>
-      </Page>
-    </Document>
-  );
+  // Create CSV file
+  const headers = [
+    {label: 'Announcement ID', key: 'announcementId'},
+    {label: 'Announcement Status', key: 'announcementStatus'},
+    {label: 'Start Location', key: 'startLocation'},
+    {label: 'Destination', key: 'destination'},
+    {label: 'Description', key: 'description'},
+    {label: 'Close Time', key: 'closeTime'},
+    {label: 'Created At', key: 'createdAt'},
+    {label: 'Updated At', key: 'updatedAt'},
+    {label: 'User ID', key: 'userId'},
+  ];
 
   const retrieveAddressesOfUser = async () => {
     try {
@@ -499,7 +430,6 @@ function Covid19User(props) {
                   Announcements
                 </h4>
               </CardHeader>
-
               <CardBody profile>
                 <ThemeProvider theme={theme}>
                   <div className={classes.cardProfile}>
@@ -606,6 +536,24 @@ function Covid19User(props) {
                   {/* <Divider variant="middle" /> */}
                 </ThemeProvider>
               </CardBody>
+
+              <CardFooter className={classes.boxButtonLast}>
+                {!Object.keys(announcements).length ? (
+                  ''
+                ) : (
+                  <Button color="primary">
+                    <CSVLink
+                      data={announcements}
+                      filename="announcements.csv"
+                      style={{
+                        textDecoration: 'none',
+                        color: '#FFFFFF',
+                      }}>
+                      Export to CSV
+                    </CSVLink>
+                  </Button>
+                )}
+              </CardFooter>
             </Card>
           </Box>
 
@@ -742,29 +690,23 @@ function Covid19User(props) {
               </ThemeProvider>
             </CardBody>
 
-            {/* <CardFooter className={classes.boxJustify}>
-              <div justifyContent="center">
-                {/* <PDFDownloadLink
-                  document={<PdfDocument />}
-                  fileName="covid-19-report.pdf"
-                  style={{
-                    textDecoration: 'none',
-                    padding: '10px',
-                    color: '#4a4a4a',
-                    backgroundColor: '#f2f2f2',
-                    border: '1px solid #4a4a4a',
-                  }}
-                > Download Pdf
-                  {({blob, url, loading, error}) =>
-                    loading ? 'Loading document...' : 'Download Pdf'
-                  }
-                </PDFDownloadLink> */}
-                {/* <Button color="primary">
-                  Download PDF
+            <CardFooter className={classes.boxButtonLast}>
+              {!Object.keys(requests).length ? (
+                ''
+              ) : (
+                <Button color="primary">
+                  <CSVLink
+                    data={requests}
+                    filename="requests.csv"
+                    style={{
+                      textDecoration: 'none',
+                      color: '#FFFFFF',
+                    }}>
+                    Export to CSV
+                  </CSVLink>
                 </Button>
-              </div>
-            </CardFooter> */}
-
+              )}
+            </CardFooter>
           </Card>
         </GridItem>
       </GridContainer>
