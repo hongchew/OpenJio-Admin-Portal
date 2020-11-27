@@ -58,6 +58,9 @@ const styles = {
       fontWeight: '400',
       lineHeight: '1',
     },
+    tableFormat: {
+      boxShadow: 'none',
+    },
   },
 };
 
@@ -280,6 +283,7 @@ function SupportManagement(props) {
             {/* Render MUI Data Table */}
             {/* <CardBody> */}
             <MUIDataTable
+              className={classes.tableFormat}
               title={''} // Customer Support
               data={data}
               columns={columns}

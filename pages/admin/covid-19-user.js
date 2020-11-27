@@ -35,6 +35,9 @@ import {
   BlobProvider
 } from '@react-pdf/renderer';
 
+// To generate CSV
+import { CSVLink } from "react-csv";
+
 const mapDispatchToProps = {
   setInfo: setInfo,
 };
@@ -739,29 +742,29 @@ function Covid19User(props) {
               </ThemeProvider>
             </CardBody>
 
-            <CardFooter className={classes.boxJustify}>
+            {/* <CardFooter className={classes.boxJustify}>
               <div justifyContent="center">
                 {/* <PDFDownloadLink
                   document={<PdfDocument />}
                   fileName="covid-19-report.pdf"
-                  // style={{
-                  //   textDecoration: 'none',
-                  //   padding: '10px',
-                  //   color: '#4a4a4a',
-                  //   backgroundColor: '#f2f2f2',
-                  //   border: '1px solid #4a4a4a',
-                  // }}
-                >
+                  style={{
+                    textDecoration: 'none',
+                    padding: '10px',
+                    color: '#4a4a4a',
+                    backgroundColor: '#f2f2f2',
+                    border: '1px solid #4a4a4a',
+                  }}
+                > Download Pdf
                   {({blob, url, loading, error}) =>
                     loading ? 'Loading document...' : 'Download Pdf'
                   }
                 </PDFDownloadLink> */}
-
-                {/* <Button color="primary" onClick={DownloadPdf()}>
+                {/* <Button color="primary">
                   Download PDF
-                </Button> */}
+                </Button>
               </div>
-            </CardFooter>
+            </CardFooter> */}
+
           </Card>
         </GridItem>
       </GridContainer>
