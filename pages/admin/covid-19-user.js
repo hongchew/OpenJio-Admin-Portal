@@ -235,7 +235,7 @@ function Covid19User(props) {
   const retrieveRequestsByUser = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/requests/with-announcement/${Router.query.userId}`
+        `http://localhost:3000/requests/two-weeks/${Router.query.userId}`
       );
       const body = response.data;
       setRequests(body);
@@ -247,7 +247,7 @@ function Covid19User(props) {
   const retrieveAnnouncementsByUser = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/announcements/all-announcements/${Router.query.userId}`
+        `http://localhost:3000/announcements/two-weeks/${Router.query.userId}`
       );
       const body = response.data;
       setAnnouncements(body);
